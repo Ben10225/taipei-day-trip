@@ -51,12 +51,12 @@ def attractions():
 		return {
 			"error": True,
 			"message": "已無足夠資訊"
-		}
+		}, 500
 	result = {
 		"nextPage": nextPage,
 		"data" : datas 
 	}
-	return result
+	return result, 200
 
 
 # attraction/<id> api
@@ -68,9 +68,10 @@ def attractionitem(id):
 		return {
 			"error": True,
 			"message": "無法辨識"
-		}
+		}, 500
 	
 	item = db_attraction_by_id(id)
+	
 
 	if item:
 		images = item["imgs"].split(" ")
@@ -88,12 +89,14 @@ def attractionitem(id):
 				"images": images[:-1]
 			}
 		}
+		status_code = 200
 	else:
 		result = {
 			"error": True,
 			"message": "查無此資料"
 		}
-	return result
+		status_code = 400
+	return result, status_code
 
 
 # categories api
@@ -109,12 +112,12 @@ def categories():
 				cates.append(i[0])
 		return {
 			"data": cates
-		}
+		}, 200
 	else:
 		return {
 			"error": True,
 			"message": "無任何類別"
-		}
+		}, 500
 
 
 @app.route("/booking")
