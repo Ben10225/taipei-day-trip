@@ -27,34 +27,34 @@ select_categories = "SELECT category FROM attractions"
 
 # select by querystring
 def db_attractions(keyword):
-  db = connectPool("users")
-  mycursor = db.cursor(dictionary=True)
-  if keyword == "":
-    mycursor.execute(select_all)
-  else:
-    mycursor.execute(select_keyword, ("%" + keyword + "%",))
+  # db = connectPool("users")
+  # mycursor = db.cursor(dictionary=True)
+  # if keyword == "":
+  #   mycursor.execute(select_all)
+  # else:
+  #   mycursor.execute(select_keyword, ("%" + keyword + "%",))
 
-  items = mycursor.fetchall()
-  mycursor.close()
-  db.close()
-  return items
+  # items = mycursor.fetchall()
+  # mycursor.close()
+  # db.close()
+  # return items
   
-  # try:
-  #   db = connectPool("users")
-  #   mycursor = db.cursor(dictionary=True)
-  #   if keyword == "":
-  #     mycursor.execute(select_all)
-  #   else:
-  #     mycursor.execute(select_keyword, ("%" + keyword + "%",))
-  #   items = mycursor.fetchall()
-  #   return items
+  try:
+    db = connectPool("users")
+    mycursor = db.cursor(dictionary=True)
+    if keyword == "":
+      mycursor.execute(select_all)
+    else:
+      mycursor.execute(select_keyword, ("%" + keyword + "%",))
+    items = mycursor.fetchall()
+    return items
 
-  # except Error as e:
-  #   print("Error while connecting to MySQL using Connection pool ", e)
+  except Error as e:
+    print("Error while connecting to MySQL using Connection pool ", e)
 
-  # finally:
-  #   mycursor.close()
-  #   db.close()
+  finally:
+    mycursor.close()
+    db.close()
 
 
 # select attraction by id
