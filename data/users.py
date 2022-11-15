@@ -27,22 +27,34 @@ select_categories = "SELECT category FROM attractions"
 
 # select by querystring
 def db_attractions(keyword):
-  try:
-    db = connectPool("users")
-    mycursor = db.cursor(dictionary=True)
-    if keyword == "":
-      mycursor.execute(select_all)
-    else:
-      mycursor.execute(select_keyword, ("%" + keyword + "%",))
-    items = mycursor.fetchall()
-    return items
+  db = connectPool("users")
+  mycursor = db.cursor(dictionary=True)
+  if keyword == "":
+    mycursor.execute(select_all)
+  else:
+    mycursor.execute(select_keyword, ("%" + keyword + "%",))
 
-  except Error as e:
-    print("Error while connecting to MySQL using Connection pool ", e)
+  items = mycursor.fetchall()
+  mycursor.close()
+  db.close()
+  return items
+  
+  # try:
+  #   db = connectPool("users")
+  #   mycursor = db.cursor(dictionary=True)
+  #   if keyword == "":
+  #     mycursor.execute(select_all)
+  #   else:
+  #     mycursor.execute(select_keyword, ("%" + keyword + "%",))
+  #   items = mycursor.fetchall()
+  #   return items
 
-  finally:
-    mycursor.close()
-    db.close()
+  # except Error as e:
+  #   print("Error while connecting to MySQL using Connection pool ", e)
+
+  # finally:
+  #   mycursor.close()
+  #   db.close()
 
 
 # select attraction by id
