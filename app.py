@@ -26,27 +26,35 @@ def attractions():
 	items = db_attractions(keyword)
 
 	datas = []
+
+	def attraction_details(range, page):
+		dt = items[range * int(page) + i]
+		images = dt["imgs"].split(" ")
+		datas.append({
+			"id": dt["id"],
+			"name": dt["name"],
+			"category": dt["category"],
+			"description": dt["description"],
+			"address": dt["address"],
+			"transport": dt["transport"],
+			"mrt": dt["mrt"],
+			"lat": dt["lat"],
+			"lng": dt["lng"],
+			"images": images[:-1],
+		})
+		return datas
+
 	if len(items) - 12 * (int(page)+1) >= 0:
 		for i in range(12):
-			dt = items[12 * int(page) + i]
-			images = dt["imgs"].split(" ")
-			datas.append({
-				"id": dt["id"],
-				"name": dt["name"],
-				"category": dt["category"],
-				"description": dt["description"],
-				"address": dt["address"],
-				"transport": dt["transport"],
-				"mrt": dt["mrt"],
-				"lat": dt["lat"],
-				"lng": dt["lng"],
-				"images": images[:-1],
-			})
+			datas = attraction_details(12, page)
 			nextPage = int(page)+1
+
 	elif 0 > len(items) - 12 * (int(page)+1) >= -11:
-		for i in range(abs(len(items) - 12 * int(page))):
-			datas.append(items[12 * int(page) + i])
+		lefts = abs(len(items) - 12 * int(page))
+		for i in range(lefts):
+			datas = attraction_details(lefts, page)
 			nextPage = None
+
 	else:
 		return {
 			"error": True,
@@ -71,7 +79,6 @@ def attractionitem(id):
 		}, 500
 	
 	item = db_attraction_by_id(id)
-	
 
 	if item:
 		images = item["imgs"].split(" ")
