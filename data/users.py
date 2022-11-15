@@ -27,18 +27,6 @@ select_categories = "SELECT category FROM attractions"
 
 # select by querystring
 def db_attractions(keyword):
-  # db = connectPool("users")
-  # mycursor = db.cursor(dictionary=True)
-  # if keyword == "":
-  #   mycursor.execute(select_all)
-  # else:
-  #   mycursor.execute(select_keyword, ("%" + keyword + "%",))
-
-  # items = mycursor.fetchall()
-  # mycursor.close()
-  # db.close()
-  # return items
-  
   try:
     db = connectPool("users")
     mycursor = db.cursor(dictionary=True)
