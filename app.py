@@ -42,17 +42,16 @@ def attractions():
 			"lng": dt["lng"],
 			"images": images[:-1],
 		})
-		return datas
 
 	if len(items) - 12 * (int(page)+1) >= 0:
 		for i in range(12):
-			datas = attraction_details(12, page)
+			attraction_details(12, page)
 			nextPage = int(page)+1
 
 	elif 0 > len(items) - 12 * (int(page)+1) >= -11:
 		lefts = abs(len(items) - 12 * int(page))
 		for i in range(lefts):
-			datas = attraction_details(lefts, page)
+			attraction_details(lefts, page)
 			nextPage = None
 
 	else:

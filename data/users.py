@@ -20,7 +20,7 @@ def connectPool(status):
   return connection_object
 
 select_all = "SELECT * FROM attractions"
-select_keyword = "SELECT * FROM attractions WHERE name LIKE %s"
+select_keyword = "SELECT * FROM attractions WHERE name LIKE %s OR category=%s"
 select_id = "SELECT * FROM attractions WHERE id=%s"
 select_categories = "SELECT category FROM attractions"
 
@@ -33,7 +33,7 @@ def db_attractions(keyword):
     if keyword == "":
       mycursor.execute(select_all)
     else:
-      mycursor.execute(select_keyword, ("%" + keyword + "%",))
+      mycursor.execute(select_keyword, ("%" + keyword + "%", keyword))
     items = mycursor.fetchall()
     return items
 
