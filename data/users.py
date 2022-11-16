@@ -19,8 +19,8 @@ def connectPool(status):
   connection_object = connection_pool.get_connection()
   return connection_object
 
-select_page = "SELECT * FROM attractions LIMIT %s,12"
-select_keyword = "SELECT * FROM attractions WHERE name LIKE %s OR category=%s LIMIT %s,12"
+select_page = "SELECT * FROM attractions LIMIT %s,13"
+select_keyword = "SELECT * FROM attractions WHERE name LIKE %s OR category=%s LIMIT %s,13"
 select_id = "SELECT * FROM attractions WHERE id=%s"
 select_categories = "SELECT category FROM attractions"
 
@@ -31,14 +31,20 @@ def db_attractions(page, keyword):
     db = connectPool("users")
     mycursor = db.cursor(dictionary=True)
     start_attraction = int(page) * 12
-    
+
     if keyword == "":
       mycursor.execute(select_page, (start_attraction, ))
     else:
       mycursor.execute(select_keyword, ("%" + keyword + "%", keyword, start_attraction))
 
     items = mycursor.fetchall()
-    return items
+
+    if len(items) == 13:
+      next = True
+      return [items[:-1], next]
+    else:
+      next = False
+      return [items, next]
 
   except Error as e:
     print("Error while connecting to MySQL using Connection pool ", e)

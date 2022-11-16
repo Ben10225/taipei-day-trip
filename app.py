@@ -29,7 +29,7 @@ def attractions():
 			"message": "資料輸入錯誤"
 		}, 400
 
-	items = db_attractions(page, keyword)
+	items, next = db_attractions(page, keyword)
 
 	datas = []
 
@@ -52,7 +52,10 @@ def attractions():
 	if len(items) == 12:
 		for i in range(12):
 			attraction_details(i)
-		nextPage = int(page)+1
+		if next:
+			nextPage = int(page)+1
+		else:
+			nextPage = None
 
 	elif len(items) > 0:
 		for i in range(len(items)):
@@ -64,7 +67,7 @@ def attractions():
 			"error": True,
 			"message": "已無足夠資訊"
 		}, 500
-		
+
 	result = {
 		"nextPage": nextPage,
 		"data" : datas 
