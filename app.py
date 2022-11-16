@@ -20,15 +20,21 @@ def attraction(id):
 # attractions api
 @app.route("/api/attractions")
 def attractions():
-	page = request.args.get("page", "0")
+	page = request.args.get("page", "")
 	keyword = request.args.get("keyword", "")
 
-	items = db_attractions(keyword)
+	if not page:
+		return {
+			"error": True,
+			"message": "資料輸入錯誤"
+		}, 400
+
+	items = db_attractions(page, keyword)
 
 	datas = []
 
-	def attraction_details(range, page):
-		dt = items[range * int(page) + i]
+	def attraction_details(i):
+		dt = items[i]
 		images = dt["imgs"].split(" ")
 		datas.append({
 			"id": dt["id"],
@@ -42,23 +48,23 @@ def attractions():
 			"lng": dt["lng"],
 			"images": images[:-1],
 		})
-
-	if len(items) - 12 * (int(page)+1) >= 0:
+	
+	if len(items) == 12:
 		for i in range(12):
-			attraction_details(12, page)
-			nextPage = int(page)+1
+			attraction_details(i)
+		nextPage = int(page)+1
 
-	elif 0 > len(items) - 12 * (int(page)+1) >= -11:
-		lefts = abs(len(items) - 12 * int(page))
-		for i in range(lefts):
-			attraction_details(lefts, page)
-			nextPage = None
+	elif len(items) > 0:
+		for i in range(len(items)):
+			attraction_details(i)
+		nextPage = None
 
 	else:
 		return {
 			"error": True,
 			"message": "已無足夠資訊"
 		}, 500
+		
 	result = {
 		"nextPage": nextPage,
 		"data" : datas 
