@@ -41,10 +41,10 @@ def db_attractions(page, keyword):
 
     if len(items) == 13:
       next = True
-      return [items[:-1], next]
+      return items[:-1], next
     else:
       next = False
-      return [items, next]
+      return items, next
 
   except Error as e:
     print("Error while connecting to MySQL using Connection pool ", e)

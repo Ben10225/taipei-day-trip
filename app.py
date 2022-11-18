@@ -7,6 +7,9 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+# 排序 json
+app.config["JSON_SORT_KEYS"]=False
+
 
 # Pages
 @app.route("/")
