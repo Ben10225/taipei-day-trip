@@ -11,6 +11,23 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"]=False
 
 
+def attraction_details(item):
+	images = item["imgs"].split(" ")
+	details = {
+		"id": item["id"],
+		"name": item["name"],
+		"category": item["category"],
+		"description": item["description"],
+		"address": item["address"].replace(" ",""),
+		"transport": item["transport"],
+		"mrt": item["mrt"],
+		"lat": item["lat"],
+		"lng": item["lng"],
+		"images": images[:-1],
+	}
+	return details
+
+
 # Pages
 @app.route("/")
 def index():
@@ -26,7 +43,7 @@ def attractions():
 	page = request.args.get("page", "")
 	keyword = request.args.get("keyword", "")
 
-	if not page:
+	if not page or not page.isdigit():
 		return {
 			"error": True,
 			"message": "資料輸入錯誤"
@@ -34,42 +51,23 @@ def attractions():
 
 	items, next = db_attractions(page, keyword)
 
-	datas = []
-
-	def attraction_details(i):
-		dt = items[i]
-		images = dt["imgs"].split(" ")
-		datas.append({
-			"id": dt["id"],
-			"name": dt["name"],
-			"category": dt["category"],
-			"description": dt["description"],
-			"address": dt["address"].replace(" ",""),
-			"transport": dt["transport"],
-			"mrt": dt["mrt"],
-			"lat": dt["lat"],
-			"lng": dt["lng"],
-			"images": images[:-1],
-		})
-	
-	if len(items) == 12:
-		for i in range(12):
-			attraction_details(i)
-		if next:
-			nextPage = int(page)+1
-		else:
-			nextPage = None
-
-	elif len(items) > 0:
-		for i in range(len(items)):
-			attraction_details(i)
+	if next:
+		nextPage = int(page)+1
+	else:
 		nextPage = None
 
+	datas = []
+
+	if items:
+		for i in range(len(items)):
+			item_detail = attraction_details(items[i])
+			datas.append(item_detail)
 	else:
 		return {
 			"error": True,
 			"message": "已無足夠資訊"
 		}, 500
+
 
 	result = {
 		"nextPage": nextPage,
@@ -92,21 +90,7 @@ def attractionitem(id):
 	item = db_attraction_by_id(id)
 
 	if item:
-		images = item["imgs"].split(" ")
-		result = {
-			"data": {
-				"id": item["id"],
-				"name": item["name"],
-				"category": item["category"],
-				"description": item["description"],
-				"address": item["address"].replace(" ",""),
-				"transport": item["transport"],
-				"mrt": item["mrt"],
-				"lat": item["lat"],
-				"lng": item["lng"],
-				"images": images[:-1]
-			}
-		}
+		result = attraction_details(item)
 		status_code = 200
 	else:
 		result = {
