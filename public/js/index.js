@@ -107,14 +107,14 @@ function categoryOut(dom, outter, lintener){
 }
 
 // fetch page
-async function catchAttractions(pg, keyword){
+function catchAttractions(pg, keyword){
   let url
   if(keyword){
     url = `/api/attractions?page=${pg}&keyword=${keyword}`
   }else{
     url = `/api/attractions?page=${pg}`
   }
-  await fetch(url, {
+  fetch(url, {
     method: 'GET',
   })
   .then((response) => response.json())
