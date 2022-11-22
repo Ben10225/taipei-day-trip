@@ -20,7 +20,9 @@ let callback = (entries, observer) => {
     ct ++;
     if(ct > 2){
       if(ct % 2 == 1){
-        catchAttractions(page, keywordValue)
+        (async ()=> {
+          await catchAttractions(page, keywordValue)
+        })();
       }
     }
   })
