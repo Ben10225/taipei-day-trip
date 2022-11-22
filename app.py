@@ -69,7 +69,6 @@ def attractions():
 			"message": "已無足夠資訊"
 		}, 500
 
-
 	result = {
 		"nextPage": nextPage,
 		"data" : datas 

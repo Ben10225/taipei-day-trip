@@ -25,10 +25,23 @@
           <h4>輕鬆享受台北一日悠閒</h4>
           <h6>探索每個角落，體驗城市的深度旅遊行程</h6>
           <div class="search">
-            <input type="text" placeholder="輸入景點名稱查詢">
+            <input class="keyword" type="text" placeholder="輸入景點名稱查詢" onclick="showCategory()">
             <button>
-              <div class="search_icon"></div>
+              <div class="search_icon" onclick="keywordSelect()"></div>
             </button>
+            <div class="category_box">
+              <ul class="category_ul">
+                <!-- <li>公共藝術</li>
+                <li>宗教信仰</li>
+                <li>歷史建築</li>
+                <li>親子共遊</li>
+                <li>其他</li>
+                <li>戶外踏青</li>
+                <li>藍色公路</li>
+                <li>養生溫泉</li>
+                <li>單車遊蹤</li> -->
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -38,128 +51,8 @@
     </section>
     <div class="attractions_outter">
       <div class="attractions_group">
+        <!-- <h2 class="error_message">123</h2> -->
         <!-- <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
-          <div class="attraction_img">
-            <div class="attraction_name_group">
-              <h6 class="attraction_name">景點名稱</h6>
-            </div>
-          </div>
-          <div class="infos">
-            <h6 class="mrt_station">捷運站</h6>
-            <h6 class="category">分類</h6>
-          </div>
-        </div>
-        <div class="attraction">
           <div class="attraction_img">
             <div class="attraction_name_group">
               <h6 class="attraction_name">景點名稱</h6>
@@ -174,6 +67,7 @@
     </div>
     <footer>
       <p>COPYRIGHT © 2021 台北一日遊</p>
+      <div class="target"></div>
     </footer>
   </div>
 
