@@ -17,14 +17,13 @@ let options = {
 
 let callback = (entries, observer) => {
   entries.forEach(entry => {
-    (async ()=> {
       ct ++;
       if(ct > 2){
         if(ct % 2 == 1){
-          await catchAttractions(page, keywordValue)
+          catchAttractions(page, keywordValue)
+          observer.unobserve(target);
         }
       }
-    })();
   })
 }
 
@@ -125,7 +124,6 @@ async function catchAttractions(pg, keyword){
       return;
     }
     if(data.nextPage){
-      
       for(let i=0;i<data.data.length;i++){
         // console.log(data.data[i].images)
         createDOM(data, i, page * data.data.length + i);
