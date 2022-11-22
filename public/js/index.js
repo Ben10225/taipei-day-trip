@@ -17,11 +17,6 @@ let options = {
 
 let callback = (entries, observer) => {
   entries.forEach(entry => {
-    // ct ++
-    // if(ct > 2){
-    //   catchAttractions(page, keywordValue)
-    //   ct = 1
-    // }
     ct ++;
     if(ct > 2){
       if(ct % 2 == 1){
@@ -111,7 +106,7 @@ function categoryOut(dom, outter, lintener){
 }
 
 // fetch page
-function catchAttractions(pg, keyword){
+async function catchAttractions(pg, keyword){
   let url
   if(keyword){
     url = `/api/attractions?page=${pg}&keyword=${keyword}`
