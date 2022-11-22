@@ -113,7 +113,7 @@ async function catchAttractions(pg, keyword){
   }else{
     url = `/api/attractions?page=${pg}`
   }
-  fetch(url, {
+  await fetch(url, {
     method: 'GET',
   })
   .then((response) => response.json())
