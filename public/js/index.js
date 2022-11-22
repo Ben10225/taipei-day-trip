@@ -43,7 +43,6 @@ function catchCategories(){
     if(data.data){
       let category_ul = document.querySelector(".category_ul");
       for(let i=0;i<data.data.length;i++){
-        // console.log(data.data[i])
         let li = document.createElement('li');
         let liNode = document.createTextNode(`${data.data[i]}`);
         li.appendChild(liNode);
@@ -125,6 +124,7 @@ function catchAttractions(pg, keyword){
     if(data.nextPage){
       
       for(let i=0;i<data.data.length;i++){
+        // console.log(data.data[i].images)
         createDOM(data, i, page * data.data.length + i);
       }
       page ++;

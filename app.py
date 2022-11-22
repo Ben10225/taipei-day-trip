@@ -13,18 +13,18 @@ app.config["JSON_SORT_KEYS"]=False
 
 
 def attraction_details(item):
-	images = item["imgs"].split(" ")
+	images = item["urls"].split(",")
 	details = {
 		"id": item["id"],
 		"name": item["name"],
-		"category": item["category"],
+		"category": item["category_name"],
 		"description": item["description"],
 		"address": item["address"].replace(" ",""),
 		"transport": item["transport"],
-		"mrt": item["mrt"],
+		"mrt": item["mrt_name"],
 		"lat": item["lat"],
 		"lng": item["lng"],
-		"images": images[:-1],
+		"images": images
 	}
 	return details
 
@@ -90,7 +90,9 @@ def attractionitem(id):
 	item = db_attraction_by_id(id)
 
 	if item:
-		result = attraction_details(item)
+		result = {
+			"data": attraction_details(item)
+		}
 		status_code = 200
 	else:
 		result = {
