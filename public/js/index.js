@@ -17,10 +17,16 @@ let options = {
 
 let callback = (entries, observer) => {
   entries.forEach(entry => {
-    ct ++
+    // ct ++
+    // if(ct > 2){
+    //   catchAttractions(page, keywordValue)
+    //   ct = 1
+    // }
+    ct ++;
     if(ct > 2){
-      catchAttractions(page, keywordValue)
-      ct = 1
+      if(ct % 2 == 1){
+        catchAttractions(page, keywordValue)
+      }
     }
   })
 }
@@ -104,7 +110,7 @@ function categoryOut(dom, outter, lintener){
   outter.removeEventListener("click", lintener);
 }
 
-// fetch
+// fetch page
 function catchAttractions(pg, keyword){
   let url
   if(keyword){
@@ -127,7 +133,7 @@ function catchAttractions(pg, keyword){
         // console.log(data.data[i].images)
         createDOM(data, i, page * data.data.length + i);
       }
-      page ++;
+      page = data.nextPage;
       sum += data.data.length;
       observer.unobserve(target);
       setTimeout(() => {
