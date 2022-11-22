@@ -130,7 +130,6 @@ function catchAttractions(pg, keyword){
       }
       page = data.nextPage;
       sum += data.data.length;
-      observer.unobserve(target);
       setTimeout(() => {
         observer.observe(target);
       }, 500);
