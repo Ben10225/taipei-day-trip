@@ -19,10 +19,34 @@ def connectPool(status):
   connection_object = connection_pool.get_connection()
   return connection_object
 
-select_page = "SELECT * FROM attractions LIMIT %s,13"
-select_keyword = "SELECT * FROM attractions WHERE name LIKE %s OR category=%s LIMIT %s,13"
-select_id = "SELECT * FROM attractions WHERE id=%s"
-select_categories = "SELECT category FROM attractions"
+
+select_page = """
+SELECT a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng, 
+GROUP_CONCAT( DISTINCT i.url ORDER BY i.pid ASC SEPARATOR ',') AS urls 
+FROM attractions AS a
+INNER JOIN categories AS c ON a.category_id=c.cid INNER JOIN mrts AS m ON a.mrt_id=m.mid 
+INNER JOIN images AS i ON a.id=i.iid GROUP BY a.aid, a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng
+ORDER BY a.aid LIMIT %s,13 
+"""
+
+select_keyword = """
+SELECT a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng, 
+GROUP_CONCAT( DISTINCT i.url ORDER BY i.pid ASC SEPARATOR ',') AS urls 
+FROM attractions AS a
+INNER JOIN categories AS c ON a.category_id=c.cid INNER JOIN mrts AS m ON a.mrt_id=m.mid 
+INNER JOIN images AS i ON a.id=i.iid WHERE a.name LIKE %s OR c.category_name=%s GROUP BY a.aid, a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng
+ORDER BY a.aid LIMIT %s,13 
+"""
+
+select_id = """
+SELECT a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng, 
+GROUP_CONCAT( DISTINCT i.url ORDER BY i.pid SEPARATOR ',') AS urls 
+FROM attractions AS a
+INNER JOIN categories AS c ON a.category_id=c.cid INNER JOIN mrts AS m ON a.mrt_id=m.mid 
+INNER JOIN images AS i ON a.id=i.iid WHERE a.id=%s GROUP BY a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng
+"""
+
+select_categories = "SELECT category_name FROM categories"
 
 
 # select by querystring
@@ -41,10 +65,10 @@ def db_attractions(page, keyword):
 
     if len(items) == 13:
       next = True
-      return [items[:-1], next]
+      return items[:-1], next
     else:
       next = False
-      return [items, next]
+      return items, next
 
   except Error as e:
     print("Error while connecting to MySQL using Connection pool ", e)
@@ -62,7 +86,7 @@ def db_attraction_by_id(id):
     mycursor.execute(select_id, (id, ))
     item = mycursor.fetchone()
     return item
-
+  
   except Error as e:
     print("Error while connecting to MySQL using Connection pool ", e)
 
@@ -78,6 +102,7 @@ def db_categories():
     mycursor = db.cursor()
     mycursor.execute(select_categories)
     items = mycursor.fetchall()
+
     return items
 
   except Error as e:
