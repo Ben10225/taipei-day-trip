@@ -155,7 +155,7 @@ function createDOM(data, i, index){
   let attractionInside = document.querySelector(`.attraction:nth-child(${index+1})`);
   let attractionImg = document.createElement('div');
   attractionImg.className = "attraction_img";
-  attractionImg.style.cssText = `background-image: url('${data.data[i].images.slice(-1)}')`;
+  attractionImg.style.cssText = `background-image: url('${data.data[i].images[0]}')`;
   attractionInside.appendChild(attractionImg);
   // div attraction_name_group
   let attractionImgInside = document.querySelector(`.attraction:nth-child(${index+1}) .attraction_img`);
