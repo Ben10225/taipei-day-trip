@@ -1,5 +1,3 @@
-
-let end;
 let page = 0;
 let ct = 0;
 let sum = 0;
@@ -138,7 +136,6 @@ function catchAttractions(pg, keyword){
       for(let i=0;i<data.data.length;i++){
         createDOM(data, i, sum + i);
       }
-      end = true;
       observer.unobserve(target);
       return;
     }
@@ -158,7 +155,7 @@ function createDOM(data, i, index){
   let attractionInside = document.querySelector(`.attraction:nth-child(${index+1})`);
   let attractionImg = document.createElement('div');
   attractionImg.className = "attraction_img";
-  attractionImg.style.cssText = `background-image: url('${data.data[i].images[0]}')`;
+  attractionImg.style.cssText = `background-image: url('${data.data[i].images.slice(-1)}')`;
   attractionInside.appendChild(attractionImg);
   // div attraction_name_group
   let attractionImgInside = document.querySelector(`.attraction:nth-child(${index+1}) .attraction_img`);
