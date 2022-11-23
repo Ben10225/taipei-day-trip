@@ -16,11 +16,9 @@ let options = {
 let callback = (entries, observer) => {
   entries.forEach(entry => {
       ct ++;
-      if(ct > 2){
-        if(ct % 2 == 1){
-          catchAttractions(page, keywordValue)
-          observer.unobserve(target);
-        }
+      if(ct > 2 && ct % 2 == 1){
+        catchAttractions(page, keywordValue)
+        observer.unobserve(target);
       }
   })
 }

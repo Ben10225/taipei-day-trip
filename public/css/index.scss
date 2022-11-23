@@ -92,17 +92,19 @@
           border: none;
           // height: 46px;
           z-index: 10;
+          &.btn_bg{
+            width: 45px;
+            // user-select: none;
+            cursor: pointer;
+            background: #448899;
+            margin-left: -30px;
+            border-radius: 0 4px 4px 0;
+            position: absolute;
+          }
         }
-        button{
-          margin-left: -30px;
-          width: 45px;
-          border: none;
-          background: #448899;
-          border-radius: 0 4px 4px 0;
-          height: 39.5px;
+        .icon_box{
+          display: inline-block;
           position: relative;
-          top: -5px;
-          z-index: 11;
           .search_icon{
             background-image: url('../images/icon_search.png');
             background-position: center;
@@ -111,10 +113,11 @@
             width: 28px;
             height: 28px;
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
+            left: -21px;
+            top: -19px;
             cursor: pointer;
+            z-index: 30;
+            pointer-events: none;
           }
         }
         .category_box{
@@ -284,6 +287,9 @@
     .search{
       input{
         width: 230px !important;
+        &.btn_bg{
+          width: 45px !important;
+        }
       }
     }  
   }
