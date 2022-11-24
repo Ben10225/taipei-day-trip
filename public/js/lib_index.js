@@ -4,7 +4,7 @@ let page = 0;
 let sum = 0;
 let keywordValue = "";
 
-// infiniteScroll
+/*  infiniteScroll  */
 let options = {
   root: null,
   rootMargin: "50px 50px 50px 50px",
@@ -26,8 +26,7 @@ const target = document.querySelector('.target');
 // observer.observe(target);
 
 
-
-// fetch category
+/*  fetch category  */
 function catchCategories(){
   fetch("/api/categories", {
     method: 'GET',
@@ -52,6 +51,7 @@ function catchCategories(){
 }
 
 
+/*  keyword select  */
 function keywordSelect(){
   observer.unobserve(target);
   page = 0;
@@ -64,6 +64,7 @@ function keywordSelect(){
 }
 
 
+/*  show category block  */
 function showCategory(){
   let category_box = document.querySelector(".category_box");
   category_box.style.display = "block";
@@ -91,6 +92,8 @@ function showCategory(){
   }, 300)
 }
 
+
+/*  category block fadeout  */
 function categoryOut(dom, outter, lintener){
   dom.style.visibility = "hidden";
   dom.style.opacity = "0";
@@ -98,7 +101,8 @@ function categoryOut(dom, outter, lintener){
   outter.removeEventListener("click", lintener);
 }
 
-// fetch page
+
+/*  attractions api  */
 function catchAttractions(pg, keyword){
   let url
   if(keyword){
@@ -136,7 +140,7 @@ function catchAttractions(pg, keyword){
 }
 
 
-// appendChild
+/*  create DOM with appendChild  */
 function createDOM(data, i, index){
   // 容器
   let attractionsGroup = document.querySelector(".attractions_group");
@@ -182,6 +186,7 @@ function createDOM(data, i, index){
 }
 
 
+/*  create Error with appendChild  */
 function createError(err){
   let attractionsGroup = document.querySelector(".attractions_group");
   let errMsg = document.createElement('h2');

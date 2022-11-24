@@ -49,65 +49,83 @@ INNER JOIN images AS i ON a.id=i.iid WHERE a.id=%s GROUP BY a.id, c.category_nam
 select_categories = "SELECT category_name FROM categories"
 
 
-# select by querystring
-def db_attractions(page, keyword):
-  try:
-    db = connectPool("users")
-    mycursor = db.cursor(dictionary=True)
-    start_attraction = int(page) * 12
 
-    if keyword == "":
-      mycursor.execute(select_page, (start_attraction, ))
-    else:
-      mycursor.execute(select_keyword, ("%" + keyword + "%", keyword, start_attraction))
+class Users:
 
-    items = mycursor.fetchall()
-
-    if len(items) == 13:
-      next = True
-      return items[:-1], next
-    else:
-      next = False
-      return items, next
-
-  except Error as e:
-    print("Error while connecting to MySQL using Connection pool ", e)
-
-  finally:
-    mycursor.close()
-    db.close()
+	def __init__(self) -> None:
+		self.page = 0
+		self.keyword = ""
+		self.id = 1
+		self.db = connectPool("users")
 
 
-# select attraction by id
-def db_attraction_by_id(id):
-  try:
-    db = connectPool("users")
-    mycursor = db.cursor(dictionary=True)
-    mycursor.execute(select_id, (id, ))
-    item = mycursor.fetchone()
-    return item
-  
-  except Error as e:
-    print("Error while connecting to MySQL using Connection pool ", e)
-
-  finally:
-    mycursor.close()
-    db.close()
+	def set_id(self, id):
+		self.id = id
 
 
-# select categories
-def db_categories():
-  try:
-    db = connectPool("users")
-    mycursor = db.cursor()
-    mycursor.execute(select_categories)
-    items = mycursor.fetchall()
+	def set_page_keyword(self, page, keyword):
+		self.page = page
+		self.keyword = keyword
 
-    return items
 
-  except Error as e:
-    print("Error while connecting to MySQL using Connection pool ", e)
+	def attractions(self):
+		try:
+			db = connectPool("users")
+			mycursor = db.cursor(dictionary=True)
+			start_attraction = int(self.page) * 12
 
-  finally:
-    mycursor.close()
-    db.close()
+			if self.keyword == "":
+				mycursor.execute(select_page, (start_attraction, ))
+			else:
+				mycursor.execute(select_keyword, ("%" + self.keyword + "%", self.keyword, start_attraction))
+
+			items = mycursor.fetchall()
+
+			if len(items) == 13:
+				next = True
+				items.pop()
+				return items, next
+			else:
+				next = False
+				return items, next
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
+	def attraction(self):
+		try:
+			db = connectPool("users")
+			mycursor = db.cursor(dictionary=True)
+			mycursor.execute(select_id, (self.id, ))
+			item = mycursor.fetchone()
+			return item
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+    
+
+	def categories(self):
+		try:
+			db = connectPool("users")
+			mycursor = db.cursor()
+			mycursor.execute(select_categories)
+			items = mycursor.fetchall()
+			return items
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
