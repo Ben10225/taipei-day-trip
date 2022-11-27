@@ -91,7 +91,10 @@
 .wrapper section .slogan_box .search {
   margin-top: 30px;
 }
-.wrapper section .slogan_box .search input {
+.wrapper section .slogan_box .search .search_bar {
+  position: relative;
+}
+.wrapper section .slogan_box .search .search_bar input {
   width: 400px;
   border-radius: 4px;
   outline: none;
@@ -99,14 +102,16 @@
   padding: 10px 9px;
   border: none;
   z-index: 10;
+  position: relative;
 }
-.wrapper section .slogan_box .search input.btn_bg {
+.wrapper section .slogan_box .search .search_bar input.btn_bg {
   width: 45px;
   cursor: pointer;
   background: #448899;
   margin-left: -30px;
   border-radius: 0 4px 4px 0;
   position: absolute;
+  right: 0;
 }
 .wrapper section .slogan_box .search .icon_box {
   display: inline-block;
@@ -120,7 +125,7 @@
   width: 28px;
   height: 28px;
   position: absolute;
-  left: -21px;
+  left: -36px;
   top: -19px;
   cursor: pointer;
   z-index: 30;
@@ -265,6 +270,7 @@
   }
   section .slogan_box {
     justify-self: start !important;
+    width: 450px !important;
   }
   section .hero_section {
     background-position: -50px -100px !important;
@@ -280,6 +286,10 @@
   section {
     padding-left: 30px;
   }
+  section .slogan_box {
+    justify-self: start !important;
+    width: 300px !important;
+  }
   section .hero_section {
     background-position: 10px -150px !important;
   }
@@ -288,6 +298,10 @@
   }
   section .search input.btn_bg {
     width: 45px !important;
+    right: 20px !important;
+  }
+  section .search .icon_box {
+    left: 34px;
   }
   .attractions_outter {
     width: 90% !important;
