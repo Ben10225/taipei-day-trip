@@ -19,8 +19,8 @@ def attractions():
 				"message": "資料輸入錯誤"
 			}, 400
 
-		sql_conn.set_page_keyword(page, keyword)
-		items, next = sql_conn.attractions()
+		# sql_conn.set_page_keyword(page, keyword)
+		items, next = sql_conn.attractions(page, keyword)
 
 		if next:
 			nextPage = int(page)+1
@@ -65,8 +65,7 @@ def attractionitem(id):
 				"message": "無法辨識"
 			}, 500
 		
-		sql_conn.set_id(id)
-		item = sql_conn.attraction()
+		item = sql_conn.attraction(id)
 
 		if item:
 			result = {

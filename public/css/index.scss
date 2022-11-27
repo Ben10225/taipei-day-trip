@@ -21,6 +21,10 @@
     display: grid;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    background: #fff;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(#000, 0.4);
     .nav_bar{
       width: 1200px;
       height: 34px;
@@ -45,6 +49,9 @@
         }
       }
     }
+  }
+  .nav_box{
+    height: 54px;
   }
   section{
     overflow: hidden;
@@ -156,7 +163,7 @@
     .hero_section_outter{
       width: 100%;
       .hero_section{
-        width: 1920px;
+        // width: 1920px;
         height: 320px;
         background-image: url('../images/welcome.png');
         background-position: center 0px;

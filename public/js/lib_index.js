@@ -5,24 +5,23 @@ let sum = 0;
 let keywordValue = "";
 
 /*  infiniteScroll  */
+const target = document.querySelector('.target');
+
 let options = {
   root: null,
   rootMargin: "50px 50px 50px 50px",
-  threshold: 0.5,
+  threshold: 1,
 }
 
 let callback = (entries, observer) => {
-  entries.forEach(entry => {
-    ct ++;
-    if(ct > 2 && ct % 2 == 1){
-      catchAttractions(page, keywordValue);
-      observer.unobserve(target);
-    }
-  })
+  ct ++;
+  if(ct > 2 && ct % 2 == 1){
+    catchAttractions(page, keywordValue);
+    observer.unobserve(target);
+  }
 }
 
 let observer = new IntersectionObserver(callback, options);
-const target = document.querySelector('.target');
 // observer.observe(target);
 
 
@@ -197,7 +196,11 @@ function createError(err){
 }
 
 
+// 再分成 子資料夾 或命名更精準
+// export {};
 
+// 是否用物件或直接用函式都可以 
+// default 適合用在主要的
 export default {
   catchCategories,
   catchAttractions,

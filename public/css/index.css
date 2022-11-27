@@ -20,6 +20,10 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  background: #fff;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 .wrapper nav .nav_bar {
   width: 1200px;
@@ -44,6 +48,9 @@
   font-size: 16px;
   line-height: 34px;
   color: #666666;
+}
+.wrapper .nav_box {
+  height: 54px;
 }
 .wrapper section {
   overflow: hidden;

@@ -40,7 +40,7 @@ ORDER BY a.aid LIMIT %s,13
 
 select_id = """
 SELECT a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng, 
-GROUP_CONCAT( DISTINCT i.url ORDER BY i.pid SEPARATOR ',') AS urls 
+GROUP_CONCAT( DISTINCT i.url ORDER BY i.pid ASC SEPARATOR ',') AS urls 
 FROM attractions AS a
 INNER JOIN categories AS c ON a.category_id=c.cid INNER JOIN mrts AS m ON a.mrt_id=m.mid 
 INNER JOIN images AS i ON a.id=i.iid WHERE a.id=%s GROUP BY a.id, c.category_name, a.name, a.description, a.address, a.transport, m.mrt_name, a.lat, a.lng
@@ -53,31 +53,19 @@ select_categories = "SELECT category_name FROM categories"
 class Users:
 
 	def __init__(self) -> None:
-		self.page = 0
-		self.keyword = ""
-		self.id = 1
 		self.db = connectPool("users")
 
 
-	def set_id(self, id):
-		self.id = id
-
-
-	def set_page_keyword(self, page, keyword):
-		self.page = page
-		self.keyword = keyword
-
-
-	def attractions(self):
+	def attractions(self, page, keyword):
 		try:
 			db = connectPool("users")
 			mycursor = db.cursor(dictionary=True)
-			start_attraction = int(self.page) * 12
+			start_attraction = int(page) * 12
 
-			if self.keyword == "":
+			if keyword == "":
 				mycursor.execute(select_page, (start_attraction, ))
 			else:
-				mycursor.execute(select_keyword, ("%" + self.keyword + "%", self.keyword, start_attraction))
+				mycursor.execute(select_keyword, ("%" + keyword + "%", keyword, start_attraction))
 
 			items = mycursor.fetchall()
 
@@ -97,11 +85,11 @@ class Users:
 			db.close()
 
 
-	def attraction(self):
+	def attraction(sel, id):
 		try:
 			db = connectPool("users")
 			mycursor = db.cursor(dictionary=True)
-			mycursor.execute(select_id, (self.id, ))
+			mycursor.execute(select_id, (id, ))
 			item = mycursor.fetchone()
 			return item
 
