@@ -6,6 +6,7 @@ let imgIndex = 0;
 let cirpos = 1
 let img = document.querySelector(".img");
 
+
 let catchAttraction = ()=>{
   let url = `/api/attraction/${id}`
   fetch(url)
@@ -19,9 +20,9 @@ let catchAttraction = ()=>{
       insertContent(data);
       insertImg(data);
     }
-
   })
 }
+
 
 let insertContent = (data)=>{
   let attractionName = document.querySelector(".attraction_name");
@@ -38,6 +39,7 @@ let insertContent = (data)=>{
   address.textContent = data.address.slice(0,3) + " " + data.address.slice(3);
   transport.textContent = data.transport;
 }
+
 
 let insertImg = (data)=>{
   let circleBox = document.querySelector(".circle_box");
@@ -152,10 +154,12 @@ let morningClick = ()=>{
   cost.textContent = "2000";
 }
 
+
 let eveningClick = ()=>{
   let cost = document.querySelector(".cost");
   cost.textContent = "2500";
 }
+
 
 export default {
   catchAttraction,
