@@ -1,4 +1,4 @@
-import lib from "./lib_index.js"
+import lib from "./index_func.js"
 
 
 window.keywordSelect = lib.keywordSelect;

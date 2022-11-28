@@ -144,7 +144,8 @@ function createDOM(data, i, index){
   // 容器
   let attractionsGroup = document.querySelector(".attractions_group");
   // div attraction 
-  let attraction = document.createElement('div');
+  let attraction = document.createElement('a');
+  attraction.setAttribute('href', `/attraction/${data.data[i].id}`);
   attraction.className= "attraction";
   attractionsGroup.appendChild(attraction);
   // div attraction_img 
@@ -195,11 +196,6 @@ function createError(err){
   attractionsGroup.appendChild(errMsg);
 }
 
-
-// 再分成 子資料夾 或命名更精準
-// export {};
-
-// 是否用物件或直接用函式都可以 
 // default 適合用在主要的
 export default {
   catchCategories,
