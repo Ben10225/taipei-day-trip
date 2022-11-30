@@ -1,39 +1,31 @@
-let page = 0;
+
 let ct = 0;
+let page = 0;
 let sum = 0;
 let keywordValue = "";
 
-catchCategories();
-catchAttractions(page);
+/*  infiniteScroll  */
+const target = document.querySelector('.target');
 
-// infiniteScroll
 let options = {
   root: null,
   rootMargin: "50px 50px 50px 50px",
-  threshold: 0.5,
+  threshold: 1,
 }
 
 let callback = (entries, observer) => {
-  entries.forEach(entry => {
-      ct ++;
-      if(ct > 2){
-        if(ct % 2 == 1){
-          catchAttractions(page, keywordValue)
-          observer.unobserve(target);
-        }
-      }
-  })
+  ct ++;
+  if(ct > 2 && ct % 2 == 1){
+    catchAttractions(page, keywordValue);
+    observer.unobserve(target);
+  }
 }
 
-let observer = new IntersectionObserver(callback, options)
-
-const target = document.querySelector('.target')
-observer.observe(target)
+let observer = new IntersectionObserver(callback, options);
+// observer.observe(target);
 
 
-
-
-// fetch category
+/*  fetch category  */
 function catchCategories(){
   fetch("/api/categories", {
     method: 'GET',
@@ -58,6 +50,7 @@ function catchCategories(){
 }
 
 
+/*  keyword select  */
 function keywordSelect(){
   observer.unobserve(target);
   page = 0;
@@ -70,6 +63,7 @@ function keywordSelect(){
 }
 
 
+/*  show category block  */
 function showCategory(){
   let category_box = document.querySelector(".category_box");
   category_box.style.display = "block";
@@ -77,26 +71,28 @@ function showCategory(){
     category_box.style.visibility = "visible";
     category_box.style.opacity = "1";
     category_box.style.transform = "translateY(3px)";
-  },1)
+  }, 1)
   let wrapper = document.querySelector(".wrapper");
   let category_ul = document.querySelector(".category_ul");
 
   setTimeout(() => {
     wrapper.addEventListener("click", function out(e){
       if (!category_ul.contains(e.target)) {
-        categoryOut(category_box, wrapper, out)
-        return
+        categoryOut(category_box, wrapper, out);
+        return;
       }
       let category_lis = document.querySelectorAll(".category_ul li");
       for(let i of category_lis){
         if(i.contains(e.target)){
-          categoryOut(category_box, wrapper, out)
+          categoryOut(category_box, wrapper, out);
         }
       }
     })
-  },300)
+  }, 300)
 }
 
+
+/*  category block fadeout  */
 function categoryOut(dom, outter, lintener){
   dom.style.visibility = "hidden";
   dom.style.opacity = "0";
@@ -104,7 +100,8 @@ function categoryOut(dom, outter, lintener){
   outter.removeEventListener("click", lintener);
 }
 
-// fetch page
+
+/*  attractions api  */
 function catchAttractions(pg, keyword){
   let url
   if(keyword){
@@ -137,18 +134,18 @@ function catchAttractions(pg, keyword){
         createDOM(data, i, sum + i);
       }
       observer.unobserve(target);
-      return;
     }
   })
 }
 
 
-// appendChild
+/*  create DOM with appendChild  */
 function createDOM(data, i, index){
   // 容器
   let attractionsGroup = document.querySelector(".attractions_group");
   // div attraction 
-  let attraction = document.createElement('div');
+  let attraction = document.createElement('a');
+  attraction.setAttribute('href', `/attraction/${data.data[i].id}`);
   attraction.className= "attraction";
   attractionsGroup.appendChild(attraction);
   // div attraction_img 
@@ -189,6 +186,7 @@ function createDOM(data, i, index){
 }
 
 
+/*  create Error with appendChild  */
 function createError(err){
   let attractionsGroup = document.querySelector(".attractions_group");
   let errMsg = document.createElement('h2');
@@ -196,4 +194,15 @@ function createError(err){
   errMsg.appendChild(errNode);
   errMsg.className= "error_message";
   attractionsGroup.appendChild(errMsg);
+}
+
+// default 適合用在主要的
+export default {
+  catchCategories,
+  catchAttractions,
+  keywordSelect,
+  showCategory,
+  page,
+  observer,
+  target
 }

@@ -20,6 +20,10 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  background: #fff;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .wrapper nav .nav_bar {
   width: 1200px;
@@ -27,12 +31,13 @@
   display: inline-block;
   vertical-align: middle;
 }
-.wrapper nav .nav_bar h3 {
+.wrapper nav .nav_bar a {
   font-weight: 700;
   font-size: 30px;
   line-height: 34px;
   color: #448899;
   float: left;
+  text-decoration: none;
 }
 .wrapper nav .nav_bar ul {
   float: right;
@@ -44,6 +49,9 @@
   font-size: 16px;
   line-height: 34px;
   color: #666666;
+}
+.wrapper .nav_box {
+  height: 54px;
 }
 .wrapper section {
   overflow: hidden;
@@ -84,7 +92,10 @@
 .wrapper section .slogan_box .search {
   margin-top: 30px;
 }
-.wrapper section .slogan_box .search input {
+.wrapper section .slogan_box .search .search_bar {
+  position: relative;
+}
+.wrapper section .slogan_box .search .search_bar input {
   width: 400px;
   border-radius: 4px;
   outline: none;
@@ -92,19 +103,22 @@
   padding: 10px 9px;
   border: none;
   z-index: 10;
-}
-.wrapper section .slogan_box .search button {
-  margin-left: -30px;
-  width: 45px;
-  border: none;
-  background: #448899;
-  border-radius: 0 4px 4px 0;
-  height: 39.5px;
   position: relative;
-  top: -5px;
-  z-index: 11;
 }
-.wrapper section .slogan_box .search button .search_icon {
+.wrapper section .slogan_box .search .search_bar input.btn_bg {
+  width: 45px;
+  cursor: pointer;
+  background: #448899;
+  margin-left: -30px;
+  border-radius: 0 4px 4px 0;
+  position: absolute;
+  right: 0;
+}
+.wrapper section .slogan_box .search .icon_box {
+  display: inline-block;
+  position: relative;
+}
+.wrapper section .slogan_box .search .icon_box .search_icon {
   background-image: url("../images/icon_search.png");
   background-position: center;
   background-size: cover;
@@ -112,19 +126,21 @@
   width: 28px;
   height: 28px;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: -36px;
+  top: -19px;
   cursor: pointer;
+  z-index: 30;
+  pointer-events: none;
 }
 .wrapper section .slogan_box .search .category_box {
-  width: 375px;
+  width: 360px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 20px #AABBCC;
   display: none;
   opacity: 0;
   visibility: hidden;
+  position: absolute;
   transition: 0.5s;
 }
 .wrapper section .slogan_box .search .category_box ul {
@@ -256,6 +272,7 @@
   }
   section .slogan_box {
     justify-self: start !important;
+    width: 450px !important;
   }
   section .hero_section {
     background-position: -50px -100px !important;
@@ -271,11 +288,25 @@
   section {
     padding-left: 30px;
   }
+  section .slogan_box {
+    justify-self: start !important;
+    width: 300px !important;
+  }
   section .hero_section {
     background-position: 10px -150px !important;
   }
   section .search input {
     width: 230px !important;
+  }
+  section .search input.btn_bg {
+    width: 45px !important;
+    right: 20px !important;
+  }
+  section .search .icon_box {
+    left: 34px;
+  }
+  section .search .category_box {
+    width: 270px !important;
   }
   .attractions_outter {
     width: 90% !important;

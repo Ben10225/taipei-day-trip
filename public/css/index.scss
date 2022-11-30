@@ -21,17 +21,22 @@
     display: grid;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    background: #fff;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(#000, 0.2);
     .nav_bar{
       width: 1200px;
       height: 34px;
       display: inline-block;
       vertical-align: middle;
-      h3{
+      a{
         font-weight: 700;
         font-size: 30px;
         line-height: 34px;
         color: #448899;
         float: left;
+        text-decoration: none;
       }
       ul{
         float: right;
@@ -45,6 +50,9 @@
         }
       }
     }
+  }
+  .nav_box{
+    height: 54px;
   }
   section{
     overflow: hidden;
@@ -83,26 +91,32 @@
       }
       .search{
         margin-top: 30px;
-        input{
-          width: 400px;
-          border-radius: 4px;
-          outline: none;
-          font-size: 16px;
-          padding: 10px 9px;
-          border: none;
-          // height: 46px;
-          z-index: 10;
-        }
-        button{
-          margin-left: -30px;
-          width: 45px;
-          border: none;
-          background: #448899;
-          border-radius: 0 4px 4px 0;
-          height: 39.5px;
+        .search_bar{
           position: relative;
-          top: -5px;
-          z-index: 11;
+          input{
+            width: 400px;
+            border-radius: 4px;
+            outline: none;
+            font-size: 16px;
+            padding: 10px 9px;
+            border: none;
+            z-index: 10;
+            position: relative;
+            &.btn_bg{
+              width: 45px;
+              cursor: pointer;
+              background: #448899;
+              margin-left: -30px;
+              border-radius: 0 4px 4px 0;
+              position: absolute;
+              right: 0;
+            }
+          }
+        }
+        
+        .icon_box{
+          display: inline-block;
+          position: relative;
           .search_icon{
             background-image: url('../images/icon_search.png');
             background-position: center;
@@ -111,14 +125,15 @@
             width: 28px;
             height: 28px;
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
+            left: -36px;
+            top: -19px;
             cursor: pointer;
+            z-index: 30;
+            pointer-events: none;
           }
         }
         .category_box{
-          width: 375px;
+          width: 360px;
           // height: 168px;
           background-color: #fff;
           border-radius: 5px;
@@ -126,6 +141,7 @@
           display: none;
           opacity: 0;
           visibility: hidden;
+          position: absolute;
           transition: 0.5s;
           ul{
             display: grid;
@@ -262,6 +278,7 @@
     padding-left: 50px;
     .slogan_box{
       justify-self: start !important;
+      width: 450px !important;
     }
     .hero_section{
       background-position: -50px -100px !important;
@@ -278,12 +295,26 @@
 @media screen and (max-width: 600px) {
   section{
     padding-left: 30px;
+    .slogan_box{
+      justify-self: start !important;
+      width: 300px !important;
+    }
     .hero_section{
       background-position: 10px -150px !important;
     }
     .search{
       input{
         width: 230px !important;
+        &.btn_bg{
+          width: 45px !important;
+          right: 20px !important;
+        }
+      }
+      .icon_box{
+        left: 34px;
+      }
+      .category_box{
+        width: 270px !important;
       }
     }  
   }
