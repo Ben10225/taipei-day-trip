@@ -37,7 +37,7 @@ def attractions():
 			return {
 				"error": True,
 				"message": "已無足夠資訊"
-			}, 500
+			}, 400
 
 		result = {
 			"nextPage": nextPage,

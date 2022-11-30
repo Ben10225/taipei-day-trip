@@ -3,7 +3,7 @@ const id = window.location.href.split("/").pop();
 
 let imgs = [];
 let imgIndex = 0;
-let cirpos = 1
+let cirpos = 1;
 let img = document.querySelector(".img");
 
 

@@ -3,6 +3,7 @@ let ct = 0;
 let page = 0;
 let sum = 0;
 let keywordValue = "";
+let isload = false;
 
 /*  infiniteScroll  */
 const target = document.querySelector('.target');
@@ -15,9 +16,8 @@ let options = {
 
 let callback = (entries, observer) => {
   ct ++;
-  if(ct > 2 && ct % 2 == 1){
+  if(ct > 2 && ct % 2 == 1 && !isload){
     catchAttractions(page, keywordValue);
-    observer.unobserve(target);
   }
 }
 
@@ -52,7 +52,6 @@ function catchCategories(){
 
 /*  keyword select  */
 function keywordSelect(){
-  observer.unobserve(target);
   page = 0;
   sum = 0;
   let keyword = document.querySelector(".keyword");
@@ -103,6 +102,7 @@ function categoryOut(dom, outter, lintener){
 
 /*  attractions api  */
 function catchAttractions(pg, keyword){
+  isload = true;
   let url
   if(keyword){
     url = `/api/attractions?page=${pg}&keyword=${keyword}`
@@ -116,24 +116,21 @@ function catchAttractions(pg, keyword){
   .then((data) => {
     if(data.error){
       createError(data.message);
+      isload = true;
       return;
     }
     if(data.nextPage){
       for(let i=0;i<data.data.length;i++){
-        // console.log(data.data[i].images)
         createDOM(data, i, page * data.data.length + i);
       }
       page = data.nextPage;
       sum += data.data.length;
-      observer.unobserve(target);
-      setTimeout(() => {
-        observer.observe(target);
-      }, 500);
+      isload = false
     }else{
       for(let i=0;i<data.data.length;i++){
         createDOM(data, i, sum + i);
       }
-      observer.unobserve(target);
+      isload = true;
     }
   })
 }
