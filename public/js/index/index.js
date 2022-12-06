@@ -1,10 +1,20 @@
-import lib from "./index_func.js"
+import attr from "./index_func.js"
+import lib from "../lib/lib.js"
 
 
-window.keywordSelect = lib.keywordSelect;
-window.showCategory = lib.showCategory;
+window.keywordSelect = attr.keywordSelect;
+window.showCategory = attr.showCategory;
+window.showSignIn = lib.showSignIn;
+window.showSignUp = lib.showSignUp;
+window.toggleSignIn = lib.toggleSignIn;
+window.signIn = lib.signIn;
+window.signUp = lib.signUp;
+window.signOut = lib.signOut;
 
-lib.catchCategories();
-lib.catchAttractions(lib.page);
+lib.hideDisplayBug();
+lib.auth(false);
 
-lib.observer.observe(lib.target);
+attr.catchCategories();
+attr.catchAttractions(attr.page);
+
+attr.observer.observe(attr.target);

@@ -1,13 +1,11 @@
 
-const id = window.location.href.split("/").pop();
-
 let imgs = [];
 let imgIndex = 0;
 let cirpos = 1;
 let img = document.querySelector(".img");
 
 
-let catchAttraction = ()=>{
+let catchAttraction = (id)=>{
   let url = `/api/attraction/${id}`
   fetch(url)
   .then((response) => response.json())
@@ -17,6 +15,7 @@ let catchAttraction = ()=>{
     }
     if(data.data){
       data = data.data;
+      document.title = data.name
       insertContent(data);
       insertImg(data);
     }
@@ -44,7 +43,7 @@ let insertContent = (data)=>{
 let insertImg = (data)=>{
   let circleBox = document.querySelector(".circle_box");
   let loads = document.querySelector(".loads");
-
+  
   for(let i=0;i<data.images.length;i++){
     imgs.push(data.images[i]);
     let circle = document.createElement('div');
@@ -62,7 +61,10 @@ let insertImg = (data)=>{
     if(i==0){
       cir.classList.add("circle_black");
     }
-    cir.addEventListener("click", ()=>{
+    // cir.addEventListener("click", circleClick.bind(null, i))
+
+    
+    cir.addEventListener("click", function cck(e){
       let circleBefore = document.querySelector(`.circle:nth-child(${cirpos})`);
       let circleAfter = document.querySelector(`.circle:nth-child(${i+1})`);
       cirpos = i+1;
@@ -71,7 +73,19 @@ let insertImg = (data)=>{
       imgIndex = i
 
       img.style.cssText = `background-image: url('${imgs[i]}'); transition: 0.5s`;
+      let cirs = document.querySelectorAll(".circle");
+      // cirs.removeEventListener("click", cck)
+
+      for(let j=0;j<cirs.length;j++){
+        // cirs[j].removeEventListener("click", cck);
+        cirs[j].style.pointerEvents = "none";
+        // cirs[j].style.background = "red";
+        setTimeout(()=>{
+          cirs[j].style.pointerEvents = "auto";
+        },500)
+      }
     })
+    
   }
   img.style.cssText = `background-image: url('${imgs[0]}')`;
 
@@ -79,6 +93,27 @@ let insertImg = (data)=>{
     loads.remove();
   }, 2000)
 }
+
+// function circleClick(i){
+//   let circleBefore = document.querySelector(`.circle:nth-child(${cirpos})`);
+//   let circleAfter = document.querySelector(`.circle:nth-child(${i+1})`);
+//   cirpos = i+1;
+//   circleBefore.classList.remove("circle_black");
+//   circleAfter.classList.add("circle_black");
+//   imgIndex = i
+
+//   img.style.cssText = `background-image: url('${imgs[i]}'); transition: 0.5s`;
+
+//   let cirs = document.querySelectorAll(".circle");
+//   for(let j=0;j<cirs.length;j++){
+//     cirs[j].removeEventListener("click", circleClick);
+//     // cirs[j].style.background = "red";
+//     setTimeout(()=>{
+
+//     },500)
+//   }
+// }
+
 
 let leftArrow = document.querySelector(".left_arrow");
 leftArrow.addEventListener("click", function lck(){

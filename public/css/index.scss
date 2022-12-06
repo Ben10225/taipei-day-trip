@@ -9,51 +9,6 @@
 
 
 .wrapper{
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  nav{
-    width: 100%;
-    height: 54px;
-    position: relative;
-    left: 0;
-    top: 0;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    background: #fff;
-    z-index: 100;
-    box-shadow: 0 4px 10px rgba(#000, 0.2);
-    .nav_bar{
-      width: 1200px;
-      height: 34px;
-      display: inline-block;
-      vertical-align: middle;
-      a{
-        font-weight: 700;
-        font-size: 30px;
-        line-height: 34px;
-        color: #448899;
-        float: left;
-        text-decoration: none;
-      }
-      ul{
-        float: right;
-        li{
-          margin-left: 13px;
-          display: inline-block;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 34px;
-          color: #666666;
-        }
-      }
-    }
-  }
-  .nav_box{
-    height: 54px;
-  }
   section{
     overflow: hidden;
     width: 100%;
@@ -113,7 +68,6 @@
             }
           }
         }
-        
         .icon_box{
           display: inline-block;
           position: relative;
@@ -190,7 +144,6 @@
       grid-template-columns: calc(94%/4) calc(94%/4) calc(94%/4) calc(94%/4);
       justify-content: space-between;
       align-content: center;
-      // grid-row-gap: 35px;
       .attraction{
         width: 100%;
         margin-bottom: 35px;
@@ -244,7 +197,6 @@
       }
     }
   }
-  
   footer{
     width: 100%;
     height: 104px;
@@ -331,5 +283,4 @@
   height: 1px;
   position: absolute;
   left: 50%;
-  // background: red;
 }

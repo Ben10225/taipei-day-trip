@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="/css/base.css">
+  {% block css %}{% endblock %}
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sign_page">
+      <div class="s_i_page_box">
+        <div class="top_decorate"></div>
+        <h2 class="s_i_h2">登入會員帳號</h2>
+        <div class="s_i_exit_icon"></div>
+        <input class="s_i_email" type="email" placeholder="輸入電子信箱">
+        <input class="s_i_pwd" type="password" placeholder="輸入密碼 需含小寫英文及數字">
+        <button class="s_i_btn" onclick="signIn();">登入帳戶</button>
+        <p class="s_i_msg"></p>
+        <p class="s_i_p">還沒有帳戶？<span class="s_i_to_sign_up" onclick="showSignUp();">點此註冊</span></p>
+      </div>
+      <div class="s_u_page_box">
+        <div class="top_decorate"></div>
+        <h2 class="s_u_h2">註冊會員帳號</h2>
+        <div class="s_u_exit_icon"></div>
+        <input class="s_u_name" type="text" placeholder="輸入姓名">
+        <input class="s_u_email" type="email" placeholder="輸入電子信箱">
+        <input class="s_u_pwd" type="password" placeholder="輸入密碼 需含小寫英文及數字">
+        <button class="s_u_btn" onclick="signUp();">註冊新帳戶</button>
+        <p class="s_u_msg"></p>
+        <p class="s_u_p">已經有帳戶了？<span class="s_i_to_sign_in" onclick="toggleSignIn();">點此登入</span></p>
+      </div>
+    </div>
+      
+    <nav>
+      <div class="nav_bar">
+        <a href="/">台北一日遊</a>
+        <ul>
+          <li class="schedule">預定行程</li>
+          <li class="sign_in_up" onclick="showSignIn();">登入/註冊</li>
+          <li class="sign_out li_out" onclick="signOut();">登出系統</li>
+        </ul>
+      </div>
+    </nav>
+    <div class="nav_box"></div>
+    {% block section %}{% endblock %}
+  </div>
+
+  {% block script %}{% endblock %}
+</body>
+</html>

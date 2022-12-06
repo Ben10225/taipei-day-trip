@@ -4,6 +4,7 @@ let page = 0;
 let sum = 0;
 let keywordValue = "";
 let isload = false;
+let showCt = 0;
 
 /*  infiniteScroll  */
 const target = document.querySelector('.target');
@@ -193,6 +194,11 @@ function createError(err){
   attractionsGroup.appendChild(errMsg);
 }
 
+
+
+
+
+
 // default 適合用在主要的
 export default {
   catchCategories,
@@ -201,5 +207,6 @@ export default {
   showCategory,
   page,
   observer,
-  target
+  target,
+  showCt
 }
