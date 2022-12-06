@@ -216,12 +216,11 @@ function auth(needRefresh){
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      signInUpLi.classList.add("li_out");
       signOutLi.classList.remove("li_out");
     }
-    // if(data.error){
-
-    // }
+    if(data.error){
+      signInUpLi.classList.remove("li_out");
+    }
     if(needRefresh){
       history.go(0);
     }
