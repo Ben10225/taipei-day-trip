@@ -1,5 +1,5 @@
 import json
-from users import connectPool
+from db import connectPool
 
 insertAll = "INSERT INTO attractions (id, name, category, description, address, transport, mrt, lat, lng, imgs) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 insertCat = "INSERT INTO categories (category_name) VALUES (%s)"
@@ -38,30 +38,30 @@ db = connectPool("setup")
 mycursor = db.cursor()
 
 
-# # insert table categories
-# for i in cat:
-#   mycursor.execute(insertCat, (i,))
-#   db.commit()
+# insert table categories
+for i in cat:
+  mycursor.execute(insertCat, (i,))
+  db.commit()
 
 
-# # insert table mrts
-# for i in mrt:
-#   mycursor.execute(insertMrt, (i,))
-#   db.commit()
+# insert table mrts
+for i in mrt:
+  mycursor.execute(insertMrt, (i,))
+  db.commit()
     
 
 # # insert table attractions
-# for i in range(len(data)):
-#   cat_s = data[i]["CAT"]
-#   mrt_s = data[i]["MRT"]
-#   if not mrt_s:
-#     mrt_id = 20
-#   else:
-#     mrt_id = mrt_dict[mrt_s]
-#   val = ( data[i]["_id"], data[i]["name"], cat_dict[cat_s], data[i]["description"], data[i]["address"],
-#           data[i]["direction"], mrt_id, data[i]["latitude"], data[i]["longitude"])
-#   mycursor.execute(insertAttrs, val)
-#   db.commit()
+for i in range(len(data)):
+  cat_s = data[i]["CAT"]
+  mrt_s = data[i]["MRT"]
+  if not mrt_s:
+    mrt_id = 20
+  else:
+    mrt_id = mrt_dict[mrt_s]
+  val = ( data[i]["_id"], data[i]["name"], cat_dict[cat_s], data[i]["description"], data[i]["address"],
+          data[i]["direction"], mrt_id, data[i]["latitude"], data[i]["longitude"])
+  mycursor.execute(insertAttrs, val)
+  db.commit()
 
 
 # insert table images
@@ -77,19 +77,19 @@ for i in range(len(data)):
 
 
 # 單一資料庫做法
-# for i in range(len(data)):
-#   imgs = data[i]["file"].split("https")
-#   imgTxt = ""
-#   for j in range(len(imgs)):
-#     if j > 0:
-#       if(imgs[j][-3:].lower() == "png" or imgs[j][-3:].lower() == "jpg"):
-#         imgTxt += "https" + imgs[j] + " "
-#   val = (data[i]["_id"], data[i]["name"], data[i]["CAT"], data[i]["description"], data[i]["address"], data[i]["direction"], data[i]["MRT"], data[i]["latitude"], data[i]["longitude"], imgTxt)
-#   mycursor.execute(insertAll, val)
-#   db.commit()
+for i in range(len(data)):
+  imgs = data[i]["file"].split("https")
+  imgTxt = ""
+  for j in range(len(imgs)):
+    if j > 0:
+      if(imgs[j][-3:].lower() == "png" or imgs[j][-3:].lower() == "jpg"):
+        imgTxt += "https" + imgs[j] + " "
+  val = (data[i]["_id"], data[i]["name"], data[i]["CAT"], data[i]["description"], data[i]["address"], data[i]["direction"], data[i]["MRT"], data[i]["latitude"], data[i]["longitude"], imgTxt)
+  mycursor.execute(insertAll, val)
+  db.commit()
 
 mycursor.close()
 db.close()
 
-# print("新增所有資料完成")
+print("新增所有資料完成")
 

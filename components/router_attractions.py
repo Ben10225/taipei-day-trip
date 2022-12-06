@@ -2,12 +2,12 @@ from flask import *
 from components.model import *
 from data.DBconnection import *
 
-simple_page = Blueprint("simple_page", __name__, template_folder="templates")
+router_page_attractions = Blueprint("router_page_attractions", __name__, template_folder="templates")
 
 sql_conn = Users()
 
 # attractions api
-@simple_page.route("/api/attractions")
+@router_page_attractions.route("/api/attractions")
 def attractions():
 	try:
 		page = request.args.get("page", "")
@@ -37,7 +37,7 @@ def attractions():
 			return {
 				"error": True,
 				"message": "已無足夠資訊"
-			}, 500
+			}, 400
 
 		result = {
 			"nextPage": nextPage,
@@ -54,7 +54,7 @@ def attractions():
 
 
 # attraction api
-@simple_page.route("/api/attraction/<id>")
+@router_page_attractions.route("/api/attraction/<id>")
 def attractionitem(id):
 	try:
 		if id.isdigit():
@@ -89,7 +89,7 @@ def attractionitem(id):
 
 
 # categories api
-@simple_page.route("/api/categories")
+@router_page_attractions.route("/api/categories")
 def categories():
 	try:
 		items = sql_conn.categories()

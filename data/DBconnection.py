@@ -2,6 +2,15 @@ import json
 from mysql.connector import Error
 from mysql.connector import pooling
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+host = os.getenv("host")
+user = os.getenv("user")
+database = os.getenv("database")
+password = os.getenv("password")
+
 def connectPool(status):
   if status == "setup":
     with open("pwd.json") as f:
@@ -12,10 +21,10 @@ def connectPool(status):
   connection_pool = pooling.MySQLConnectionPool(pool_name="pynative_pool",
                                                 pool_size=5,
                                                 pool_reset_session=True,
-                                                host='localhost',
-                                                user='root',
-                                                database='taipei',
-                                                password= pwd["password"])
+                                                host=host,
+                                                user=user,
+                                                database=database,
+                                                password=password)
   connection_object = connection_pool.get_connection()
   return connection_object
 
@@ -48,6 +57,11 @@ INNER JOIN images AS i ON a.id=i.iid WHERE a.id=%s GROUP BY a.id, c.category_nam
 
 select_categories = "SELECT category_name FROM categories"
 
+insert_user = "INSERT INTO users (name ,email, password) VALUES(%s, %s, %s)"
+
+select_email = "SELECT email FROM users WHERE email=%s"
+
+select_user_by_email = "SELECT uid, name, email, password FROM users WHERE email=%s"
 
 
 class Users:
@@ -117,3 +131,45 @@ class Users:
 			db.close()
 
 
+	def createUser(name, email, password):
+		try:
+			db = connectPool("users")
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(select_email, (email, ))
+			item = mycursor.fetchone()
+
+			if not item:
+				val = (name, email, password)
+				mycursor.execute(insert_user, val)
+				db.commit()
+				return "created"
+			else:
+				return "exists"
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
+	def getUser(email):
+		try:
+			db = connectPool("users")
+			mycursor = db.cursor(dictionary=True)
+
+			mycursor.execute(select_user_by_email, (email, ))
+			item = mycursor.fetchone()
+
+			if not item:
+				return False
+			else:
+				return item
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
