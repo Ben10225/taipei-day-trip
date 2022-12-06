@@ -8,6 +8,7 @@ const signUpMsg = document.querySelector(".s_u_msg");
 const signInUpLi = document.querySelector(".sign_in_up");
 const signOutLi = document.querySelector(".sign_out");
 const signPage = document.querySelector(".sign_page");
+const schedule = document.querySelector(".schedule");
 
 // input
 const SUName = document.querySelector(".s_u_name");
@@ -215,6 +216,7 @@ function auth(needRefresh){
   fetch("/api/user/auth")
   .then((response) => response.json())
   .then((data) => {
+    schedule.classList.remove("li_out");
     if(data.ok){
       signOutLi.classList.remove("li_out");
     }
