@@ -1,5 +1,5 @@
 import attr from "./attr_func.js"
-import lib from "../lib/lib.js"
+import nav from "../nav/nav_setting.js"
 
 
 window.morningClick = attr.morningClick;
@@ -7,16 +7,16 @@ window.eveningClick = attr.eveningClick;
 
 const id = window.location.href.split("/").pop();
 
-window.showSignIn = lib.showSignIn;
-window.showSignUp = lib.showSignUp;
-window.toggleSignIn = lib.toggleSignIn;
+window.showSignIn = nav.showSignIn;
+window.showSignUp = nav.showSignUp;
+window.toggleSignIn = nav.toggleSignIn;
 
-window.signIn = lib.signIn;
-window.signUp = lib.signUp;
-window.signOut = lib.signOut;
+window.signIn = nav.signIn;
+window.signUp = nav.signUp;
+window.signOut = nav.signOut;
 
-lib.hideDisplayBug();
-lib.auth(false);
+nav.hideDisplayBug();
+nav.auth(false);
 
 attr.catchAttraction(id);
 
