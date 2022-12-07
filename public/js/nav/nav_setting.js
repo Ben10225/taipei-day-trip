@@ -97,14 +97,14 @@ document.addEventListener("keydown", (e)=>{
 })
 
 function pressEnter(e, callback, status){
-  if(e.key == "Enter" && status=="signIn"){
+  if(e.key == "Enter" && status == "signIn"){
     callback();
     signInkeyWait = false;
     setTimeout(()=>{
       signInkeyWait = true;
     }, 2000)
   }
-  if(e.key == "Enter" && status=="signUp"){
+  if(e.key == "Enter" && status == "signUp"){
     callback();
     signUpkeyWait = false;
     setTimeout(()=>{
@@ -229,6 +229,7 @@ function auth(needRefresh){
   })
 }
 
+
 function signOut(){
   fetch("/api/user/auth", {
     method: "delete",
@@ -243,8 +244,8 @@ function signOut(){
 
 
 
-function showMsg(el, btn ,bool, status){
-  if(bool){
+function showMsg(el, btn ,dataCheckedBool, status){
+  if(dataCheckedBool){
     el.style.color = "rgb(20, 138, 73)";
   }else{
     el.style.color = "rgb(208, 35, 35)";
@@ -260,7 +261,6 @@ function showMsg(el, btn ,bool, status){
   setTimeout(()=>{
     if(status === "signIn"){
       SIcautionBox.style.height = "10px";
-
     }else{
       SUcautionBox.style.height = "10px";
     }
