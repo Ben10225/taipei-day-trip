@@ -1,5 +1,5 @@
 import json
-from db import connectPool
+from db_connection import connectPool
 
 insertAll = "INSERT INTO attractions (id, name, category, description, address, transport, mrt, lat, lng, imgs) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 insertCat = "INSERT INTO categories (category_name) VALUES (%s)"
@@ -34,7 +34,7 @@ for i in range(len(data)):
 
 
 
-db = connectPool("setup")
+db = connectPool()
 mycursor = db.cursor()
 
 

@@ -1,21 +1,23 @@
 // dom
-const signInbtn = document.querySelector(".s_i_btn");
-const signUpbtn = document.querySelector(".s_u_btn");
-const signInPageBox = document.querySelector(".s_i_page_box");
-const signUpPageBox = document.querySelector(".s_u_page_box");
-const signInMsg = document.querySelector(".s_i_msg");
-const signUpMsg = document.querySelector(".s_u_msg");
+const signInbtn = document.querySelector(".btn.si");
+const signUpbtn = document.querySelector(".btn.su");
+const signInPageBox = document.querySelector(".page_box.si");
+const signUpPageBox = document.querySelector(".page_box.su");
+const signInMsg = document.querySelector(".msg.si");
+const signUpMsg = document.querySelector(".msg.su");
 const signInUpLi = document.querySelector(".sign_in_up");
 const signOutLi = document.querySelector(".sign_out");
 const signPage = document.querySelector(".sign_page");
 const schedule = document.querySelector(".schedule");
+const SIcautionBox = document.querySelector(".caution_box.si");
+const SUcautionBox = document.querySelector(".caution_box.su");
 
 // input
-const SUName = document.querySelector(".s_u_name");
-const SUEmail = document.querySelector(".s_u_email");
-const SUPwd = document.querySelector(".s_u_pwd");
-const SIEmail = document.querySelector(".s_i_email");
-const SIPwd = document.querySelector(".s_i_pwd");
+const SUName = document.querySelector(".name.su");
+const SUEmail = document.querySelector(".email.su");
+const SUPwd = document.querySelector(".pwd.su");
+const SIEmail = document.querySelector(".email.si");
+const SIPwd = document.querySelector(".pwd.si");
 
 // regex
 const EmailPattern = /^\S+@\S+$/;
@@ -24,43 +26,40 @@ const PwdPattern = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{2,}$/;
 let signInkeyWait = true;
 let signUpkeyWait = true;
 
-
 /*  show signIn page  */
 function showSignIn(){
-  let pageBox = document.querySelector(".s_i_page_box");
   if(!signPage.classList.contains("sign_page_show")){
     signPage.classList.add("sign_page_show");
   }
   setTimeout(()=>{
-    pageBox.classList.add("page_box_show");
+    signInPageBox.classList.add("page_box_show");
   }, 150)
 }
 
-const inIcon = document.querySelector(".s_i_exit_icon");
+const inIcon = document.querySelector(".exit_icon.si");
 inIcon.addEventListener("click", ()=>{
-  fadeOut(".s_i_page_box", true)
+  fadeOut(".page_box.si", true);
 })
 
 
 function toggleSignIn(){
   showSignIn();
-  fadeOut(".s_u_page_box", false);
+  fadeOut(".page_box.su", false);
 }
 
 
 /*  show signUp page  */
 function showSignUp(){
-  let pageBox = document.querySelector(".s_u_page_box");
   signPage.classList.add("sign_page_show");
-  fadeOut(".s_i_page_box", false);
+  fadeOut(".page_box.si", false);
   setTimeout(()=>{
-    pageBox.classList.add("page_box_show");
+    signUpPageBox.classList.add("page_box_show");
   }, 150)
 }
 
-const upIcon = document.querySelector(".s_u_exit_icon");
+const upIcon = document.querySelector(".exit_icon.su");
 upIcon.addEventListener("click", function upExit(){
-  fadeOut(".s_u_page_box", true)
+  fadeOut(".page_box.su", true);
 })
 
 
@@ -86,31 +85,78 @@ function fadeOut(boxClass, pressX){
 
 /*  press enter to submit  */
 document.addEventListener("keydown", (e)=>{
-  let singInOpacity = getComputedStyle(signInPageBox).opacity;
-  let singUpOpacity = getComputedStyle(signUpPageBox).opacity;
+  let singInOpacity = Math.round(getComputedStyle(signInPageBox).opacity);
+  let singUpOpacity = Math.round(getComputedStyle(signUpPageBox).opacity);
 
   if(signInkeyWait && singInOpacity){
     pressEnter(e, signIn, "signIn");
-  }else if(signUpkeyWait && singUpOpacity){
+  }
+  if(signUpkeyWait && singUpOpacity){
     pressEnter(e, signUp, "signUp");
   }
 })
 
 function pressEnter(e, callback, status){
-  if(e.key == "Enter" && signInkeyWait && status=="signIn"){
+  if(e.key == "Enter" && status=="signIn"){
     callback();
     signInkeyWait = false;
     setTimeout(()=>{
       signInkeyWait = true;
     }, 2000)
   }
-  if(e.key == "Enter" && signUpkeyWait && status=="signUp"){
+  if(e.key == "Enter" && status=="signUp"){
     callback();
     signUpkeyWait = false;
     setTimeout(()=>{
       signUpkeyWait = true;
     }, 2000)
   }
+}
+
+
+/*  sign in  */
+function signIn(){
+  let validatedEmail = EmailPattern.test(SIEmail.value);
+  let validatedPwd = PwdPattern.test(SIPwd.value);
+
+  signInbtn.style.pointerEvents = "none";
+
+  if(!validatedEmail){
+    signInMsg.textContent = "信箱格式錯誤";
+    showMsg(signInMsg, signInbtn, false, "signIn");
+    return;
+  }
+  if(!validatedPwd){
+    signInMsg.textContent = "密碼格式錯誤";
+    showMsg(signInMsg, signInbtn, false, "signIn");
+    return;
+  }
+
+  fetch("/api/user/auth", {
+    method: "put",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "email": SIEmail.value,
+      "password": SIPwd.value,
+    }),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.error){
+      signInMsg.textContent = data.message;
+      showMsg(signInMsg, signInbtn, false, "signIn");
+      return;
+    }
+    if(data.data){
+      signInMsg.textContent = "登入成功";
+      showMsg(signInMsg, signInbtn, true, "signIn");
+      SIEmail.value = "";
+      SIPwd.value = "";
+      auth(true);
+    }
+  })
 }
 
 
@@ -123,17 +169,17 @@ function signUp(){
 
   if(!SUName.value){
     signUpMsg.textContent = "請輸入姓名";
-    showMsg(signUpMsg, signUpbtn, false);
+    showMsg(signUpMsg, signUpbtn, false, "signUp");
     return;
   }
   if(!validatedEmail){
     signUpMsg.textContent = "信箱格式錯誤";
-    showMsg(signUpMsg, signUpbtn, false);
+    showMsg(signUpMsg, signUpbtn, false, "signUp");
     return;
   }
   if(!validatedPwd){
     signUpMsg.textContent = "密碼格式錯誤";
-    showMsg(signUpMsg, signUpbtn, false);
+    showMsg(signUpMsg, signUpbtn, false, "signUp");
     return;
   }
 
@@ -152,61 +198,15 @@ function signUp(){
   .then((data) => {
     if(data.error){
       signUpMsg.textContent = data.message;
-      showMsg(signUpMsg, signUpbtn, false);
+      showMsg(signUpMsg, signUpbtn, false, "signUp");
       return;
     }
     if(data.data){
       signUpMsg.textContent = "註冊成功";
-      showMsg(signUpMsg, signUpbtn, true);
+      showMsg(signUpMsg, signUpbtn, true, "signUp");
       SUName.value = "";
       SUEmail.value = "";
       SUPwd.value = "";
-    }
-  })
-}
-
-
-/*  sign in  */
-function signIn(){
-  let validatedEmail = EmailPattern.test(SIEmail.value);
-  let validatedPwd = PwdPattern.test(SIPwd.value);
-
-  signInbtn.style.pointerEvents = "none";
-
-  if(!validatedEmail){
-    signInMsg.textContent = "信箱格式錯誤";
-    showMsg(signInMsg, signInbtn, false);
-    return;
-  }
-  if(!validatedPwd){
-    signInMsg.textContent = "密碼格式錯誤";
-    showMsg(signInMsg, signInbtn, false);
-    return;
-  }
-
-  fetch("/api/user/auth", {
-    method: "put",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "email": SIEmail.value,
-      "password": SIPwd.value,
-    }),
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    if(data.error){
-      signInMsg.textContent = data.message;
-      showMsg(signInMsg, signInbtn, false);
-      return;
-    }
-    if(data.data){
-      signInMsg.textContent = "登入成功";
-      showMsg(signInMsg, signInbtn, true);
-      SIEmail.value = "";
-      SIPwd.value = "";
-      auth(true);
     }
   })
 }
@@ -243,18 +243,27 @@ function signOut(){
 
 
 
-function showMsg(el, btn ,bool){
+function showMsg(el, btn ,bool, status){
   if(bool){
     el.style.color = "rgb(20, 138, 73)";
   }else{
     el.style.color = "rgb(208, 35, 35)";
   }
   setTimeout(()=>{
-    el.style.height = "20px";
+    if(status === "signIn"){
+      SIcautionBox.style.height = "35px";
+    }else{
+      SUcautionBox.style.height = "35px";
+    }
     el.style.opacity = "1";
   }, 1)
   setTimeout(()=>{
-    el.style.height = "0";
+    if(status === "signIn"){
+      SIcautionBox.style.height = "10px";
+
+    }else{
+      SUcautionBox.style.height = "10px";
+    }
     el.style.opacity = "0";
     btn.style.pointerEvents = "auto";
   }, 2000)

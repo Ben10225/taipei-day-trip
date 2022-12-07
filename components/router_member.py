@@ -1,9 +1,9 @@
 
 from flask import *
 from flask_bcrypt import Bcrypt
-from data.DBconnection import *
 from components.validate import *
 from components.jwt import *
+from components.model import *
 
 bcrypt = Bcrypt()
 router_page_member = Blueprint("router_page_member", __name__, template_folder="templates")
@@ -23,7 +23,7 @@ def sign_up():
   
   hashed_password = bcrypt.generate_password_hash(password=password)
 
-  status = Users.createUser(name, email, hashed_password)
+  status = User.createUser(name, email, hashed_password)
 
   if status == "exists":
     return {"error":True, "message": "此信箱已被使用"}, 400
@@ -45,7 +45,7 @@ def sign_in():
   if hacked:
     return {"error": True, "message": "遭受駭客攻擊"}, 400
 
-  user_info = Users.getUser(email)
+  user_info = User.getUser(email)
   if not user_info:
     return {"error":True, "message": "查無此帳號"}, 400
 

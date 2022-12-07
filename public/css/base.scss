@@ -27,7 +27,7 @@
       background: rgba(#000, 0.75);
       visibility: visible;
     }
-    .s_i_page_box, .s_u_page_box{
+    .page_box{
       text-align: center;
       width: 340px;
       background: #fff;
@@ -36,7 +36,7 @@
       transform: translateX(-50%);
       z-index: 110;
       border-radius: 6px;
-      padding: 15px;
+      padding: 15px 15px 10px 15px;
       display: grid;
       justify-content: center;
       align-items: center;
@@ -45,6 +45,22 @@
       position: absolute;
       opacity: 0;
       visibility: hidden;
+      &.si{
+        top: 30px;
+        &.page_box_show{
+          visibility: visible;
+          top: 69px;
+          opacity: 1;
+        }
+      }
+      &.su{
+        top: 108px;
+        &.page_box_show{
+          visibility: visible;
+          top: 69px;
+          opacity: 1;
+        }
+      }
       .top_decorate{
         position: absolute;
         left: 0;
@@ -61,7 +77,7 @@
         color: #666;
         margin: 10px auto;
       }
-      .s_i_exit_icon, .s_u_exit_icon{
+      .exit_icon, .exit_icon{
         width: 16px;
         height: 16px;
         background-image: url('../images/icon_close.png');
@@ -99,6 +115,20 @@
           opacity: 1;
         }
       }
+      .caution_box{
+        transition: 0.4s;
+        height: 10px;
+        position: relative;
+        .msg{
+          position: absolute;
+          left: 50%;
+          top: 9px;
+          transform: translateX(-50%);
+          color: rgb(208, 35, 35);
+          transition: 0.4s;
+          opacity: 0;
+        }
+      }
       p{
         font-style: normal;
         font-weight: 500;
@@ -107,35 +137,9 @@
         position: relative;
         top: 50%;
         transform: translateY(-50%);
-        &.s_i_msg, &.s_u_msg{
-          color: rgb(208, 35, 35);
-          margin-top: 5px;
-          height: 0px;
-          transition: 0.4s;
-          opacity: 0;
-        }
-        &.s_i_p, &.s_u_p{
-          margin-top: 6px;
-        }
-        .s_i_to_sign_up, .s_i_to_sign_in{
+        .to_sign_up, .to_sign_in{
           cursor: pointer;
         }
-      }
-    }
-    .s_i_page_box{
-      top: 30px;
-      &.page_box_show{
-        visibility: visible;
-        top: 69px;
-        opacity: 1;
-      }
-    }
-    .s_u_page_box{
-      top: 108px;
-      &.page_box_show{
-        visibility: visible;
-        top: 69px;
-        opacity: 1;
       }
     }
   }
