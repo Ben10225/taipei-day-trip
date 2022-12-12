@@ -1,22 +1,6 @@
 from data.db_connection import *
 from data.sql_command import *
-
-
-def attraction_details(item):
-	images = item["urls"].split(",")
-	details = {
-		"id": item["id"],
-		"name": item["name"],
-		"category": item["category_name"],
-		"description": item["description"],
-		"address": item["address"].replace(" ",""),
-		"transport": item["transport"],
-		"mrt": item["mrt_name"],
-		"lat": item["lat"],
-		"lng": item["lng"],
-		"images": images
-	}
-	return details
+from mysql.connector import Error
 
 
 class Attr:
@@ -81,7 +65,7 @@ class Attr:
 
 
 class User:
-	def createUser(name, email, password):
+	def create_user(my_uuid, name, email, password):
 		try:
 			db = connectPool()
 			mycursor = db.cursor(buffered=True)
@@ -90,7 +74,7 @@ class User:
 			item = mycursor.fetchone()
 
 			if not item:
-				val = (name, email, password)
+				val = (my_uuid, name, email, password)
 				mycursor.execute(insert_user, val)
 				db.commit()
 				return "created"
@@ -105,7 +89,7 @@ class User:
 			db.close()
 
 
-	def getUser(email):
+	def get_user(email):
 		try:
 			db = connectPool()
 			mycursor = db.cursor(dictionary=True)
@@ -117,6 +101,53 @@ class User:
 				return False
 			else:
 				return item
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
+class Booking:
+	def create_booking(uuid, attraction_Id, date, time, price):
+		try:
+			db = connectPool()
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(select_booking, (attraction_Id, date, time))
+			item = mycursor.fetchone()
+
+			if not item:
+				val = (uuid, attraction_Id, date, time, price)
+				mycursor.execute(insert_booking, val)
+				db.commit()
+				return "created"
+			else:
+				return "exists"
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def get_bookings(uuid):
+		try:
+			db = connectPool()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_booking_by_uuid, (uuid, ))
+			bookings = mycursor.fetchall()
+
+			if bookings:
+				return bookings
+			# if not item:
+			# 	return "created"
+			else:
+				return "exists"
+
 		except Error as e:
 			print("Error while connecting to MySQL using Connection pool ", e)
 		

@@ -181,6 +181,12 @@ function createDOM(data, i, index){
   category.appendChild(categoryNode);
   category.className = "category";
   infosInside.appendChild(category);
+  // preload
+  let link = document.createElement('link');
+  link.href = data.data[i].images[0];
+  link.rel = "preload";
+  link.as = "image";
+  document.head.appendChild(link);
 }
 
 
@@ -193,9 +199,6 @@ function createError(err){
   errMsg.className= "error_message";
   attractionsGroup.appendChild(errMsg);
 }
-
-
-
 
 
 

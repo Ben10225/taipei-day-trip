@@ -25,15 +25,23 @@ const PwdPattern = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{2,}$/;
 
 let signInkeyWait = true;
 let signUpkeyWait = true;
+let userSignIn = false;
+let keepReserveData = null;
+
 
 /*  show signIn page  */
-function showSignIn(){
+function showSignIn(clickBy){
   if(!signPage.classList.contains("sign_page_show")){
     signPage.classList.add("sign_page_show");
   }
   setTimeout(()=>{
     signInPageBox.classList.add("page_box_show");
   }, 150)
+  if(clickBy){
+    keepReserveData = clickBy;
+  }else{
+    keepReserveData = null;
+  }
 }
 
 const inIcon = document.querySelector(".exit_icon.si");
@@ -96,6 +104,7 @@ document.addEventListener("keydown", (e)=>{
   }
 })
 
+
 function pressEnter(e, callback, status){
   if(e.key == "Enter" && status == "signIn"){
     callback();
@@ -132,15 +141,31 @@ function signIn(){
     return;
   }
 
+  let data = {
+    "email": SIEmail.value,
+    "password": SIPwd.value,
+    "reserve": false,
+  }
+
+  if(keepReserveData === "fromAttrBtn"){
+    const date = document.querySelector(".date");
+    const radio = document.querySelector("input[name='time']:checked");
+
+    data = {
+      "email": SIEmail.value,
+      "password": SIPwd.value,
+      "reserve": true,
+      "date": date.value,
+      "radio": radio.value,
+    }
+  }
+
   fetch("/api/user/auth", {
     method: "put",
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      "email": SIEmail.value,
-      "password": SIPwd.value,
-    }),
+    body: JSON.stringify(data),
   })
   .then((response) => response.json())
   .then((data) => {
@@ -212,16 +237,21 @@ function signUp(){
 }
 
 
-function auth(needRefresh){
-  fetch("/api/user/auth")
+function auth(needRefresh, needAuth){
+  return fetch("/api/user/auth")
   .then((response) => response.json())
   .then((data) => {
     schedule.classList.remove("li_out");
     if(data.ok){
       signOutLi.classList.remove("li_out");
+      userSignIn = true;
     }
     if(data.error){
       signInUpLi.classList.remove("li_out");
+      if(needAuth){
+        // window.location.href = "/";
+        history.go(-1);
+      }
     }
     if(needRefresh){
       history.go(0);
@@ -231,17 +261,21 @@ function auth(needRefresh){
 
 
 function signOut(){
+  const booking = window.location.href.split("/").pop();
   fetch("/api/user/auth", {
     method: "delete",
   })
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
+      if(booking === "booking"){
+        window.location.href = "/";
+        return
+      }
       history.go(0);
     }
   })
 }
-
 
 
 function showMsg(el, btn ,dataCheckedBool, status){
@@ -277,6 +311,19 @@ function hideDisplayBug(){
 }
 
 
+function signStatus(){
+  return userSignIn;
+}
+
+
+function toBooking(){
+  if(userSignIn){
+    window.location.href = "/booking"
+  }else{
+    showSignIn();
+  }
+}
+
 
 export default {
   signIn,
@@ -287,4 +334,6 @@ export default {
   showSignUp,
   toggleSignIn,
   hideDisplayBug,
+  signStatus,
+  toBooking,
 }

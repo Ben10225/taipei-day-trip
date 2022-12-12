@@ -27,8 +27,24 @@ INNER JOIN images AS i ON a.id=i.iid WHERE a.id=%s GROUP BY a.id, c.category_nam
 
 select_categories = "SELECT category_name FROM categories"
 
-insert_user = "INSERT INTO users (name ,email, password) VALUES(%s, %s, %s)"
+
+# user
+insert_user = "INSERT INTO users (uuid, name ,email, password) VALUES(%s, %s, %s, %s)"
 
 select_email = "SELECT email FROM users WHERE email=%s"
 
-select_user_by_email = "SELECT uid, name, email, password FROM users WHERE email=%s"
+select_user_by_email = "SELECT uuid, name, email, password FROM users WHERE email=%s"
+
+# booking
+select_booking = "SELECT attraction_id, date, time FROM bookings WHERE attraction_id=%s and date=%s and time=%s"
+
+insert_booking = "INSERT INTO bookings (uuid, attraction_id, date, time, price) VALUES(%s, %s, %s, %s, %s)"
+
+select_booking_by_uuid = """
+SELECT b.attraction_id, b.date, b.time, b.price, a.name, a.address, i.url
+FROM bookings AS b
+INNER JOIN attractions AS a ON b.attraction_id=a.id
+INNER JOIN images AS i ON i.iid=b.attraction_id
+WHERE b.uuid=%s
+GROUP BY b.attraction_id
+"""

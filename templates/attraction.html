@@ -14,9 +14,9 @@
           <div class="circle_box">
             <!-- <div class="circle circle_black"></div> -->
           </div>
-          <div class="loads">
+          <!-- <div class="loads"> -->
             <!-- <div class="load"></div> -->
-          </div>
+          <!-- </div> -->
           <div class="img"></div>
         </div>
       </div>
@@ -26,8 +26,10 @@
         <div class="reserve_box">
           <h4>訂購導覽行程</h4>
           <p class="intro">以此景點為中心的一日行程，帶您探索城市角落故事</p>
-          <h4 class="reserve_box_inline">選擇日期：</h4>
-          <input type="date"><br>
+          <div class="date_box">
+            <h4 class="reserve_box_inline">選擇日期：</h4>
+            <input class="date" type="date" onchange="clickBtnOpen()">
+          </div>
           <h4 class="reserve_box_inline">選擇時間：</h4>
 
           <input class="radio" type="radio" onclick="morningClick()" id="morning" name="time" value="morning" checked>
@@ -37,7 +39,7 @@
 
           <h4 class="reserve_box_inline">導覽費用：</h4>
           <p class="reserve_box_inline">新台幣 <span class="cost">2000</span> 元</p><br>
-          <button>開始預約行程</button>
+          <button class="">開始預約行程</button>
         </div>
       </div>
     </div>

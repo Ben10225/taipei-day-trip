@@ -1,5 +1,6 @@
 from flask import *
-from components.model import *
+from api.model import *
+from utils.json_format import *
 
 router_page_attractions = Blueprint("router_page_attractions", __name__, template_folder="templates")
 
