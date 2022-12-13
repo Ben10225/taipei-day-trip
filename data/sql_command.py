@@ -47,6 +47,7 @@ INNER JOIN attractions AS a ON b.attraction_id=a.id
 INNER JOIN images AS i ON i.iid=b.attraction_id
 WHERE b.uuid=%s
 GROUP BY b.bid
+ORDER BY b.bid ASC
 """
 
 select_booking_by_bid = "SELECT bid FROM bookings WHERE bid=%s"
