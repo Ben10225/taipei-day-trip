@@ -146,6 +146,60 @@
 .wrapper .sign_page .page_box p .to_sign_up, .wrapper .sign_page .page_box p .to_sign_in {
   cursor: pointer;
 }
+.wrapper .sign_page .page_box_c {
+  text-align: center;
+  width: 340px;
+  background: #fff;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  z-index: 110;
+  border-radius: 6px;
+  padding: 15px 15px 10px 15px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr;
+  transition: 0.7s;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.wrapper .sign_page .page_box_c.repeat {
+  top: 20%;
+}
+.wrapper .sign_page .page_box_c.repeat h3 {
+  margin-top: 10px;
+  color: #666;
+}
+.wrapper .sign_page .page_box_c.repeat .button_box {
+  margin-top: 20px;
+}
+.wrapper .sign_page .page_box_c.repeat .button_box button {
+  width: 100px;
+  margin: 10px 20px;
+}
+.wrapper .sign_page .page_box_c.repeat.page_box_show {
+  visibility: visible;
+  top: 30%;
+  opacity: 1;
+}
+.wrapper .sign_page .page_box_c button {
+  height: 47px;
+  background: #448899;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 400;
+  font-style: normal;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.wrapper .sign_page .page_box_c button:hover {
+  opacity: 1;
+}
 .wrapper nav {
   width: 100%;
   height: 54px;

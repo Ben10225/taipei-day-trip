@@ -110,10 +110,16 @@ class User:
 
 
 class Booking:
-	def create_booking(uuid, attraction_Id, date, time, price):
+	def create_booking(uuid, attraction_Id, date, time, price, push_status):
 		try:
 			db = connectPool()
 			mycursor = db.cursor(buffered=True)
+
+			if push_status:
+				val = (uuid, attraction_Id, date, time, price)
+				mycursor.execute(insert_booking, val)
+				db.commit()
+				return "created_force"
 
 			mycursor.execute(select_booking, (attraction_Id, date, time))
 			item = mycursor.fetchone()
@@ -143,10 +149,30 @@ class Booking:
 
 			if bookings:
 				return bookings
-			# if not item:
-			# 	return "created"
 			else:
-				return "exists"
+				return []
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def delete_bookings(bid):
+		try:
+			db = connectPool()
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(select_booking_by_bid, (bid, ))
+			item = mycursor.fetchone()
+
+			if item:
+				mycursor.execute(delete_booking_by_bid, (bid, ))
+				db.commit()
+				return True
+			else:
+				return False
 
 		except Error as e:
 			print("Error while connecting to MySQL using Connection pool ", e)

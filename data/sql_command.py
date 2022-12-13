@@ -41,10 +41,14 @@ select_booking = "SELECT attraction_id, date, time FROM bookings WHERE attractio
 insert_booking = "INSERT INTO bookings (uuid, attraction_id, date, time, price) VALUES(%s, %s, %s, %s, %s)"
 
 select_booking_by_uuid = """
-SELECT b.attraction_id, b.date, b.time, b.price, a.name, a.address, i.url
+SELECT b.bid, b.attraction_id, b.date, b.time, b.price, a.name, a.address, i.url
 FROM bookings AS b
 INNER JOIN attractions AS a ON b.attraction_id=a.id
 INNER JOIN images AS i ON i.iid=b.attraction_id
 WHERE b.uuid=%s
-GROUP BY b.attraction_id
+GROUP BY b.bid
 """
+
+select_booking_by_bid = "SELECT bid FROM bookings WHERE bid=%s"
+
+delete_booking_by_bid = "DELETE FROM bookings WHERE bid=%s"

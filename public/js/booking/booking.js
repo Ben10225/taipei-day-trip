@@ -9,10 +9,9 @@ window.signUp = nav.signUp;
 window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 
-
 nav.hideDisplayBug();
+booking.jumpToNextInput();
 
 (async()=>{
-  await booking.getBooking();
   await nav.auth(false, true);
 })()

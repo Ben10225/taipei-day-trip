@@ -12,6 +12,7 @@ window.signUp = nav.signUp;
 window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 
+
 nav.hideDisplayBug();
 nav.auth(false);
 

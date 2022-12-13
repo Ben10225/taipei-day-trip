@@ -18,7 +18,6 @@ def attractions():
 				"message": "資料輸入錯誤"
 			}, 400
 
-		# sql_conn.set_page_keyword(page, keyword)
 		items, next = Attr.attractions(page, keyword)
 
 		if next:

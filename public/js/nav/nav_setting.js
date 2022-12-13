@@ -1,3 +1,5 @@
+import bookingJS from "../booking/booking_func.js"
+
 // dom
 const signInbtn = document.querySelector(".btn.si");
 const signUpbtn = document.querySelector(".btn.su");
@@ -11,6 +13,8 @@ const signPage = document.querySelector(".sign_page");
 const schedule = document.querySelector(".schedule");
 const SIcautionBox = document.querySelector(".caution_box.si");
 const SUcautionBox = document.querySelector(".caution_box.su");
+
+const repeatPageBox = document.querySelector(".page_box_c.repeat");
 
 // input
 const SUName = document.querySelector(".name.su");
@@ -245,13 +249,18 @@ function auth(needRefresh, needAuth){
     if(data.ok){
       signOutLi.classList.remove("li_out");
       userSignIn = true;
+      if(needAuth){
+        bookingJS.getBooking();
+        return
+      }
     }
     if(data.error){
-      signInUpLi.classList.remove("li_out");
       if(needAuth){
-        // window.location.href = "/";
-        history.go(-1);
+        // history.go(-1);
+        window.location.href = "/";
+        return
       }
+      signInUpLi.classList.remove("li_out");
     }
     if(needRefresh){
       history.go(0);
@@ -325,6 +334,26 @@ function toBooking(){
 }
 
 
+/*  show booking repeat checked page  */
+function bookingRepeatIn(){
+  if(!signPage.classList.contains("sign_page_show")){
+    signPage.classList.add("sign_page_show");
+  }
+  setTimeout(()=>{
+    repeatPageBox.classList.add("page_box_show");
+  }, 150)
+}
+
+function bookingRepeatOut(){
+  signPage.classList.remove("sign_page_show");
+
+  setTimeout(()=>{
+    repeatPageBox.classList.remove("page_box_show");
+  }, 80)
+}
+
+
+
 export default {
   signIn,
   signUp,
@@ -336,4 +365,6 @@ export default {
   hideDisplayBug,
   signStatus,
   toBooking,
+  bookingRepeatIn,
+  bookingRepeatOut,
 }

@@ -236,7 +236,7 @@ let signStatus = (isSign)=>{
   if(isSign){
     reserveBtn.onclick = ()=>{
       let checkedRadio = document.querySelector("input[name='time']:checked");
-      booking.createBooking(attractionId, date.value, checkedRadio.value)
+      booking.createBooking(attractionId, date.value, checkedRadio.value, null)
     }
   }else{
     reserveBtn.onclick = ()=>{
@@ -244,6 +244,12 @@ let signStatus = (isSign)=>{
     }
   }
 }
+
+let pushRepeatBooking = ()=>{
+  let checkedRadio = document.querySelector("input[name='time']:checked");
+  booking.createBooking(attractionId, date.value, checkedRadio.value, "push")
+}
+
 
 let getReserveData = ()=>{
   return fetch("/api/user/auth/cookie")
@@ -274,5 +280,6 @@ export default {
   signStatus,
   getReserveData,
   clickBtnOpenIfValue,
+  pushRepeatBooking,
 }
 

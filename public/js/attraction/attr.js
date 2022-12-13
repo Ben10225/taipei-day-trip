@@ -9,11 +9,14 @@ window.signIn = nav.signIn;
 window.signUp = nav.signUp;
 window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
+window.bookingRepeatOut = nav.bookingRepeatOut;
 
 
 window.morningClick = attr.morningClick;
 window.eveningClick = attr.eveningClick;
 window.clickBtnOpen = attr.clickBtnOpen;
+window.pushRepeatBooking = attr.pushRepeatBooking;
+
 
 nav.hideDisplayBug();
 

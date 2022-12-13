@@ -142,6 +142,60 @@
         }
       }
     }
+    .page_box_c{
+      text-align: center;
+      width: 340px;
+      background: #fff;
+      left: 50%;
+      top: 40%;
+      transform: translateX(-50%);
+      z-index: 110;
+      border-radius: 6px;
+      padding: 15px 15px 10px 15px;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      grid-template-columns: 1fr;
+      transition: 0.7s;
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      &.repeat{
+        top: 20%;
+        h3{
+          margin-top: 10px;
+          color: #666;
+        }
+        .button_box{
+          margin-top: 20px;
+          button{
+            width: 100px;
+            margin: 10px 20px;
+          }
+        }
+        &.page_box_show{
+          visibility: visible;
+          top: 30%;
+          opacity: 1;
+        }
+      }
+      button{
+        height: 47px;
+        background: #448899;
+        border-radius: 5px;
+        border: none;
+        color: #fff;
+        font-size: 19px;
+        font-weight: 400;
+        font-style: normal;
+        opacity: 0.6;
+        cursor: pointer;
+        transition: 0.4s;
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
   }
   nav{
     width: 100%;

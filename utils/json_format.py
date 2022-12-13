@@ -25,6 +25,7 @@ def booking_details(booking):
 		},
 		"date": booking["date"],
 		"time": booking["time"],
-		"price": booking["price"]
+		"price": booking["price"],
+		"bid": booking["bid"]
 	}
 	return details
