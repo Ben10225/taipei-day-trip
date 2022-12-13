@@ -11,6 +11,7 @@ window.toBooking = nav.toBooking;
 
 nav.hideDisplayBug();
 booking.jumpToNextInput();
+booking.creditPwdFormat();
 
 (async()=>{
   await nav.auth(false, true);

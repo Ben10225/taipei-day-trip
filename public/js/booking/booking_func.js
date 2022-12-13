@@ -205,13 +205,18 @@ function jumpToNextInput(){
   })
 }
 
-creditPwdInput.addEventListener("input", (e)=>{
-  e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
-});
+
+function creditPwdFormat(){
+  creditPwdInput.addEventListener("input", (e)=>{
+    e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+  });
+}
+
 
 
 export default {
   createBooking,
   getBooking,
   jumpToNextInput,
+  creditPwdFormat,
 }
