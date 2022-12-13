@@ -9,6 +9,9 @@ const img = document.querySelector(".img");
 const date = document.querySelector(".date");
 const evening = document.querySelector("#evening");
 const reserveBtn = document.querySelector(".reserve_box button");
+const rightArrow = document.querySelector(".right_arrow");
+const leftArrow = document.querySelector(".left_arrow");
+
 
 
 let catchAttraction = (id)=>{
@@ -92,74 +95,75 @@ let insertImg = (data)=>{
   img.style.cssText = `background-image: url('${imgs[0]}')`
 }
 
-
-let leftArrow = document.querySelector(".left_arrow");
-leftArrow.addEventListener("click", function lck(){
-  let circleBefore = document.querySelector(`.circle:nth-child(${imgIndex+1})`);
-  let circleAfter = document.querySelector(`.circle:nth-child(${imgIndex})`);
-  if(imgIndex > 0){
-    leftArrow.removeEventListener("click", lck)
-    imgIndex--;
-    circleBefore.classList.remove("circle_black");
-    circleAfter.classList.add("circle_black");
-    cirpos = imgIndex+1;
-
-    // slide
-    let imgBox = document.querySelector(".img_setup");
-    let imgNew = document.createElement('div');
-    imgNew.className = "img img_last";
-    imgBox.appendChild(imgNew);
-
-    let imgOld = document.querySelector(".img");
-    let width = imgOld.offsetWidth;
-    imgOld.style.cssText = `transform: translateX(${width}px); background-image: url('${imgs[imgIndex+1]}'); transition: transform 0.5s`;
+let leftArrowClick = ()=>{
+  leftArrow.addEventListener("click", function lck(){
+    let circleBefore = document.querySelector(`.circle:nth-child(${imgIndex+1})`);
+    let circleAfter = document.querySelector(`.circle:nth-child(${imgIndex})`);
+    if(imgIndex > 0){
+      leftArrow.removeEventListener("click", lck)
+      imgIndex--;
+      circleBefore.classList.remove("circle_black");
+      circleAfter.classList.add("circle_black");
+      cirpos = imgIndex+1;
   
-    let imgNewSelect = document.querySelector(".img.img_last");
-    imgNewSelect.style.cssText = `transform: translateX(${width}px); background-image: url('${imgs[imgIndex]}'); transition: transform 0.5s`;
-
-    setTimeout(()=>{
-      imgOld.style.cssText = `transform: translateX(0px); background-image: url('${imgs[imgIndex]}'); transition: 0s`;
-      imgNewSelect.remove();
-
-      leftArrow.addEventListener("click", lck)
-    },500)
+      // slide
+      let imgBox = document.querySelector(".img_setup");
+      let imgNew = document.createElement('div');
+      imgNew.className = "img img_last";
+      imgBox.appendChild(imgNew);
   
-  }
-})
-
-
-let rightArrow = document.querySelector(".right_arrow");
-rightArrow.addEventListener("click", function rck(){
-  let circleBefore = document.querySelector(`.circle:nth-child(${imgIndex+1})`);
-  let circleAfter = document.querySelector(`.circle:nth-child(${imgIndex+2})`);
-  if(imgIndex < imgs.length-1){
-    rightArrow.removeEventListener("click", rck)
-    imgIndex++;
-    circleBefore.classList.remove("circle_black");
-    circleAfter.classList.add("circle_black");
-    cirpos = imgIndex+1
-
-    // slide
-    let imgBox = document.querySelector(".img_setup");
-    let imgNew = document.createElement('div');
-    imgNew.className = "img img_next";
-    imgBox.appendChild(imgNew);
+      let imgOld = document.querySelector(".img");
+      let width = imgOld.offsetWidth;
+      imgOld.style.cssText = `transform: translateX(${width}px); background-image: url('${imgs[imgIndex+1]}'); transition: transform 0.5s`;
+    
+      let imgNewSelect = document.querySelector(".img.img_last");
+      imgNewSelect.style.cssText = `transform: translateX(${width}px); background-image: url('${imgs[imgIndex]}'); transition: transform 0.5s`;
   
-    let imgOld = document.querySelector(".img");
-    let width = imgOld.offsetWidth
-    imgOld.style.cssText = `transform: translateX(${-width}px); background-image: url('${imgs[imgIndex-1]}'); transition: transform 0.5s`;
+      setTimeout(()=>{
+        imgOld.style.cssText = `transform: translateX(0px); background-image: url('${imgs[imgIndex]}'); transition: 0s`;
+        imgNewSelect.remove();
   
-    let imgNewSelect = document.querySelector(".img.img_next");
-    imgNewSelect.style.cssText = `transform: translateX(${-width}px); background-image: url('${imgs[imgIndex]}'); transition: transform 0.5s`;
-  
-    setTimeout(()=>{
-      imgOld.style.cssText = `transform: translateX(0px); background-image: url('${imgs[imgIndex]}'); transition: 0s`;
-      imgNewSelect.remove();
+        leftArrow.addEventListener("click", lck)
+      },500)
+    }
+  })
+}
 
-      rightArrow.addEventListener("click", rck);
-    },500)
-  }
-})
+
+let rightArrowClick = ()=>{
+  rightArrow.addEventListener("click", function rck(){
+    let circleBefore = document.querySelector(`.circle:nth-child(${imgIndex+1})`);
+    let circleAfter = document.querySelector(`.circle:nth-child(${imgIndex+2})`);
+    if(imgIndex < imgs.length-1){
+      rightArrow.removeEventListener("click", rck)
+      imgIndex++;
+      circleBefore.classList.remove("circle_black");
+      circleAfter.classList.add("circle_black");
+      cirpos = imgIndex+1
+  
+      // slide
+      let imgBox = document.querySelector(".img_setup");
+      let imgNew = document.createElement('div');
+      imgNew.className = "img img_next";
+      imgBox.appendChild(imgNew);
+    
+      let imgOld = document.querySelector(".img");
+      let width = imgOld.offsetWidth
+      imgOld.style.cssText = `transform: translateX(${-width}px); background-image: url('${imgs[imgIndex-1]}'); transition: transform 0.5s`;
+    
+      let imgNewSelect = document.querySelector(".img.img_next");
+      imgNewSelect.style.cssText = `transform: translateX(${-width}px); background-image: url('${imgs[imgIndex]}'); transition: transform 0.5s`;
+    
+      setTimeout(()=>{
+        imgOld.style.cssText = `transform: translateX(0px); background-image: url('${imgs[imgIndex]}'); transition: 0s`;
+        imgNewSelect.remove();
+  
+        rightArrow.addEventListener("click", rck);
+      },500)
+    }
+  })
+}
+
 
 
 let morningClick = ()=>{
@@ -281,5 +285,8 @@ export default {
   getReserveData,
   clickBtnOpenIfValue,
   pushRepeatBooking,
+  leftArrowClick,
+  rightArrowClick,
+  reserveBtn,
 }
 

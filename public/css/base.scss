@@ -77,13 +77,13 @@
         color: #666;
         margin: 10px auto;
       }
-      .exit_icon, .exit_icon{
+      .exit_icon{
         width: 16px;
         height: 16px;
         background-image: url('../images/icon_close.png');
         position: absolute;
         right: 5%;
-        top: 9%;
+        top: 25px;
         opacity: 0.5;
         transition: 0.4s;
         cursor: pointer;

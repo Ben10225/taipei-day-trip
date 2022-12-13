@@ -82,18 +82,18 @@
   color: #666;
   margin: 10px auto;
 }
-.wrapper .sign_page .page_box .exit_icon, .wrapper .sign_page .page_box .exit_icon {
+.wrapper .sign_page .page_box .exit_icon {
   width: 16px;
   height: 16px;
   background-image: url("../images/icon_close.png");
   position: absolute;
   right: 5%;
-  top: 9%;
+  top: 25px;
   opacity: 0.5;
   transition: 0.4s;
   cursor: pointer;
 }
-.wrapper .sign_page .page_box .exit_icon:hover, .wrapper .sign_page .page_box .exit_icon:hover {
+.wrapper .sign_page .page_box .exit_icon:hover {
   opacity: 1;
 }
 .wrapper .sign_page .page_box input {

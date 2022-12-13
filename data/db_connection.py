@@ -17,8 +17,8 @@ def connectPool():
                                                 user=user,
                                                 database=database,
                                                 password=password)
-  connection_object = connection_pool.get_connection()
-  return connection_object
+  # connection_object = connection_pool.get_connection()
+  return connection_pool
 
 
 

@@ -33,6 +33,8 @@ const id = window.location.href.split("/").pop();
 
 attr.setDateMixAndMax();
 attr.catchAttraction(id);
+attr.leftArrowClick();
+attr.rightArrowClick();
 
 
 

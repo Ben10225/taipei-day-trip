@@ -1,4 +1,5 @@
 import bookingJS from "../booking/booking_func.js"
+import attr from "../attraction/attr_func.js"
 
 // dom
 const signInbtn = document.querySelector(".btn.si");
@@ -43,8 +44,6 @@ function showSignIn(clickBy){
   }, 150)
   if(clickBy){
     keepReserveData = clickBy;
-  }else{
-    keepReserveData = null;
   }
 }
 
@@ -79,6 +78,7 @@ upIcon.addEventListener("click", function upExit(){
 function fadeOut(boxClass, pressX){
   let pageBox = document.querySelector(boxClass);
   if(pressX){
+    keepReserveData = null;
     signPage.classList.remove("sign_page_show");
     setTimeout(()=>{
       SUName.value = "";
@@ -129,6 +129,7 @@ function pressEnter(e, callback, status){
 
 /*  sign in  */
 function signIn(){
+
   let validatedEmail = EmailPattern.test(SIEmail.value);
   let validatedPwd = PwdPattern.test(SIPwd.value);
 
@@ -261,6 +262,8 @@ function auth(needRefresh, needAuth){
         return
       }
       signInUpLi.classList.remove("li_out");
+      attr.reserveBtn.style.opacity = "1";
+      attr.reserveBtn.style.pointerEvents = "auto";
     }
     if(needRefresh){
       history.go(0);

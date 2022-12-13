@@ -192,9 +192,10 @@
     margin-top: 80px;
     &.empty{
       align-items: flex-start;
-      position: fixed;
+      // position: absolute;
       margin-top: 0;
-      height: 70vh;
+      height: 100%;
+      bottom: 0;
       p{
         margin-top: 52px;
       }

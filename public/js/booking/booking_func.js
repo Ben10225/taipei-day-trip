@@ -9,7 +9,8 @@ const totalBox = document.querySelector(".total_box");
 const footer = document.querySelector("footer");
 const userTitle = document.querySelector(".user_title");
 const creditInputs = document.querySelectorAll(".credit_input");
-const creditPwdInput = document.querySelector(".credit_pwd");
+const body = document.querySelector("body");
+const section = document.querySelector("section");
 
 let totalPrice = 0;
 
@@ -183,6 +184,8 @@ function createEmptyBookingDOM(data){
   bookingBox.appendChild(empty);
   footer.classList.add("empty");
   userTitle.classList.add("empty_title");
+  body.style.backgroundColor = "#757575";
+  section.style.backgroundColor = "#fff";
   userInfoBox.replaceChildren();
   creditCardBox.replaceChildren();
   totalBox.replaceChildren();
@@ -192,7 +195,7 @@ function createEmptyBookingDOM(data){
 function jumpToNextInput(){
   creditInputs.forEach(function(el, index){
     el.addEventListener("keyup", function(event){
-      if (el.value.length == el.maxLength) {
+      if(el.value.length == el.maxLength){
         if(index == 0){
           creditInputs[index+1].focus();
         }else if(index == 1){
@@ -201,16 +204,15 @@ function jumpToNextInput(){
           creditInputs[index+1].focus();
         }
       }
+      if(index == 0){
+        el.addEventListener("input", (e)=>{
+          e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        });
+      }
     })
   })
 }
 
-
-function creditPwdFormat(){
-  creditPwdInput.addEventListener("input", (e)=>{
-    e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
-  });
-}
 
 
 
@@ -218,5 +220,4 @@ export default {
   createBooking,
   getBooking,
   jumpToNextInput,
-  creditPwdFormat,
 }
