@@ -214,8 +214,6 @@ function jumpToNextInput(){
 }
 
 
-
-
 export default {
   createBooking,
   getBooking,

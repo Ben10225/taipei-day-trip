@@ -13,5 +13,5 @@ nav.hideDisplayBug();
 booking.jumpToNextInput();
 
 (async()=>{
-  await nav.auth(false, true);
+  await nav.auth(false, "booking");
 })()

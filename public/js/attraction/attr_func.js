@@ -264,14 +264,9 @@ let getReserveData = ()=>{
       if(data.radio !== "morning"){
         evening.setAttribute('checked', true)
       }
+      reserveBtn.classList.add("click_open");
     }
   })
-}
-
-let clickBtnOpenIfValue = ()=>{
-  if(date.value){
-    reserveBtn.classList.add("click_open");
-  }
 }
 
 
@@ -283,7 +278,6 @@ export default {
   clickBtnOpen,
   signStatus,
   getReserveData,
-  clickBtnOpenIfValue,
   pushRepeatBooking,
   leftArrowClick,
   rightArrowClick,
