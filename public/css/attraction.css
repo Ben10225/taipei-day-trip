@@ -157,6 +157,16 @@
   margin-bottom: 20px;
   color: #666;
 }
+.wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box .date_box {
+  position: relative;
+}
+.wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box .date_box .date {
+  position: absolute;
+  left: 85px;
+  top: -3px;
+  width: 120px;
+  padding: 3px 6px;
+}
 .wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box button {
   background: #448899;
   border-radius: 5px;
@@ -165,6 +175,17 @@
   font-size: 19px;
   color: #fff;
   cursor: pointer;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.4s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box button.click_open {
+  pointer-events: auto;
+  opacity: 1;
 }
 .wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box .radio {
   vertical-align: top;

@@ -1,10 +1,9 @@
 from flask import *
-from components.model import *
-from data.DBconnection import *
+from api.model import *
+from utils.json_format import *
 
 router_page_attractions = Blueprint("router_page_attractions", __name__, template_folder="templates")
 
-sql_conn = Users()
 
 # attractions api
 @router_page_attractions.route("/api/attractions")
@@ -19,8 +18,7 @@ def attractions():
 				"message": "資料輸入錯誤"
 			}, 400
 
-		# sql_conn.set_page_keyword(page, keyword)
-		items, next = sql_conn.attractions(page, keyword)
+		items, next = Attr.attractions(page, keyword)
 
 		if next:
 			nextPage = int(page)+1
@@ -55,7 +53,7 @@ def attractions():
 
 # attraction api
 @router_page_attractions.route("/api/attraction/<id>")
-def attractionitem(id):
+def attraction_item(id):
 	try:
 		if id.isdigit():
 			id = int(id)
@@ -65,7 +63,7 @@ def attractionitem(id):
 				"message": "無法辨識"
 			}, 500
 		
-		item = sql_conn.attraction(id)
+		item = Attr.attraction(id)
 
 		if item:
 			result = {
@@ -92,7 +90,7 @@ def attractionitem(id):
 @router_page_attractions.route("/api/categories")
 def categories():
 	try:
-		items = sql_conn.categories()
+		items = Attr.categories()
 		if items:
 			cates = []
 			for i in items:

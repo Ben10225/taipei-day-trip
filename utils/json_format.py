@@ -15,3 +15,17 @@ def attraction_details(item):
 	}
 	return details
 
+def booking_details(booking):
+	details = {
+		"attraction": {
+			"id": booking["attraction_id"],
+			"name": booking["name"],
+			"address": booking["address"],
+			"image": booking["url"]
+		},
+		"date": booking["date"],
+		"time": booking["time"],
+		"price": booking["price"],
+		"bid": booking["bid"]
+	}
+	return details

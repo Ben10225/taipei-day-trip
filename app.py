@@ -1,10 +1,12 @@
 from flask import *
-from components.router_attractions import router_page_attractions
-from components.router_member import router_page_member
+from api.attractions import router_page_attractions
+from api.member import router_page_member
+from api.booking import router_page_booking
 
 app = Flask(__name__, static_folder="public", static_url_path="/")
 app.register_blueprint(router_page_attractions)
 app.register_blueprint(router_page_member)
+app.register_blueprint(router_page_booking)
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -30,5 +32,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-
-app.run(port=3000, host="0.0.0.0", debug=True)
+if __name__ == "__main__":
+	app.run(port=3000, host="0.0.0.0", debug=True)
