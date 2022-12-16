@@ -190,9 +190,10 @@
 }
 .wrapper footer.empty {
   align-items: flex-start;
+  position: fixed;
   margin-top: 0;
-  height: 100%;
-  bottom: 0;
+  height: 100vh;
+  z-index: -1;
 }
 .wrapper footer.empty p {
   margin-top: 52px;

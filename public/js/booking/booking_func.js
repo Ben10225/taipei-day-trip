@@ -184,8 +184,8 @@ function createEmptyBookingDOM(data){
   bookingBox.appendChild(empty);
   footer.classList.add("empty");
   userTitle.classList.add("empty_title");
-  body.style.backgroundColor = "#757575";
-  section.style.backgroundColor = "#fff";
+  // body.style.backgroundColor = "#757575";
+  // section.style.backgroundColor = "#fff";
   userInfoBox.replaceChildren();
   creditCardBox.replaceChildren();
   totalBox.replaceChildren();
