@@ -18,7 +18,7 @@ def get_booking():
     if len(bookings) > 0:
       for booking in bookings:
         result.append(booking_details(booking))
-      return {"data": result, "name": name}, 200
+      return {"data": result, "name": name, "uuid": uuid}, 200
     else:
       return {"data": result, "name": name, "empty": True}, 200
 
@@ -69,6 +69,26 @@ def delete_booking():
 
     if status:
       return {"ok": True}, 200
+    else:
+      return {"error": True, "message": "查無此資料"}, 400
+
+  except:
+    resp = make_response({"error": True, "message": "未登入狀態"}, 200)
+    resp.set_cookie('token', '', 0)
+    return resp
+
+
+@router_page_booking.route("/api/booking/getinfo")
+def get_user_info():
+  try:
+    payload = jwt_verify(request.cookies.get("token"))
+
+    uuid = payload["sub"]
+
+    name, email = Booking.get_user_info_by_uuid(uuid)
+
+    if name and email:
+      return {"data": {"name": name, "email": email}}, 200
     else:
       return {"error": True, "message": "查無此資料"}, 400
 

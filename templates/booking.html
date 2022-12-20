@@ -35,18 +35,30 @@
     <div class="content">
       <h3>您的聯絡資訊</h3>
       <label for="">聯絡姓名：</label>
-      <input type="text"><br>
+      <input type="text" class="contact_name"><br>
       <label for="">聯絡信箱：</label>
-      <input type="text"><br>
+      <input type="text" class="contact_email"><br>
       <label for="">手機號碼：</label>
-      <input type="text"><br>
+      <input type="text" class="contact_mobile"><br>
       <p>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
     </div>
     <hr>
   </div>
   <div class="credit_card_box">
     <div class="content">
-      <h3>信用卡付款資訊</h3>
+      <div class="credit_row">
+        <label for="">卡片號碼：</label>
+        <div class="tpfield credit_card_number" id="card-number"></div>
+      </div>
+      <div class="credit_row">
+        <label for="">過期時間：</label>
+        <div class="tpfield credit_card_time" id="card-expiration-date"></div>
+      </div>
+      <div class="credit_row">
+        <label for="">驗證密碼：</label>
+        <div class="tpfield credit_card_ccv" id="card-ccv"></div>
+      </div>
+      <!-- <h3>信用卡付款資訊</h3>
       <label for="">卡片號碼：</label>
       <input class="credit_pwd credit_input" type="text" maxlength="19" size="19">
       <div class="expire_time">
@@ -56,14 +68,14 @@
         <input class="exp_y credit_input" type="text" maxlength="2" size="2">
       </div>
       <label for="">驗證密碼：</label>
-      <input class="credit_input" type="text" maxlength="3" size="3">
+      <input class="credit_input" type="text" maxlength="3" size="3"> -->
     </div>
     <hr>
   </div>
   <div class="total_box">
     <div class="total">
       <h6>總價：新台幣 <span class="total_cost">2000</span> 元</h6>
-      <button>確認訂購並付款</button>
+      <button onclick="onSubmit()" class="submit_btn">確認訂購並付款</button>
     </div>
   </div>
 </section>
@@ -72,4 +84,7 @@
 </footer>
 {% endblock %}
 
-{% block script %}<script type="module" src="/js/booking/booking.js"></script>{% endblock %}
+{% block script %}
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+<script type="module" src="/js/booking/booking.js"></script>
+{% endblock %}

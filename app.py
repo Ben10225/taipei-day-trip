@@ -1,12 +1,12 @@
 from flask import *
-from api.attractions import router_page_attractions
-from api.member import router_page_member
-from api.booking import router_page_booking
+from api import *
 
 app = Flask(__name__, static_folder="public", static_url_path="/")
 app.register_blueprint(router_page_attractions)
 app.register_blueprint(router_page_member)
 app.register_blueprint(router_page_booking)
+app.register_blueprint(router_page_order)
+
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True

@@ -265,8 +265,8 @@ function auth(needRefresh, page){
         attr.reserveBtn.style.opacity = "1";
         attr.reserveBtn.style.pointerEvents = "auto";
         return;
-      }else if(page === "booking"){
-        window.location.href = "/";
+      }else if(page === "booking" || page === "thankyou"){
+        window.location = "/";
       }
     }
     if(needRefresh){

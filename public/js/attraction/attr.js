@@ -24,8 +24,6 @@ nav.hideDisplayBug();
   await nav.auth(false, "attraction");
   let bool = nav.signStatus();
   attr.signStatus(bool);
-  // await attr.getReserveData();
-  // attr.clickBtnOpenIfValue();
 })()
 
 

@@ -181,3 +181,80 @@ class Booking:
 		finally:
 			mycursor.close()
 			db.close()
+
+	def get_user_info_by_uuid(uuid):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_name_email_by_uuid, (uuid, ))
+			info = mycursor.fetchone()
+
+			if info:
+				return info["name"], info["email"]
+			else:
+				return False
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
+class Order:
+	def create_payment(number, total_price, name, email, phone, bool):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(insert_payment, (number, total_price, name, email, phone, bool))
+			db.commit()
+
+			mycursor.execute(select_payment_id, )
+			id = mycursor.fetchone()
+			
+			return id[0]
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def create_trips(tid, number, a_id, a_name, a_address, a_image, a_price, a_date, a_time):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(insert_trips, (tid, number, a_id, a_name, a_address, a_image, a_price, a_date, a_time))
+			db.commit()
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def get_order_details(payment_id, number):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_payment_by_id_and_num, (payment_id, number))
+			payment = mycursor.fetchone()
+
+			mycursor.execute(select_trips_by_id_and_num, (payment_id, number))
+			trips = mycursor.fetchall()
+
+			return payment, trips
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
