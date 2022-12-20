@@ -65,14 +65,21 @@ def delete_booking():
     jwt_verify(request.cookies.get("token"))
 
     bid = request.json["bid"]
-    status = Booking.delete_bookings(bid)
+
+    if len(bid) == 1:
+      status = Booking.delete_bookings(bid[0])
+    elif len(bid) > 1:
+      for i in range(len(bid)):
+        status = Booking.delete_bookings(bid[i])
+      return {"pass": True}, 200
 
     if status:
       return {"ok": True}, 200
     else:
       return {"error": True, "message": "查無此資料"}, 400
 
-  except:
+  except Exception as e:
+    print(e)
     resp = make_response({"error": True, "message": "未登入狀態"}, 200)
     resp.set_cookie('token', '', 0)
     return resp

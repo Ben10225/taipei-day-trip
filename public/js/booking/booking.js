@@ -208,12 +208,8 @@ function onSubmit(event) {
         window.location = "/";
       }
       if(data.data){
-        const deletes = document.querySelectorAll(".icon_delete");
-        deletes.forEach((item)=>{
-          let bid = item.getAttribute("bid");
-          booking.deleteBooking(bid, "order");
-        })
-
+        let lst = booking.bidLst;
+        booking.deleteBooking(lst);
         window.location = `/thankyou?number=${data.data.number}`;
       }
     })

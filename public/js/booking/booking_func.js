@@ -20,6 +20,7 @@ const mobilePattern = /^((?=(09))[0-9]{10})$/;
 const emailPattern = /^\S+@\S+$/;
 
 let totalPrice = 0;
+let bidLst = [];
 
 function getBooking(){
   return fetch("/api/booking")
@@ -72,7 +73,7 @@ function createBooking(id, date, time, status){
 }
 
 
-function deleteBooking(bid, status){
+function deleteBooking(bid){
   fetch("/api/booking", {
     method: "delete",
     headers: {
@@ -84,7 +85,7 @@ function deleteBooking(bid, status){
   })
   .then((response) => response.json())
   .then((data) => {
-    if(status === "order"){
+    if(data.pass){
       return
     }
     if(data.ok){
@@ -136,9 +137,9 @@ function createBookingDOM(data){
 
     let iconDelete = document.createElement("div");
     iconDelete.className = "icon_delete";
-    iconDelete.setAttribute("bid", book.bid);
+    bidLst.push(book.bid);
     iconDelete.addEventListener("click", ()=>{
-      deleteBooking(book.bid);
+      deleteBooking([book.bid]);
     })
 
     let content =  document.createElement("div");
@@ -295,4 +296,5 @@ export default {
   jumpToNextInput,
   varifyInfo,
   deleteBooking,
+  bidLst,
 }
