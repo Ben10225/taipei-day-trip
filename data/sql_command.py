@@ -54,6 +54,8 @@ select_booking_by_bid = "SELECT bid FROM bookings WHERE bid=%s"
 
 delete_booking_by_bid = "DELETE FROM bookings WHERE bid=%s"
 
+delete_booking_by_bids = "DELETE FROM bookings WHERE bid in %s"
+
 select_name_email_by_uuid = "SELECT name, email FROM users WHERE uuid=%s"
 
 # order
