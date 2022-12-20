@@ -72,7 +72,7 @@ function createBooking(id, date, time, status){
 }
 
 
-function deleteBooking(bid){
+function deleteBooking(bid, status){
   fetch("/api/booking", {
     method: "delete",
     headers: {
@@ -84,6 +84,9 @@ function deleteBooking(bid){
   })
   .then((response) => response.json())
   .then((data) => {
+    if(status === "order"){
+      return
+    }
     if(data.ok){
       history.go(0);
       return
@@ -133,6 +136,7 @@ function createBookingDOM(data){
 
     let iconDelete = document.createElement("div");
     iconDelete.className = "icon_delete";
+    iconDelete.setAttribute("bid", book.bid);
     iconDelete.addEventListener("click", ()=>{
       deleteBooking(book.bid);
     })
@@ -290,4 +294,5 @@ export default {
   getBooking,
   jumpToNextInput,
   varifyInfo,
+  deleteBooking,
 }
