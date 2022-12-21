@@ -134,6 +134,7 @@
   outline: none;
   padding: 10px;
   margin-bottom: 15px;
+  transition: border 0.4s;
 }
 .wrapper section .user_info_box .content input.credit_pwd, .wrapper section .credit_card_box .content input.credit_pwd {
   width: 180px;
@@ -178,6 +179,7 @@
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  transition: 0.4s;
 }
 .wrapper footer {
   width: 100%;
@@ -190,9 +192,10 @@
 }
 .wrapper footer.empty {
   align-items: flex-start;
+  position: fixed;
   margin-top: 0;
-  height: 100%;
-  bottom: 0;
+  height: 100vh;
+  z-index: -1;
 }
 .wrapper footer.empty p {
   margin-top: 52px;
@@ -202,6 +205,24 @@
   color: #fff;
   font-size: 16px;
   font-weight: 700;
+}
+
+.credit_row {
+  margin: 5px auto;
+}
+.credit_row label {
+  position: relative;
+  top: -20px;
+}
+.credit_row .tpfield {
+  height: 40px;
+  width: 190px;
+  border: 1px solid #E8E8E8;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 5px;
+  display: inline-block;
+  transition: border 0.7s;
 }
 
 @media screen and (max-width: 1200px) {

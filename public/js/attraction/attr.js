@@ -21,11 +21,9 @@ window.pushRepeatBooking = attr.pushRepeatBooking;
 nav.hideDisplayBug();
 
 (async()=>{
-  await nav.auth(false);
+  await nav.auth(false, "attraction");
   let bool = nav.signStatus();
   attr.signStatus(bool);
-  await attr.getReserveData();
-  attr.clickBtnOpenIfValue();
 })()
 
 

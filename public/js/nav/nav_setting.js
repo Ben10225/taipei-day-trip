@@ -156,12 +156,14 @@ function signIn(){
     const date = document.querySelector(".date");
     const radio = document.querySelector("input[name='time']:checked");
 
-    data = {
-      "email": SIEmail.value,
-      "password": SIPwd.value,
-      "reserve": true,
-      "date": date.value,
-      "radio": radio.value,
+    if(date.value && radio.value){
+      data = {
+        "email": SIEmail.value,
+        "password": SIPwd.value,
+        "reserve": true,
+        "date": date.value,
+        "radio": radio.value,
+      }
     }
   }
 
@@ -242,7 +244,7 @@ function signUp(){
 }
 
 
-function auth(needRefresh, needAuth){
+function auth(needRefresh, page){
   return fetch("/api/user/auth")
   .then((response) => response.json())
   .then((data) => {
@@ -250,20 +252,22 @@ function auth(needRefresh, needAuth){
     if(data.ok){
       signOutLi.classList.remove("li_out");
       userSignIn = true;
-      if(needAuth){
+      if(page === "attraction"){
+        attr.getReserveData();
+      }else if(page === "booking"){
         bookingJS.getBooking();
-        return
+        return;
       }
     }
     if(data.error){
-      if(needAuth){
-        // history.go(-1);
-        window.location.href = "/";
-        return
-      }
       signInUpLi.classList.remove("li_out");
-      attr.reserveBtn.style.opacity = "1";
-      attr.reserveBtn.style.pointerEvents = "auto";
+      if(page === "attraction"){
+        attr.reserveBtn.style.opacity = "1";
+        attr.reserveBtn.style.pointerEvents = "auto";
+        return;
+      }else if(page === "booking" || page === "thankyou"){
+        window.location = "/";
+      }
     }
     if(needRefresh){
       history.go(0);

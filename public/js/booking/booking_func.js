@@ -9,10 +9,18 @@ const totalBox = document.querySelector(".total_box");
 const footer = document.querySelector("footer");
 const userTitle = document.querySelector(".user_title");
 const creditInputs = document.querySelectorAll(".credit_input");
-const body = document.querySelector("body");
-const section = document.querySelector("section");
+const submitBtn = document.querySelector(".submit_btn");
+const contactName = document.querySelector(".contact_name");
+const contactEmail = document.querySelector(".contact_email");
+const contactMobile = document.querySelector(".contact_mobile");
+
+const creditCardNumber = document.querySelector(".credit_card_number");
+
+const mobilePattern = /^((?=(09))[0-9]{10})$/;
+const emailPattern = /^\S+@\S+$/;
 
 let totalPrice = 0;
+let bidLst = [];
 
 function getBooking(){
   return fetch("/api/booking")
@@ -20,6 +28,8 @@ function getBooking(){
   .then((data) => {
     if(data.data && !data.empty){
       createBookingDOM(data);
+      getUserInfo();
+      preventBtn();
       return
     }
     if(data.data && data.empty){
@@ -55,7 +65,6 @@ function createBooking(id, date, time, status){
       if(data.message === "此行程已存在"){
         nav.bookingRepeatIn();
 
-
       }else if(data.message === "未登入狀態"){
         window.location.href = "/";
       }
@@ -76,9 +85,27 @@ function deleteBooking(bid){
   })
   .then((response) => response.json())
   .then((data) => {
+    if(data.pass){
+      return
+    }
     if(data.ok){
       history.go(0);
       return
+    }
+    if(data.error){
+      window.location.href = "/";
+    }
+  })
+}
+
+
+function getUserInfo(){
+  fetch("/api/booking/getinfo")
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.data){
+      contactName.value = data.data.name;
+      contactEmail.value = data.data.email;
     }
     if(data.error){
       window.location.href = "/";
@@ -101,6 +128,7 @@ function createBookingDOM(data){
     // create DOM
     let bookingItem = document.createElement("div");
     bookingItem.className = "booking_item";
+    bookingItem.setAttribute("attraction_id", book.attraction.id)
     bookingBox.appendChild(bookingItem);
 
     let img = document.createElement("div");
@@ -109,8 +137,9 @@ function createBookingDOM(data){
 
     let iconDelete = document.createElement("div");
     iconDelete.className = "icon_delete";
+    bidLst.push(book.bid);
     iconDelete.addEventListener("click", ()=>{
-      deleteBooking(book.bid)
+      deleteBooking([book.bid]);
     })
 
     let content =  document.createElement("div");
@@ -132,12 +161,14 @@ function createBookingDOM(data){
 
     let date = document.createElement("h5");
     date.textContent = "日期： ";
+    date.className = "date";
     let dateSpan = document.createElement("span");
     dateSpan.textContent = book.date;
     date.appendChild(dateSpan);
 
     let time = document.createElement("h5");
     time.textContent = "時間： ";
+    time.className = "time";
     let timeSpan = document.createElement("span");
     if(book.time === "morning"){
       timeSpan.textContent = "早上 7 點到下午 3 點";
@@ -148,12 +179,14 @@ function createBookingDOM(data){
 
     let cost = document.createElement("h5");
     cost.textContent = "費用： ";
+    cost.className = "cost";
     let costSpan = document.createElement("span");
     costSpan.textContent = `新台幣 ${book.price} 元`;
     cost.appendChild(costSpan);
 
     let address = document.createElement("h5");
     address.textContent = "地點： ";
+    address.className = "address";
     let addressSpan = document.createElement("span");
     addressSpan.textContent = book.attraction.address;
     address.appendChild(addressSpan);
@@ -184,8 +217,6 @@ function createEmptyBookingDOM(data){
   bookingBox.appendChild(empty);
   footer.classList.add("empty");
   userTitle.classList.add("empty_title");
-  body.style.backgroundColor = "#757575";
-  section.style.backgroundColor = "#fff";
   userInfoBox.replaceChildren();
   creditCardBox.replaceChildren();
   totalBox.replaceChildren();
@@ -213,11 +244,57 @@ function jumpToNextInput(){
   })
 }
 
+function varifyInfo(){
+  contactName.addEventListener("input", (e)=>{
+    if(e.target.value){
+      submitBtn.style = "pointer-events: auto; opacity: 1";
+    }else{
+      preventBtn();
+    }
+  })
+  
+  contactEmail.addEventListener("input", (e)=>{
+    let bool = emailPattern.test(e.target.value);
+    if(bool){
+      submitBtn.style = "pointer-events: auto; opacity: 1";
+      contactEmail.style = "border: 1px solid #E8E8E8";
+    }else{
+      preventBtn();
+      if(contactEmail.value == ""){
+        contactEmail.style = "border: 1px solid #E8E8E8";
+      }else{
+        contactEmail.style = "border: 1px solid red";
+      }
+    }
+  })
+  
+  contactMobile.addEventListener("input", (e)=>{
+    let bool = mobilePattern.test(e.target.value);
+    if(bool){
+      submitBtn.style = "pointer-events: auto; opacity: 1";
+      contactMobile.style = "border: 1px solid #E8E8E8";
+    }else{
+      preventBtn();
+      if(contactMobile.value == ""){
+        contactMobile.style = "border: 1px solid #E8E8E8";
+      }else{
+        contactMobile.style = "border: 1px solid red";
+      }
+    }
+  })
+}
 
+
+function preventBtn(){
+  submitBtn.style = "pointer-events: none; opacity: 0.5";
+}
 
 
 export default {
   createBooking,
   getBooking,
   jumpToNextInput,
+  varifyInfo,
+  deleteBooking,
+  bidLst,
 }

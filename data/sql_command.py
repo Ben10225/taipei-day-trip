@@ -53,3 +53,24 @@ ORDER BY b.bid ASC
 select_booking_by_bid = "SELECT bid FROM bookings WHERE bid=%s"
 
 delete_booking_by_bid = "DELETE FROM bookings WHERE bid=%s"
+
+delete_booking_by_bids = "DELETE FROM bookings WHERE bid in %s"
+
+select_name_email_by_uuid = "SELECT name, email FROM users WHERE uuid=%s"
+
+# order
+insert_payment = "INSERT INTO payment (order_number, total_price, contact_name, contact_email, contact_phone, status) VALUES(%s, %s, %s, %s, %s, %s);"
+
+select_payment_id = "SELECT LAST_INSERT_ID(payment_id) from payment order by LAST_INSERT_ID(payment_id) DESC LIMIT 1;"
+
+insert_trips = "INSERT INTO trips VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
+select_payment_by_id_and_num = """
+SELECT total_price, contact_name, contact_email, contact_phone, status 
+FROM payment WHERE payment_id=%s AND order_number=%s
+"""
+
+select_trips_by_id_and_num = """
+SELECT attraction_id, attraction_name, attraction_address, attraction_image, attraction_price, attraction_date, attraction_time
+FROM trips WHERE tid=%s AND trip_order_number=%s
+"""

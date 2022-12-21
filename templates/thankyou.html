@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}訂購完成 - 台北一日遊{% endblock %}
+{% block css %}<link rel="stylesheet" href="/css/thankyou.css">{% endblock %}
+
+{% block section %}
+<section>
+  <div class="text_box">
+    <h3>行程預定<span>成功</span></h3>
+    <h3>您的訂單編號如下</h3>
+    <p class="order_number"></p>
+    <p>請記住此編號，或到會員中心查詢歷史訂單</p>
+  </div>
+</section>
+<footer class="empty">
+  <p>COPYRIGHT © 2022 台北一日遊</p>
+</footer>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="/js/thankyou/thankyou.js"></script>
+{% endblock %}
