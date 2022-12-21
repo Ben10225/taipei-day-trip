@@ -69,8 +69,7 @@ def delete_booking():
     if len(bid) == 1:
       status = Booking.delete_bookings(bid[0], "one")
     elif len(bid) > 1:
-      # for i in range(len(bid)):
-      status = Booking.delete_bookings(bid, "mutiple")
+      status = Booking.delete_bookings(bid, "multiple")
       return {"pass": True}, 200
 
     if status:

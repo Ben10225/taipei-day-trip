@@ -24,7 +24,7 @@ def create_order():
       headers = {
         'Content-Type': 'application/json',
         "x-api-key": partner_key
-        }
+      }
       data = {
         "prime": prime,
         "partner_key": partner_key,
@@ -33,7 +33,7 @@ def create_order():
         "amount": order["totalPrice"],
         "cardholder": {
           "phone_number": order["contact"]["phone"],
-          "name": base64.b64encode(order["contact"]["name"].encode("utf-8")).decode('ascii'),
+          "name": base64.b64encode(order["contact"]["name"].encode("utf-8")).decode("ascii"),
           "email": order["contact"]["email"]
         },
         "remember": True
@@ -44,24 +44,24 @@ def create_order():
 
       if status != 0:
         create_orders(order, False)
-        res = {
+        result = {
           "number": number + "-" + str(payment_id),
           "payment": {
             "status": status,
             "message": "付款失敗"
           }
         }
-        return {"data": res}, 200
+        return {"data": result}, 200
 
       number, payment_id = create_orders(order, True)
-      res = {
+      result = {
         "number": number + "-" + str(payment_id),
         "payment": {
           "status": 0,
           "message": "付款成功"
         }
       }
-      return {"data": res}, 200  
+      return {"data": result}, 200  
 
     except Exception as e:
       print(e)
@@ -74,13 +74,13 @@ def create_order():
     return resp
 
 
-@router_page_order.route("/api/order/<order_Number>")
-def get_order_details(order_Number):
+@router_page_order.route("/api/order/<order_number>")
+def get_order_details(order_number):
   try:
     jwt_verify(request.cookies.get("token"))
 
-    payment_id = order_Number.split("-")[1]
-    number = order_Number.split("-")[0]
+    payment_id = order_number.split("-")[1]
+    number = order_number.split("-")[0]
 
     if not payment_id or not number:
       return {"error": True, "message": "載入錯誤"}, 400
@@ -102,8 +102,8 @@ def get_order_details(order_Number):
       }
       trips_details.append(detail)
 
-    res = {
-      "number": order_Number,
+    result = {
+      "number": order_number,
       "price": payment["total_price"],
       "trips": trips_details,
       "contact": {
@@ -113,7 +113,7 @@ def get_order_details(order_Number):
       }
     }
 
-    return {"data": res}, 200 
+    return {"data": result}, 200 
 
   except Exception as e:
     print(e)

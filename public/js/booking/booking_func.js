@@ -244,7 +244,7 @@ function jumpToNextInput(){
   })
 }
 
-function varifyInfo(){
+function verifyInfo(){
   contactName.addEventListener("input", (e)=>{
     if(e.target.value){
       submitBtn.style = "pointer-events: auto; opacity: 1";
@@ -294,7 +294,7 @@ export default {
   createBooking,
   getBooking,
   jumpToNextInput,
-  varifyInfo,
+  verifyInfo,
   deleteBooking,
   bidLst,
 }

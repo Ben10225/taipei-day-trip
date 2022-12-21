@@ -165,7 +165,7 @@ class Booking:
 			db = pool.get_connection()
 			mycursor = db.cursor(buffered=True)
 
-			if status == "mutiple":
+			if status == "multiple":
 				t = tuple(i for i in bid)
 				mycursor.execute(delete_booking_by_bids %f"{t}")
 				db.commit()

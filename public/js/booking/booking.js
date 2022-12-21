@@ -12,7 +12,7 @@ window.onSubmit = onSubmit;
 
 nav.hideDisplayBug();
 booking.jumpToNextInput();
-booking.varifyInfo();
+booking.verifyInfo();
 
 (async()=>{
   await nav.auth(false, "booking");
