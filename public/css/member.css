@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 100px 150px 0 150px;
+  padding: 100px 0 0 150px;
 }
 .wrapper section .member_box {
   display: flex;
@@ -99,44 +99,145 @@
   opacity: 1;
 }
 .wrapper section .history_box {
+  height: auto;
   margin-left: 50px;
   flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
   top: -50px;
+  transition: 0.5s;
 }
 .wrapper section .history_box .history_title {
   margin-bottom: 40px;
 }
 .wrapper section .history_box .order {
+  position: relative;
+}
+.wrapper section .history_box .order .order_item {
   width: 480px;
-  height: 50px;
-  background: #999;
-  color: #fff;
+  background: rgba(153, 153, 153, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   padding: 0 15px;
-  line-height: 50px;
   margin-bottom: 30px;
-  opacity: 0.5;
   cursor: pointer;
   transition: 0.3s;
+  position: relative;
 }
-.wrapper section .history_box .order:hover {
-  opacity: 1;
+.wrapper section .history_box .order .order_item .order_number, .wrapper section .history_box .order .order_item .time {
+  line-height: 50px;
 }
-.wrapper section .history_box .order:hover h3 {
+.wrapper section .history_box .order .order_item:hover {
+  background: #999;
+}
+.wrapper section .history_box .order .order_item:hover h3 {
   color: #fff;
 }
+.wrapper section .history_box .order .order_item.active {
+  background: rgb(255, 219, 99);
+}
+.wrapper section .history_box .order .order_item.active h3 {
+  color: #333;
+}
 .wrapper section .history_box .order h3 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: 0.3s;
-  color: #555;
+  color: rgba(85, 85, 85, 0.5);
   font-weight: 500;
   display: inline-block;
 }
 .wrapper section .history_box .order h3.time {
   text-align: right;
   float: right;
+}
+.wrapper section .history_box .order .details {
+  position: absolute;
+  left: 600px;
+  top: -50px;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  visibility: hidden;
+}
+.wrapper section .history_box .order .details.show {
+  opacity: 1;
+  visibility: visible;
+}
+.wrapper section .history_box .order .details .contact_info, .wrapper section .history_box .order .details .attraction_info {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  padding: 3px 20px 10px 20px;
+}
+.wrapper section .history_box .order .details .contact_info h5, .wrapper section .history_box .order .details .attraction_info h5 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-weight: 400;
+  font-size: 17px;
+  color: rgb(255, 244, 150);
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+.wrapper section .history_box .order .details .contact_info p, .wrapper section .history_box .order .details .attraction_info p {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: 15px;
+  color: #fff;
+  opacity: 0.9;
+}
+.wrapper section .history_box .order .details .attraction_info {
+  background: rgba(0, 0, 0, 0.6);
+}
+.wrapper section .history_box .order .details .attraction_info .arrow_down {
+  margin: 10px 0 0 0;
+  display: inline-block;
+  opacity: 0.3;
+  transition: 0.3s;
+}
+.wrapper section .history_box .order .details .attraction_info .arrow_down:hover {
+  opacity: 0.8;
+}
+.wrapper section .history_box .order .details .attraction_info .arrow_down i {
+  cursor: pointer;
+  color: #fff;
+  z-index: 10;
+  display: block;
+  margin: -8px 0;
+}
+.wrapper section .history_box .order .details .attraction_info .arrow_down i.i_rotate {
+  transform: rotate(180deg);
+}
+.wrapper section .history_box .order .details .attraction_info .attraction_img {
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 150px;
+  background-image: url("../images/Picture.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: height 0.5s;
+}
+.wrapper section .history_box .order .details .attraction_info .attraction_img.attraction_img_hide {
+  height: 0px;
+  border: 0px solid #fff;
+}
+.wrapper section .history_box .order .details .attraction_info hr {
+  margin: 20px 0;
+  transform: scaleX(0.9);
+}
+.wrapper section .history_box .order .details hr {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  transform: scaleX(1.1);
 }
 .wrapper footer {
   width: 100%;

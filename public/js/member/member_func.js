@@ -3,8 +3,24 @@ const emailInput = document.querySelector(".email_input");
 const nameLabel = document.querySelector(".name_label");
 const nameInput = document.querySelector(".name_input");
 const historyBox = document.querySelector(".history_box");
+const details = document.querySelectorAll(".details");
+
+const orders = document.querySelectorAll(".order");
+const arrows = document.querySelectorAll(".arrow_down");
+const arrowsIcon = document.querySelectorAll(".arrow_down i");
+const attractionImages = document.querySelectorAll(".attraction_img");
+const order_items = document.querySelectorAll(".order_item");
+
 
 let originName = null;
+let tempHeight = 0;
+// let deg = 0;
+
+const originHeight = historyBox.offsetHeight;
+setHistoryBoxHeightAdd(0, 0);
+attractionImageArrow();
+orderItemInit();
+
 
 function getHistoryOrders(){
   fetch("/api/history")
@@ -56,7 +72,6 @@ function createHistoryDOM(data){
   });  
   historyBox.insertAdjacentHTML('beforeEnd', html);
 
-  const orders = document.querySelectorAll(".order");
   orders.forEach(order => {
     order.addEventListener("click", (e)=>{
       let orderNumber = order.children[0].textContent
@@ -101,6 +116,71 @@ function changeUserName(){
       }, 1000)
       originName = nameInput.value;
       return;
+    }
+  })
+}
+
+
+function setHistoryBoxHeightAdd(height, index){
+  let detailHeight = details[index].offsetHeight;
+  historyBox.style = `height: ${detailHeight + height}px`
+}
+
+function setHistoryBoxHeightMinus(height, index){
+  let detailHeight = details[index].offsetHeight;
+  historyBox.style = `height: ${detailHeight - height +index*150}px`
+}
+
+function attractionImageArrow(){
+  arrows.forEach((arrow, i) =>{
+    let deg = 0;
+    arrow.onclick = ()=>{
+      if(attractionImages[i].classList.contains("attraction_img_hide")){
+        setHistoryBoxHeightAdd(150+ Math.floor(i/2)*80, Math.floor(i/2));
+        tempHeight += 150;
+      }else{
+        setHistoryBoxHeightMinus(150+ Math.floor(i/2)*80, Math.floor(i/2));
+        tempHeight -= 150;
+      }
+      deg += 180;
+      attractionImages[i].classList.toggle("attraction_img_hide");
+      arrowsIcon[i*2].style = `transform: rotate(${deg}deg); transition: 0.4s;`;
+      arrowsIcon[i*2+1].style = `transform: rotate(${deg}deg); transition: 0.4s;`;
+      if(deg == 360){
+        arrow.style = "pointer-events: none; opacity: 0.8;"
+        setTimeout(()=>{
+          arrowsIcon[i*2].style = `transform: rotate(0deg);`;
+          arrowsIcon[i*2+1].style = `transform: rotate(0deg);`;
+          arrow.style = "pointer-events: auto;"
+        }, 500)
+        deg = 0;
+      }
+    }
+  })
+}
+
+function orderItemInit(){
+  order_items.forEach((order, i)=>{
+    order.onclick = ()=>{
+      order.classList.toggle("active");
+      details[i].classList.toggle("show");
+      setHistoryBoxHeightAdd(80*i, i);
+      arrowsIcon.forEach(icon=>{
+        icon.style = `transform: rotate(0deg);`;
+      })
+
+      order_items.forEach((order, j)=>{
+        if(j != i){
+          order.classList.remove("active");
+          details[j].classList.remove("show");
+          attractionImageArrow();
+          attractionImages[j*2].classList.add("attraction_img_hide");
+          attractionImages[j*2+1].classList.add("attraction_img_hide");
+        }
+      })
+      if(!order.classList.contains("active")){
+        setHistoryBoxHeightMinus(0);
+      }
     }
   })
 }

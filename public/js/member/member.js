@@ -17,5 +17,5 @@ member.inputStyleInit();
 (async()=>{
   await nav.auth(false, "member");
   await book.getUserInfo(member.nameInput, member.emailInput);
-  member.getHistoryOrders();
+  // member.getHistoryOrders();
 })()

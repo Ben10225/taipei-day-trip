@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 100px 150px 0 150px;
+    padding: 100px 0 0 150px;
     .member_box{
       display: flex;
       align-items: center;
@@ -97,41 +97,133 @@
       }
     }
     .history_box{
+      height: auto;
       margin-left: 50px;
       flex: 1;
       display: flex;
       flex-direction: column;
       position: relative;
       top: -50px;
+      transition: 0.5s;
       .history_title{
         margin-bottom: 40px;
       }
       .order{
-        width: 480px;
-        height: 50px;
-        background: #999;
-        color: #fff;
-        border-radius: 5px;
-        padding: 0 15px;
-        line-height: 50px;
-        margin-bottom: 30px;
-        opacity: 0.5;
-        cursor: pointer;
-        transition: 0.3s;
-        &:hover{
-          opacity: 1;
-          h3{
-            color: #fff;
+        position: relative;
+        .order_item{
+          width: 480px;
+          background: rgba(#999, 0.5);
+          color: rgba(#fff, 0.5);
+          border-radius: 5px;
+          padding: 0 15px;
+          margin-bottom: 30px;
+          cursor: pointer;
+          transition: 0.3s;
+          position: relative;
+          .order_number, .time{
+            line-height: 50px;
+          }
+          &:hover{
+            background: #999;
+            h3{
+              color: #fff;
+            }
+          }
+          &.active{
+            background: rgb(255, 219, 99);
+            h3{
+              color: #333;
+            }
           }
         }
         h3{
+          user-select: none;
           transition: 0.3s;
-          color: #555;
+          color: rgba(#555, 0.5);
           font-weight: 500;
           display: inline-block;
           &.time{
             text-align: right;
             float: right;
+          }
+        }
+        .details{
+          position: absolute;
+          left: 600px;
+          top: -50px;
+          letter-spacing: 0.1em;
+          opacity: 0;
+          visibility: hidden;
+          &.show{
+            opacity: 1;
+            visibility: visible;
+          }
+          .contact_info, .attraction_info{
+            background: rgba(#000, 0.85);
+            border-radius: 10px;
+            padding: 3px 20px 10px 20px;
+            h5{
+              user-select: none;
+              font-weight: 400;
+              font-size: 17px;
+              color: rgb(255, 244, 150);
+              margin-top:10px;
+              margin-bottom: 3px;
+            }
+            p{
+              user-select: none;
+              font-size: 15px;
+              color: #fff;
+              opacity: 0.9;
+            }
+          }
+          .attraction_info{
+            background: rgba(#000, 0.6);
+            .arrow_down{
+              margin: 10px 0 0 0;
+              display: inline-block;
+              opacity: 0.3;
+              transition: 0.3s;
+              &:hover{
+                opacity: 0.8;
+              }
+              i{
+                cursor: pointer;
+                color: #fff;
+                z-index: 10;
+                display: block;
+                margin: -8px 0;
+                &.i_rotate{
+                  transform: rotate(180deg);
+                }
+              }
+            }
+            .attraction_img{
+              border: 1.5px solid #fff;
+              border-radius: 10px;
+              margin-top: 5px;
+              margin-bottom: 10px;
+              width: 100%;
+              height: 150px;
+              background-image: url("../images/Picture.png");
+              background-position: center;
+              background-size: cover;
+              background-repeat: no-repeat;
+              transition: height 0.5s;
+              &.attraction_img_hide{
+                height: 0px;
+                border: 0px solid #fff;
+              }
+            }
+            hr{
+              margin: 20px 0;
+              transform: scaleX(0.9);
+            }
+          }
+          hr{
+            margin-top:15px;
+            margin-bottom: 15px;
+            transform: scaleX(1.1);
           }
         }
       }
