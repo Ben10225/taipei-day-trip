@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}會員頁面{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="/css/member.css">
+{% endblock %}
+
+{% block section %}
+<section>
+  <div class="member_box">
+    <div class="img_box">
+      <div class="img">
+        <i class="fa-solid fa-user-tie"></i>
+      </div>
+    </div>
+    <div class="user_box">
+      <div class="input_row">
+        <h6 class="email_label">email</h6>
+        <input type="text" class="email_input" disabled>
+      </div>
+      <div class="input_row">
+        <h6 class="name_label">name</h6>
+        <input type="text" class="name_input">
+      </div>
+      <button class="save_name" onclick="changeUserName()">Save</button>
+    </div>
+  </div>
+  <div class="history_box">
+    <h2 class="history_title">歷史訂單</h2>
+    <!-- <div class="order">
+      <h3 class="order_number">order_number</h3>
+      <h3 class="time">time</h3>
+      <div class="details">
+
+      </div>
+    </div> -->
+  </div>
+</section>
+<footer>
+  <p>COPYRIGHT © 2022 台北一日遊</p>
+</footer>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="/js/member/member.js"></script>
+{% endblock %}

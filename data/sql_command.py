@@ -59,7 +59,7 @@ delete_booking_by_bids = "DELETE FROM bookings WHERE bid in %s"
 select_name_email_by_uuid = "SELECT name, email FROM users WHERE uuid=%s"
 
 # order
-insert_payment = "INSERT INTO payment (order_number, total_price, contact_name, contact_email, contact_phone, status) VALUES(%s, %s, %s, %s, %s, %s);"
+insert_payment = "INSERT INTO payment (order_number, uuid, total_price, contact_name, contact_email, contact_phone, status) VALUES(%s, %s, %s, %s, %s, %s, %s);"
 
 select_payment_id = "SELECT LAST_INSERT_ID(payment_id) from payment order by LAST_INSERT_ID(payment_id) DESC LIMIT 1;"
 
@@ -73,4 +73,15 @@ FROM payment WHERE payment_id=%s AND order_number=%s
 select_trips_by_id_and_num = """
 SELECT attraction_id, attraction_name, attraction_address, attraction_image, attraction_price, attraction_date, attraction_time
 FROM trips WHERE tid=%s AND trip_order_number=%s
+"""
+
+# history
+select_payment_by_uuid_group = """
+SELECT payment_id, order_number, time FROM payment 
+WHERE uuid=%s GROUP BY payment_id
+ORDER BY payment_id DESC
+"""
+
+update_name = """
+UPDATE users SET name=%s WHERE uuid=%s;
 """

@@ -28,7 +28,7 @@ function getBooking(){
   .then((data) => {
     if(data.data && !data.empty){
       createBookingDOM(data);
-      getUserInfo();
+      getUserInfo(contactName, contactEmail);
       preventBtn();
       return
     }
@@ -73,7 +73,7 @@ function createBooking(id, date, time, status){
 }
 
 
-function deleteBooking(bid){
+function deleteBooking(bid, status){
   fetch("/api/booking", {
     method: "delete",
     headers: {
@@ -85,7 +85,7 @@ function deleteBooking(bid){
   })
   .then((response) => response.json())
   .then((data) => {
-    if(data.pass){
+    if(status === "order"){
       return
     }
     if(data.ok){
@@ -99,13 +99,13 @@ function deleteBooking(bid){
 }
 
 
-function getUserInfo(){
-  fetch("/api/booking/getinfo")
+function getUserInfo(nameDOM, emailDOM){
+  return fetch("/api/booking/getinfo")
   .then((response) => response.json())
   .then((data) => {
     if(data.data){
-      contactName.value = data.data.name;
-      contactEmail.value = data.data.email;
+      nameDOM.value = data.data.name;
+      emailDOM.value = data.data.email;
     }
     if(data.error){
       window.location.href = "/";
@@ -297,4 +297,5 @@ export default {
   verifyInfo,
   deleteBooking,
   bidLst,
+  getUserInfo,
 }

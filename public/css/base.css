@@ -234,6 +234,7 @@
 }
 .wrapper nav .nav_bar ul {
   float: right;
+  display: none;
 }
 .wrapper nav .nav_bar ul li {
   margin-left: 13px;
@@ -246,6 +247,11 @@
 }
 .wrapper nav .nav_bar ul li.li_out {
   display: none;
+}
+.wrapper nav .nav_bar ul li i {
+  font-size: 19px;
+  position: relative;
+  top: 1px;
 }
 .wrapper .nav_box {
   height: 54px;

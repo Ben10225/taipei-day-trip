@@ -226,6 +226,7 @@
       }
       ul{
         float: right;
+        display: none;
         li{
           margin-left: 13px;
           display: inline-block;
@@ -234,9 +235,13 @@
           line-height: 34px;
           color: #666666;
           cursor: pointer;
-          // display: none;
           &.li_out{
             display: none;
+          }
+          i{
+            font-size: 19px;
+            position: relative;
+            top: 1px;
           }
         }
       }

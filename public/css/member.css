@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+.wrapper {
+  display: block;
+}
+.wrapper section {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 150px 0 150px;
+}
+.wrapper section .member_box {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 100px;
+  padding-bottom: 100px;
+}
+.wrapper section .member_box .img_box {
+  width: 180px;
+  height: 200px;
+  margin: 30px 0;
+  border: 2px solid rgba(153, 153, 153, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.wrapper section .member_box .img_box .img .fa-user-tie {
+  font-size: 160px;
+  color: #555;
+}
+.wrapper section .member_box .user_box {
+  position: relative;
+}
+.wrapper section .member_box .user_box .input_row {
+  position: relative;
+}
+.wrapper section .member_box .user_box .input_row h6 {
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  font-size: 16px;
+  font-weight: 200;
+  background: #fff;
+  padding: 0 5px;
+  letter-spacing: 0.05em;
+  color: #444;
+}
+.wrapper section .member_box .user_box .input_row input {
+  width: 300px;
+  font-size: 15px;
+  padding: 12px 10px 8px 10px;
+  margin: 15px 0;
+  border-radius: 5px;
+  border: 1.2px solid rgba(153, 153, 153, 0.5);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+}
+.wrapper section .member_box .user_box .input_row input.email_input {
+  color: rgba(153, 153, 153, 0.7);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: not-allowed;
+}
+.wrapper section .member_box .user_box .input_row input:focus {
+  outline: none;
+  border-color: #55a1e0;
+  box-shadow: 0 0 10px #9ecaed;
+}
+.wrapper section .member_box .user_box .save_name {
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 8px 10px;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: none;
+  background: rgb(50, 113, 49);
+  color: #fff;
+  opacity: 0.5;
+  transition: 0.4s;
+  letter-spacing: 0.1em;
+}
+.wrapper section .member_box .user_box .save_name:hover {
+  opacity: 1;
+}
+.wrapper section .history_box {
+  margin-left: 50px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -50px;
+}
+.wrapper section .history_box .history_title {
+  margin-bottom: 40px;
+}
+.wrapper section .history_box .order {
+  width: 480px;
+  height: 50px;
+  background: #999;
+  color: #fff;
+  border-radius: 5px;
+  padding: 0 15px;
+  line-height: 50px;
+  margin-bottom: 30px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.wrapper section .history_box .order:hover {
+  opacity: 1;
+}
+.wrapper section .history_box .order:hover h3 {
+  color: #fff;
+}
+.wrapper section .history_box .order h3 {
+  transition: 0.3s;
+  color: #555;
+  font-weight: 500;
+  display: inline-block;
+}
+.wrapper section .history_box .order h3.time {
+  text-align: right;
+  float: right;
+}
+.wrapper footer {
+  width: 100%;
+  height: 104px;
+  background: #757575;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  nav {
+    justify-content: start !important;
+    width: 100% !important;
+  }
+  nav .nav_bar {
+    width: 100vw !important;
+    display: inline !important;
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .nav_box {
+    height: 54px !important;
+  }
+}/*# sourceMappingURL=member.css.map */

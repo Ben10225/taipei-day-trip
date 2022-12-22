@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
 
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css' integrity='sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==' crossorigin='anonymous'/>
   <link rel="stylesheet" href="/css/base.css">
   {% block css %}{% endblock %}
 </head>
@@ -50,6 +51,9 @@
       <div class="nav_bar">
         <a href="/">台北一日遊</a>
         <ul>
+          <li class="member_icon li_out">
+            <i class="fa-solid fa-user-gear"></i>
+          </li>
           <li class="schedule li_out" onclick="toBooking()">預定行程</li>
           <li class="sign_in_up li_out" onclick="showSignIn();">登入/註冊</li>
           <li class="sign_out li_out" onclick="signOut();">登出系統</li>

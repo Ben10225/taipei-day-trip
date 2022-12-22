@@ -3,9 +3,10 @@ from api import *
 
 app = Flask(__name__, static_folder="public", static_url_path="/")
 app.register_blueprint(router_page_attractions)
-app.register_blueprint(router_page_member)
+app.register_blueprint(router_page_auth)
 app.register_blueprint(router_page_booking)
 app.register_blueprint(router_page_order)
+app.register_blueprint(router_page_member)
 
 
 app.config["JSON_AS_ASCII"]=False
@@ -31,6 +32,10 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+
+@app.route("/member")
+def member():
+	return render_template("member.html")
 
 if __name__ == "__main__":
 	app.run(port=3000, host="0.0.0.0", debug=True)

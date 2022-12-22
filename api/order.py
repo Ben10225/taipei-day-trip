@@ -11,7 +11,8 @@ router_page_order = Blueprint("router_page_order", __name__, template_folder="te
 @router_page_order.route("/api/orders", methods=["post"])
 def create_order():
   try:
-    jwt_verify(request.cookies.get("token"))
+    payload = jwt_verify(request.cookies.get("token"))
+    uuid = payload["sub"]
     prime = request.json['prime']
     order = request.json['order']
 
@@ -43,7 +44,7 @@ def create_order():
       status = json.loads(r.text)["status"]
 
       if status != 0:
-        create_orders(order, False)
+        number, payment_id = create_orders(order, uuid, False)
         result = {
           "number": number + "-" + str(payment_id),
           "payment": {
@@ -53,7 +54,7 @@ def create_order():
         }
         return {"data": result}, 200
 
-      number, payment_id = create_orders(order, True)
+      number, payment_id = create_orders(order, uuid, True)
       result = {
         "number": number + "-" + str(payment_id),
         "payment": {

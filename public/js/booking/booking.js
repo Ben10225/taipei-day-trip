@@ -209,7 +209,7 @@ function onSubmit(event) {
       }
       if(data.data){
         let lst = booking.bidLst;
-        booking.deleteBooking(lst);
+        booking.deleteBooking(lst, "order");
         window.location = `/thankyou?number=${data.data.number}`;
       }
     })

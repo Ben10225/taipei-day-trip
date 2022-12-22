@@ -2,6 +2,7 @@ import bookingJS from "../booking/booking_func.js"
 import attr from "../attraction/attr_func.js"
 
 // dom
+const ul = document.querySelector("ul");
 const signInbtn = document.querySelector(".btn.si");
 const signUpbtn = document.querySelector(".btn.su");
 const signInPageBox = document.querySelector(".page_box.si");
@@ -10,6 +11,7 @@ const signInMsg = document.querySelector(".msg.si");
 const signUpMsg = document.querySelector(".msg.su");
 const signInUpLi = document.querySelector(".sign_in_up");
 const signOutLi = document.querySelector(".sign_out");
+const memberIcon = document.querySelector(".member_icon");
 const signPage = document.querySelector(".sign_page");
 const schedule = document.querySelector(".schedule");
 const SIcautionBox = document.querySelector(".caution_box.si");
@@ -129,7 +131,6 @@ function pressEnter(e, callback, status){
 
 /*  sign in  */
 function signIn(){
-
   let validatedEmail = EmailPattern.test(SIEmail.value);
   let validatedPwd = PwdPattern.test(SIPwd.value);
 
@@ -248,9 +249,12 @@ function auth(needRefresh, page){
   return fetch("/api/user/auth")
   .then((response) => response.json())
   .then((data) => {
+    ul.style = "display: block;"
     schedule.classList.remove("li_out");
     if(data.ok){
       signOutLi.classList.remove("li_out");
+      memberIcon.classList.remove("li_out");
+      memberIconInit();
       userSignIn = true;
       if(page === "attraction"){
         attr.getReserveData();
@@ -265,7 +269,7 @@ function auth(needRefresh, page){
         attr.reserveBtn.style.opacity = "1";
         attr.reserveBtn.style.pointerEvents = "auto";
         return;
-      }else if(page === "booking" || page === "thankyou"){
+      }else if(page === "booking" || page === "thankyou" || page === "member"){
         window.location = "/";
       }
     }
@@ -360,6 +364,13 @@ function bookingRepeatOut(){
 }
 
 
+function memberIconInit(){
+  memberIcon.onclick = ()=>{
+    window.location = "/member";
+  }
+}
+
+
 
 export default {
   signIn,
@@ -374,4 +385,5 @@ export default {
   toBooking,
   bookingRepeatIn,
   bookingRepeatOut,
+  memberIconInit,
 }
