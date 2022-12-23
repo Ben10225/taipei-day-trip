@@ -22,7 +22,7 @@
   align-items: center;
   flex-direction: column;
   margin-right: 100px;
-  padding-bottom: 100px;
+  padding-bottom: 155px;
 }
 .wrapper section .member_box .img_box {
   width: 180px;
@@ -157,19 +157,20 @@
 .wrapper section .history_box .order .details {
   position: absolute;
   left: 600px;
-  top: -50px;
+  top: -100px;
   letter-spacing: 0.1em;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  pointer-events: none;
 }
 .wrapper section .history_box .order .details.show {
-  opacity: 1;
-  visibility: visible;
+  pointer-events: auto;
 }
 .wrapper section .history_box .order .details .contact_info, .wrapper section .history_box .order .details .attraction_info {
   background: rgba(0, 0, 0, 0.85);
   border-radius: 10px;
   padding: 3px 20px 10px 20px;
+  opacity: 0;
+  visibility: hidden;
 }
 .wrapper section .history_box .order .details .contact_info h5, .wrapper section .history_box .order .details .attraction_info h5 {
   -webkit-user-select: none;
@@ -191,8 +192,24 @@
   color: #fff;
   opacity: 0.9;
 }
+.wrapper section .history_box .order .details .contact_info {
+  transition: 0.4s;
+  opacity: 0;
+  visibility: hidden;
+}
+.wrapper section .history_box .order .details .contact_info.contact_info_show {
+  opacity: 1;
+  visibility: visible;
+}
 .wrapper section .history_box .order .details .attraction_info {
   background: rgba(0, 0, 0, 0.6);
+  transition: 0.4s;
+  opacity: 0;
+  visibility: hidden;
+}
+.wrapper section .history_box .order .details .attraction_info.attraction_info_show {
+  opacity: 1;
+  visibility: visible;
 }
 .wrapper section .history_box .order .details .attraction_info .arrow_down {
   margin: 10px 0 0 0;
@@ -228,7 +245,7 @@
 }
 .wrapper section .history_box .order .details .attraction_info .attraction_img.attraction_img_hide {
   height: 0px;
-  border: 0px solid #fff;
+  border: 0px solid rgba(255, 255, 255, 0.8);
 }
 .wrapper section .history_box .order .details .attraction_info hr {
   margin: 20px 0;
@@ -237,16 +254,62 @@
 .wrapper section .history_box .order .details hr {
   margin-top: 15px;
   margin-bottom: 15px;
-  transform: scaleX(1.1);
+  border: 0.5px solid #888;
+  transform: scaleX(0);
+}
+.wrapper section .history_box .order .details hr.hr_ani {
+  -webkit-animation: hrIn 0.8s forwards;
+          animation: hrIn 0.8s forwards;
+}
+.wrapper section .history_box .order .details hr.hr_ani_out {
+  -webkit-animation: hrOut 0.9s 0.7s both;
+          animation: hrOut 0.9s 0.7s both;
+}
+@-webkit-keyframes hrIn {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1.1);
+  }
+}
+@keyframes hrIn {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1.1);
+  }
+}
+@-webkit-keyframes hrOut {
+  0% {
+    transform: scaleX(1.1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes hrOut {
+  0% {
+    transform: scaleX(1.1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
 }
 .wrapper footer {
+  position: relative;
+  bottom: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   width: 100%;
   height: 104px;
   background: #757575;
   display: grid;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
   color: #fff;
   font-size: 16px;
   font-weight: 700;

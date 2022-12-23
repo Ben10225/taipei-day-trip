@@ -10,16 +10,22 @@ const arrows = document.querySelectorAll(".arrow_down");
 const arrowsIcon = document.querySelectorAll(".arrow_down i");
 const attractionImages = document.querySelectorAll(".attraction_img");
 const order_items = document.querySelectorAll(".order_item");
+const bigHr = document.querySelectorAll(".big_hr");
+const contactInfo = document.querySelectorAll(".contact_info");
+const attractionInfo = document.querySelectorAll(".attraction_info");
+
 
 
 let originName = null;
 let tempHeight = 0;
-// let deg = 0;
+let tempClick = null;
+let ct =0;
 
-const originHeight = historyBox.offsetHeight;
+
 setHistoryBoxHeightAdd(0, 0);
 attractionImageArrow();
 orderItemInit();
+hideDetailsStart();
 
 
 function getHistoryOrders(){
@@ -162,26 +168,79 @@ function attractionImageArrow(){
 function orderItemInit(){
   order_items.forEach((order, i)=>{
     order.onclick = ()=>{
+      if(bigHr[i].classList.contains("hr_ani_out") && !order_items[i].classList.contains("active")){
+        bigHr[i].classList.remove("hr_ani_out");
+      }
+
+      ct++ ;
       order.classList.toggle("active");
       details[i].classList.toggle("show");
+
+      setTimeout(()=>{
+        bigHr[i].classList.toggle("hr_ani");
+        // bigHr[tempClick].classList.toggle("hr_ani_out");
+      },100)
+
+      setTimeout(()=>{
+        contactInfo[i].classList.toggle("contact_info_show");
+      }, 400)
+
+      setTimeout(()=>{
+        attractionInfo[i].classList.toggle("attraction_info_show");
+      }, 700)
+
       setHistoryBoxHeightAdd(80*i, i);
       arrowsIcon.forEach(icon=>{
         icon.style = `transform: rotate(0deg);`;
       })
 
-      order_items.forEach((order, j)=>{
-        if(j != i){
-          order.classList.remove("active");
-          details[j].classList.remove("show");
+      // console.log(tempClick, i)
+      if(ct > 1){
+        if(tempClick !== i){
+          details[tempClick].classList.toggle("show");
+          // console.log(tempClick);
+          order_items[tempClick].classList.toggle("active");
+          contactInfo[tempClick].classList.remove("contact_info_show");
+          attractionInfo[tempClick].classList.remove("attraction_info_show");
+          bigHr[tempClick].classList.remove("hr_ani");
+          // bigHr[tempClick].classList.toggle("hr_ani_out");
           attractionImageArrow();
-          attractionImages[j*2].classList.add("attraction_img_hide");
-          attractionImages[j*2+1].classList.add("attraction_img_hide");
+          attractionImages[tempClick*2].classList.add("attraction_img_hide");
+          attractionImages[tempClick*2+1].classList.add("attraction_img_hide");
+          tempClick = null;
+
+          order_items.forEach((it)=>{
+            it.style = "pointer-events: none;";
+            setTimeout(()=>{
+              it.style = "pointer-events: auto;";
+            }, 1000)
+          })
+          // return
+        }else if(tempClick === i){
+          // order_items[tempClick].classList.toggle("active");
+          // bigHr[tempClick].classList.toggle("hr_ani");
+          bigHr[tempClick].classList.toggle("hr_ani_out");
+          // bigHr[tempClick].classList.toggle("hr_ani");
+          tempClick = null;
+          ct = 0;
         }
-      })
-      if(!order.classList.contains("active")){
-        setHistoryBoxHeightMinus(0);
       }
+      if(!order.classList.contains("active")){
+        setHistoryBoxHeightMinus(0,0);
+      }
+      tempClick = i;
     }
+  })
+}
+
+
+function hideDetailsStart(){
+  // details.forEach(detail => {
+  //   detail.style = "display: none";
+  // })
+  historyBox.style = "display: none";
+  setTimeout(()=>{
+    historyBox.style = "display: block";
   })
 }
 
