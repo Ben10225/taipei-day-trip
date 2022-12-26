@@ -16,13 +16,24 @@ def get_history():
     if not orders:
       return {"data": None}, 200
 
+    # "attractionName": order["attraction_name"],
+
     history = []
+
     for order in orders:
+      attractions_info = History.get_user_orders_attractions(order["payment_id"], order["order_number"])
+
       item = {
         "orderNumber": order["order_number"]+ "-" + str(order["payment_id"]),
+        "totalPrice": order["total_price"],
+        "contactName": order["contact_name"],
+        "contactEmail": order["contact_email"],
+        "contactPhone": order["contact_phone"],
+        "trips": attractions_info,
         "time": str(order["time"])
       }
       history.append(item)
+      
     return {"data": history}, 200
 
 

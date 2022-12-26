@@ -77,10 +77,21 @@ FROM trips WHERE tid=%s AND trip_order_number=%s
 
 # history
 select_payment_by_uuid_group = """
-SELECT payment_id, order_number, time FROM payment 
-WHERE uuid=%s GROUP BY payment_id
-ORDER BY payment_id DESC
+SELECT 
+p.payment_id, p.order_number, p.total_price, p.contact_name, p.contact_email, p.contact_phone, p.time 
+FROM payment AS p
+WHERE uuid=%s GROUP BY p.payment_id
+ORDER BY p.payment_id DESC
 """
+
+select_trips_by_tid_and_num = """
+SELECT 
+attraction_name, attraction_address, attraction_image, attraction_price ,attraction_date, attraction_time
+FROM trips
+WHERE tid=%s AND trip_order_number=%s
+ORDER BY tid DESC
+"""
+# 可能要給 trips auto increment
 
 update_name = """
 UPDATE users SET name=%s WHERE uuid=%s;

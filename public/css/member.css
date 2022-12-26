@@ -14,14 +14,19 @@
   background: #fff;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 100px 0 0 150px;
+  padding-top: 100px;
+  position: relative;
+  transition: 0.6s;
+}
+.wrapper section.move_left {
+  transform: translateX(-170px);
 }
 .wrapper section .member_box {
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-right: 100px;
+  margin-top: -50px;
   padding-bottom: 155px;
 }
 .wrapper section .member_box .img_box {
@@ -56,7 +61,7 @@
   color: #444;
 }
 .wrapper section .member_box .user_box .input_row input {
-  width: 300px;
+  width: 250px;
   font-size: 15px;
   padding: 12px 10px 8px 10px;
   margin: 15px 0;
@@ -99,14 +104,13 @@
   opacity: 1;
 }
 .wrapper section .history_box {
-  height: auto;
-  margin-left: 50px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  height: 500px;
   position: relative;
   top: -50px;
-  transition: 0.5s;
+  transition: 1s;
+}
+.wrapper section .history_box.move_left {
+  transform: translateX(-60px);
 }
 .wrapper section .history_box .history_title {
   margin-bottom: 40px;
@@ -115,6 +119,7 @@
   position: relative;
 }
 .wrapper section .history_box .order .order_item {
+  z-index: 0;
   width: 480px;
   background: rgba(153, 153, 153, 0.5);
   color: rgba(255, 255, 255, 0.5);
@@ -155,20 +160,23 @@
   float: right;
 }
 .wrapper section .history_box .order .details {
+  z-index: 1;
   position: absolute;
-  left: 600px;
+  left: 550px;
   top: -100px;
   letter-spacing: 0.1em;
   opacity: 1;
   pointer-events: none;
+  display: none;
 }
 .wrapper section .history_box .order .details.show {
   pointer-events: auto;
 }
 .wrapper section .history_box .order .details .contact_info, .wrapper section .history_box .order .details .attraction_info {
+  width: 320px;
   background: rgba(0, 0, 0, 0.85);
   border-radius: 10px;
-  padding: 3px 20px 10px 20px;
+  padding: 3px 15px 10px 15px;
   opacity: 0;
   visibility: hidden;
 }
@@ -313,6 +321,7 @@
   color: #fff;
   font-size: 16px;
   font-weight: 700;
+  z-index: -1;
 }
 
 @media screen and (max-width: 1200px) {
@@ -325,9 +334,57 @@
     display: inline !important;
     padding: 0 20px;
   }
+  section {
+    flex-direction: column;
+    align-items: center;
+  }
+  section.move_left {
+    transform: translateX(0px) !important;
+  }
+  section .member_box {
+    margin-right: 0 !important;
+  }
+  section .history_box {
+    margin-top: 40px !important;
+  }
+  section .history_box.move_left {
+    transform: translateX(-160px) !important;
+  }
+  section .order .order_item {
+    width: 250px !important;
+  }
+  section .order .order_item h3 {
+    font-size: 15px !important;
+  }
+  section .order .order_item .time {
+    display: none !important;
+  }
+  section .order .details {
+    left: 285px !important;
+  }
+  section .order .details .contact_info, section .order .details .attraction_info {
+    width: 270px !important;
+  }
 }
 @media screen and (max-width: 600px) {
   .nav_box {
     height: 54px !important;
+  }
+  section .history_box {
+    margin-top: 10px !important;
+    height: auto !important;
+  }
+  section .history_box.move_left {
+    transform: translateX(0px) !important;
+  }
+  section .order .details {
+    position: relative !important;
+    left: -8px !important;
+    top: 0 !important;
+    margin-bottom: 30px;
+  }
+  footer {
+    position: relative;
+    top: 0px !important;
   }
 }/*# sourceMappingURL=member.css.map */

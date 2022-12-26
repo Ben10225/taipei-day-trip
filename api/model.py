@@ -287,6 +287,26 @@ class History:
 			mycursor.close()
 			db.close()
 
+	def get_user_orders_attractions(tid, tnum):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_trips_by_tid_and_num, (tid, tnum))
+			attraction_infos = mycursor.fetchall()
+
+			if len(attraction_infos) > 0:
+				return attraction_infos
+			else:
+				return None
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
 	def update_user_name(uuid, name):
 		try:
 			db = pool.get_connection()
