@@ -10,6 +10,7 @@
 
 .wrapper{
   display: block;
+  overflow-x: hidden;
   section{
     width: 100%;
     background: #fff;
@@ -105,14 +106,14 @@
       }
     }
     .history_box{
-      height: 500px;
+      // height: 500px;
       // margin-left: 50px;
       // flex: 1;
       // display: flex;
       // flex-direction: column;
       position: relative;
       top: -50px;
-      transition: 1s;
+      transition: 1.2s;
       &.move_left{
         transform: translateX(-60px);
       }
@@ -327,7 +328,6 @@
     }
     .history_box{
       margin-top: 40px !important;
-      // height: auto !important;
       &.move_left{
         transform: translateX(-160px) !important;
       }
@@ -367,8 +367,6 @@
       }
     }
     .order{
-      .order_item{
-      }
       .details{
         position: relative !important;
         left: -8px !important;

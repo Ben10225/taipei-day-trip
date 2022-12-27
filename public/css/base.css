@@ -255,4 +255,13 @@
 }
 .wrapper .nav_box {
   height: 54px;
+}
+
+@media screen and (max-width: 600px) {
+  nav .nav_bar a {
+    font-size: 25px !important;
+  }
+  nav .nav_bar ul li {
+    margin-left: 3px !important;
+  }
 }/*# sourceMappingURL=base.css.map */

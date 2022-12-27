@@ -4,22 +4,15 @@ const nameLabel = document.querySelector(".name_label");
 const nameInput = document.querySelector(".name_input");
 const historyBox = document.querySelector(".history_box");
 const section = document.querySelector("section");
-const details = document.querySelectorAll(".details");
 
 const orders = document.querySelectorAll(".order");
 
 
 
 let originName = null;
-let tempHeight = 0;
 let tempClick = null;
 let ct =0;
-
-
-// setHistoryBoxHeightAdd(0, 0);
-// attractionImageArrow();
-// orderItemInit();
-// hideDetailsStart();
+let historyHeightGlobal = null;
 
 
 function getHistoryOrders(){
@@ -31,12 +24,13 @@ function getHistoryOrders(){
       return;
     }
     if(data.data){
-      // console.log(data.data)
       createHistoryDOM(data.data);
       setHistoryBoxHeightAdd(0, null);
       attractionImageArrow();
       orderItemInit();
       hideDetailsStart();
+    }else{
+      createHistoryDOM(false);
     }
   })
 }
@@ -44,95 +38,97 @@ function getHistoryOrders(){
 
 function createHistoryDOM(data){
   let html = "";
-  data.forEach((element, wholeIndex)=> {
-    let attractions = "";
-    element.trips.forEach((attr, i) => {
-      attractions += `
-      <h5 class="order_index">行程 <span>${i+1}</span></h5>
-      <p>景點： ${attr.attraction_name}</p>
-      <p>時間： ${attr.attraction_time}</p>
-      <p>費用： NT <span class="price">${attr.attraction_price}</span>$</p>
-      <p>地點： ${attr.attraction_address}</p>
-      <div class="arrow_down" index="${wholeIndex}">
-        <i class="fa-solid fa-chevron-down"></i>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-      <div class="attraction_img attraction_img_hide" 
-      style="background-image: url('${attr.attraction_image}');"></div>
-      `;
-      if(i != element.trips.length-1){
-        attractions += "<hr>"
-      }
-    })
-
-    let txt = `
-    <div class="order">
-      <div class="order_item">
-        <h3 class="order_number">${element.orderNumber}</h3>
-        <h3 class="time">${element.time.slice(0,-3)}</h3>
-      </div>
-      <div class="details">
-        <div class="contact_info">
-          <h5>訂單金額</h5>
-          <p>總金額： NT <span class="total_price">${element.totalPrice}</span>$</p>
-          <h5>聯絡人</h5>
-          <p>姓名： ${element.contactName}</p>
-          <p>信箱： ${element.contactEmail}</p>
-          <p>電話： ${element.contactPhone}</p>
+  if(data){
+    data.forEach((element, wholeIndex)=> {
+      let attractions = "";
+      element.trips.forEach((attr, i) => {
+        attractions += `
+        <h5 class="order_index">行程 <span>${i+1}</span></h5>
+        <p>景點： ${attr.attraction_name}</p>
+        <p>時間： ${attr.attraction_time}</p>
+        <p>費用： NT <span class="price">${attr.attraction_price}</span>$</p>
+        <p>地點： ${attr.attraction_address}</p>
+        <div class="arrow_down" index="${wholeIndex}">
+          <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-        <hr class="big_hr">
-        <div class="attraction_info">
-          ${attractions}
-        </div>
-      </div>
-    </div>
-    `;
-    html += txt;
-  });  
-  historyBox.insertAdjacentHTML('beforeEnd', html);
-
-  orders.forEach(order => {
-    order.addEventListener("click", (e)=>{
-      let orderNumber = order.children[0].textContent
-      fetch(`/api/order/${orderNumber}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.error){
-          return;
-        }
-        if(data.data){
-          // console.log(data.data);
+        <div class="attraction_img attraction_img_hide" 
+        style="background-image: url('${attr.attraction_image}');"></div>
+        `;
+        if(i != element.trips.length-1){
+          attractions += "<hr>"
         }
       })
-    })
-  })
+  
+      let txt = `
+      <div class="order">
+        <div class="order_item">
+          <h3 class="order_number">${element.orderNumber}</h3>
+          <h3 class="time">${element.time.slice(0,-3)}</h3>
+        </div>
+        <div class="details">
+          <div class="contact_info">
+            <h5>訂單金額</h5>
+            <p>總金額： NT <span class="total_price">${element.totalPrice}</span>$</p>
+            <h5>聯絡人</h5>
+            <p>姓名： ${element.contactName}</p>
+            <p>信箱： ${element.contactEmail}</p>
+            <p>電話： ${element.contactPhone}</p>
+          </div>
+          <hr class="big_hr">
+          <div class="attraction_info">
+            ${attractions}
+          </div>
+        </div>
+      </div>
+      `;
+      html += txt;
+    });  
+  }else{
+    let txt = `<div style="color: #666; font-size: 17px; width: 320px;">目前無歷史訂單</div>`;
+    html += txt;
+  }
+  
+  historyBox.insertAdjacentHTML('beforeEnd', html);
+
 }
 
 
 function setHistoryBoxHeightAdd(height, index){
   if(index === null){
-    historyBox.style = `${historyBox.offsetHeight}`
+    historyHeightGlobal = historyBox.offsetHeight;
+    historyBox.style = `height: ${historyHeightGlobal}px;`;
     return
   }
   let details = document.querySelectorAll(".details");
 
   let detailHeight = details[index].offsetHeight;
-  historyBox.style = `height: ${detailHeight + height}px`
-
+  let add = detailHeight + height;
+  if(add > historyHeightGlobal){
+    historyBox.style = `height: ${add}px`
+  }else{
+    historyBox.style = `height: ${historyHeightGlobal}px;`;
+  }
 }
 
 function setHistoryBoxHeightMinus(height, index){
   if(index === null){
     setTimeout(()=>{
-      historyBox.style = `${historyBox.offsetHeight}`
+      historyBox.style = `height: ${historyHeightGlobal}px`
     },700)
     return
   }
+
   let details = document.querySelectorAll(".details");
 
   let detailHeight = details[index].offsetHeight;
-  historyBox.style = `height: ${detailHeight - height +index*150}px`
 
+  let minus = detailHeight - height +index*150
+  if(minus > historyHeightGlobal){
+    historyBox.style = `height: ${minus}px`
+  }else{
+    historyBox.style = `height: ${historyHeightGlobal}px;`;
+  }
 }
 
 function attractionImageArrow(){
@@ -147,10 +143,10 @@ function attractionImageArrow(){
       let arrowWholeIndex = arrow.getAttribute("index");
       if(attractionImages[i].classList.contains("attraction_img_hide")){
         setHistoryBoxHeightAdd(150+ arrowWholeIndex*80, arrowWholeIndex);
-        tempHeight += 150;
+
       }else{
         setHistoryBoxHeightMinus(150+ arrowWholeIndex*80, arrowWholeIndex);
-        tempHeight -= 150;
+
       }
       deg += 180;
       attractionImages[i].classList.toggle("attraction_img_hide");
@@ -178,20 +174,9 @@ function orderItemInit(){
   let attractionInfo = document.querySelectorAll(".attraction_info");
   let details = document.querySelectorAll(".details");
 
-  // let attractionImages = document.querySelectorAll(".attraction_img");
-
-
   order_items.forEach((order, i)=>{
     order.onclick = ()=>{
-      if(!section.classList.contains("move_left")){
-        // section.classList.add("move_left");
-        // historyBox.classList.add("move_left");
-      }else{
-        // setTimeout(()=>{
-        //   section.classList.remove("move_left");
-        //   historyBox.classList.remove("move_left");
-        // }, 1200)
-      }
+
       if(bigHr[i].classList.contains("hr_ani_out") && !order_items[i].classList.contains("active")){
         bigHr[i].classList.remove("hr_ani_out");
       }
@@ -245,6 +230,9 @@ function orderItemInit(){
           tempImgs.forEach(img => {
             img.classList.add("attraction_img_hide");
           })
+          
+          details[tempClick].style = "display: none;";
+
           tempClick = null;
 
         }else if(tempClick === i){
@@ -269,12 +257,9 @@ function orderItemInit(){
 
 
 function hideDetailsStart(){
-  // details.forEach(detail => {
-  //   detail.style = "display: none";
-  // })
-  historyBox.style = "display: none";
+  historyBox.style.display = "none";
   setTimeout(()=>{
-    historyBox.style = "display: block";
+    historyBox.style.display = "block";
   })
 }
 
