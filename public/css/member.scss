@@ -29,7 +29,6 @@
       flex-direction: column;
       margin-right: 100px;
       margin-top: -50px;
-      // margin: 0 150px;
       padding-bottom: 155px;
       .img_box{
         width: 180px;
@@ -61,6 +60,9 @@
             padding: 0 5px;
             letter-spacing: 0.05em;
             color: #444;
+            &.email_label{
+              background: linear-gradient( #fff 58%, #fafafa 59%);
+            }
           }
           input{
             width: 250px;
@@ -106,11 +108,6 @@
       }
     }
     .history_box{
-      // height: 500px;
-      // margin-left: 50px;
-      // flex: 1;
-      // display: flex;
-      // flex-direction: column;
       position: relative;
       top: -50px;
       transition: 1.2s;
@@ -182,7 +179,7 @@
             opacity: 0;
             visibility: hidden;
             h5{
-              user-select: none;
+              // user-select: none;
               font-weight: 400;
               font-size: 17px;
               color: rgb(255, 244, 150);
@@ -190,10 +187,12 @@
               margin-bottom: 3px;
             }
             p{
-              user-select: none;
+              // user-select: none;
               font-size: 15px;
               color: #fff;
               opacity: 0.9;
+              text-indent: -3.65em;
+              padding: 0em 0em 0em 3.65em;
             }
           }
           .contact_info{

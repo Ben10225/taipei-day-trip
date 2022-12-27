@@ -4,9 +4,7 @@ const nameLabel = document.querySelector(".name_label");
 const nameInput = document.querySelector(".name_input");
 const historyBox = document.querySelector(".history_box");
 const section = document.querySelector("section");
-
-const orders = document.querySelectorAll(".order");
-
+const wait = document.querySelector(".wait");
 
 
 let originName = null;
@@ -24,12 +22,14 @@ function getHistoryOrders(){
       return;
     }
     if(data.data){
+      wait.remove();
       createHistoryDOM(data.data);
       setHistoryBoxHeightAdd(0, null);
       attractionImageArrow();
       orderItemInit();
       hideDetailsStart();
     }else{
+      wait.remove();
       createHistoryDOM(false);
     }
   })
@@ -123,7 +123,7 @@ function setHistoryBoxHeightMinus(height, index){
 
   let detailHeight = details[index].offsetHeight;
 
-  let minus = detailHeight - height +index*150
+  let minus = detailHeight - height + index*159;
   if(minus > historyHeightGlobal){
     historyBox.style = `height: ${minus}px`
   }else{
@@ -233,10 +233,19 @@ function orderItemInit(){
           
           details[tempClick].style = "display: none;";
 
+          attractionImageArrow();
+
           tempClick = null;
 
         }else if(tempClick === i){
           bigHr[tempClick].classList.toggle("hr_ani_out");
+          let tempImgs = attractionInfo[tempClick].querySelectorAll(".attraction_img");
+          tempImgs.forEach(img => {
+            img.classList.add("attraction_img_hide");
+          })
+
+          attractionImageArrow();
+
           tempClick = null;
           ct = 0;
         }

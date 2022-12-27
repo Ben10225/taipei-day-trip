@@ -4,6 +4,8 @@ from flask import *
 from api.model import *
 from utils.jwt import jwt_verify
 from utils.create_payment import create_orders
+from dotenv import load_dotenv
+load_dotenv()
 
 
 router_page_order = Blueprint("router_page_order", __name__, template_folder="templates")
@@ -21,7 +23,7 @@ def create_order():
 
     try:
       url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
-      partner_key = "partner_xx7qA40I1lNDglRMGRM6KcfFGFhE4xR3JKExEZwiuA4p18TCBBadXC4m"
+      partner_key = os.getenv("partner_kry")
       headers = {
         'Content-Type': 'application/json',
         "x-api-key": partner_key

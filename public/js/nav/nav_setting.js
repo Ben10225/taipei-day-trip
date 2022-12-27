@@ -18,6 +18,7 @@ const SIcautionBox = document.querySelector(".caution_box.si");
 const SUcautionBox = document.querySelector(".caution_box.su");
 
 const repeatPageBox = document.querySelector(".page_box_c.repeat");
+const wait = document.querySelector(".wait");
 
 // input
 const SUName = document.querySelector(".name.su");
@@ -252,6 +253,7 @@ function auth(needRefresh, page){
     ul.style = "display: block;"
     schedule.classList.remove("li_out");
     if(data.ok){
+      wait.remove();
       signOutLi.classList.remove("li_out");
       memberIcon.classList.remove("li_out");
       memberIconInit();
@@ -266,11 +268,14 @@ function auth(needRefresh, page){
     if(data.error){
       signInUpLi.classList.remove("li_out");
       if(page === "attraction"){
+        wait.remove();
         attr.reserveBtn.style.opacity = "1";
         attr.reserveBtn.style.pointerEvents = "auto";
         return;
       }else if(page === "booking" || page === "thankyou" || page === "member"){
         window.location = "/";
+      }else{
+        wait.remove();
       }
     }
     if(needRefresh){
