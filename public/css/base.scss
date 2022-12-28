@@ -276,23 +276,22 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        animation: waitAni 1.5s infinite both;
+        animation: waitAni 1.5s infinite;
         transform: scale(0.6);
       }
       @keyframes waitAni {
-        1%{background-image: url('../images/waiting/ani1.svg')}
-        9%{background-image: url('../images/waiting/ani2.svg')}
-        17%{background-image: url('../images/waiting/ani3.svg')}
-        25%{background-image: url('../images/waiting/ani4.svg')}
-        33%{background-image: url('../images/waiting/ani5.svg')}
-        41%{background-image: url('../images/waiting/ani6.svg')}
-        49%{background-image: url('../images/waiting/ani7.svg')}
-        57%{background-image: url('../images/waiting/ani8.svg')}
-        65%{background-image: url('../images/waiting/ani9.svg')}
-        73%{background-image: url('../images/waiting/ani10.svg')}
-        81%{background-image: url('../images/waiting/ani11.svg')}
-        90%{background-image: url('../images/waiting/ani12.svg')}
-        100%{background-image: url('../images/waiting/ani1.svg')}
+        1%{background-image: url('../images/waiting/ani1.svg');}
+        9%{background-image: url('../images/waiting/ani2.svg');}
+        18%{background-image: url('../images/waiting/ani3.svg');}
+        27%{background-image: url('../images/waiting/ani4.svg');}
+        36%{background-image: url('../images/waiting/ani5.svg');}
+        45%{background-image: url('../images/waiting/ani6.svg');}
+        54%{background-image: url('../images/waiting/ani7.svg');}
+        63%{background-image: url('../images/waiting/ani8.svg');}
+        72%{background-image: url('../images/waiting/ani9.svg');}
+        81%{background-image: url('../images/waiting/ani10.svg');}
+        90%{background-image: url('../images/waiting/ani11.svg');}
+        100%{background-image: url('../images/waiting/ani12.svg');}
       }
     }
   }

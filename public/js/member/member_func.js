@@ -17,7 +17,7 @@ let historyHeightGlobal = null;
 
 
 function getHistoryOrders(){
-  fetch("/api/history")
+  fetch("/api/member")
   .then((response) => response.json())
   .then((data) => {
     originName = nameInput.value;
@@ -168,8 +168,8 @@ function attractionImageArrow(){
   })
 }
 
-function orderItemInit(){
 
+function orderItemInit(){
   let arrowsIcon = document.querySelectorAll(".arrow_down i");
   let order_items = document.querySelectorAll(".order_item");
   let bigHr = document.querySelectorAll(".big_hr");
@@ -304,7 +304,7 @@ function changeUserName(){
       }, 1000)
     return
   }
-  fetch("/api/history/name", {
+  fetch("/api/member/name", {
     method: "post",
     headers: {
       'Content-Type': 'application/json',
@@ -330,6 +330,7 @@ function changeUserName(){
 function uploadInit(){
   inputImg.addEventListener("change", upload)
 }
+
 
 async function upload(e){
   userIcon.remove();
@@ -366,7 +367,7 @@ async function getUserImage(){
 
 
 function getS3Url(){
-  return fetch("/api/history/getimg")
+  return fetch("/api/member/getimg")
   .then((response) => response.json())
   .then((data) => {
     if(data.data){

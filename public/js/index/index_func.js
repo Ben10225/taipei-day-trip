@@ -145,7 +145,6 @@ function catchAttractions(pg, keyword){
 
 /*  create DOM with appendChild  */
 function createDOM(data, i, index){
-  
   // preload
   let link = document.createElement('link');
   link.href = data.data[i].images[0];

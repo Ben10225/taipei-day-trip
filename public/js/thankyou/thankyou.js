@@ -9,6 +9,7 @@ window.signUp = nav.signUp;
 window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 
+nav.loadWaitingSvg();
 nav.hideDisplayBug();
 thankyou.setValue();
 thankyou.getOrder(thankyou.value);

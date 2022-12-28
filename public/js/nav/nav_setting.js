@@ -264,7 +264,7 @@ function auth(needRefresh, page){
         wait.remove();
         bookingJS.getBooking();
       }else if(page === "member"){
-        
+
       }
     }
     if(data.error){
@@ -378,6 +378,17 @@ function memberIconInit(){
 }
 
 
+function loadWaitingSvg(){
+  for(let i=0;i<12;i++){
+  // preload
+  let link = document.createElement('link');
+  link.href = `../images/waiting/ani${i+1}.svg`;
+  link.rel = "preload";
+  link.as = "image";
+  document.head.appendChild(link);
+  }
+}
+
 
 export default {
   signIn,
@@ -393,4 +404,5 @@ export default {
   bookingRepeatIn,
   bookingRepeatOut,
   memberIconInit,
+  loadWaitingSvg,
 }

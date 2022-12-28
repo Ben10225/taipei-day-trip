@@ -11,8 +11,8 @@ window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 window.changeUserName = member.changeUserName;
 
+nav.loadWaitingSvg();
 nav.hideDisplayBug();
-
 
 (async()=>{
   await nav.auth(false, "member");

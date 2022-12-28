@@ -10,6 +10,7 @@ window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 window.onSubmit = onSubmit;
 
+nav.loadWaitingSvg();
 nav.hideDisplayBug();
 booking.jumpToNextInput();
 booking.verifyInfo();
