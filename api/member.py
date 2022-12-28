@@ -1,9 +1,23 @@
 from flask import *
 from api.model import *
 from utils.jwt import *
+from werkzeug.utils import secure_filename
+import boto3
 
+
+from dotenv import load_dotenv
+load_dotenv()
+
+s3 = boto3.client('s3',
+  aws_access_key_id = os.getenv("aws_access_key_id"),
+  aws_secret_access_key = os.getenv("aws_secret_access_key"),
+  region_name = os.getenv("region_name")
+)
+
+BUCKET_NAME = 'bennnn'
 
 router_page_member = Blueprint("router_page_member", __name__, template_folder="templates")
+
 
 @router_page_member.route("/api/history")
 def get_history():
@@ -15,8 +29,6 @@ def get_history():
 
     if not orders:
       return {"data": None}, 200
-
-    # "attractionName": order["attraction_name"],
 
     history = []
 
@@ -33,7 +45,7 @@ def get_history():
         "time": str(order["time"])
       }
       history.append(item)
-      
+
     return {"data": history}, 200
 
 
@@ -67,3 +79,54 @@ def change_user_name():
     resp = make_response({"error": True, "message": "未登入狀態"}, 200)
     resp.set_cookie('token', '', 0)
     return resp
+
+
+@router_page_member.route("/api/history/getimg")
+def getimg():
+  try:
+    payload = jwt_verify(request.cookies.get("token"))
+    uuid = payload["sub"]
+
+    get_url = s3.generate_presigned_url(
+      "get_object",
+      Params = {
+        "Bucket": "bennnn",
+        "Key": uuid,
+      },                                  
+      ExpiresIn=3600)
+
+    return {"data": get_url}, 200
+
+  except Exception as e:
+    print(e)
+    resp = make_response({"error": True, "message": "未登入狀態"}, 200)
+    resp.set_cookie('token', '', 0)
+    return resp
+
+
+@router_page_member.route("/api/history/uploadimg")
+def uploadimg():
+  try:
+    payload = jwt_verify(request.cookies.get("token"))
+    uuid = payload["sub"]
+
+    put_url = s3.generate_presigned_url(
+      "put_object", 
+      Params = {"Bucket": "bennnn", "Key": uuid},
+      ExpiresIn = 3600,
+      HttpMethod = "PUT")
+
+    return {"data": put_url}, 200
+
+  except Exception as e:
+    print(e)
+    resp = make_response({"error": True, "message": "未登入狀態"}, 200)
+    resp.set_cookie('token', '', 0)
+    return resp
+
+
+# s3.upload_file(
+#   Filename = "public/images/Picture.png",
+#   Bucket = "bennnn",
+#   Key = "test2",
+# )

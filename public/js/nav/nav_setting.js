@@ -253,16 +253,18 @@ function auth(needRefresh, page){
     ul.style = "display: block;"
     schedule.classList.remove("li_out");
     if(data.ok){
-      wait.remove();
       signOutLi.classList.remove("li_out");
       memberIcon.classList.remove("li_out");
       memberIconInit();
       userSignIn = true;
       if(page === "attraction"){
         attr.getReserveData();
+        wait.remove();
       }else if(page === "booking"){
+        wait.remove();
         bookingJS.getBooking();
-        return;
+      }else if(page === "member"){
+        
       }
     }
     if(data.error){

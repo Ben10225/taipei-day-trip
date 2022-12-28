@@ -12,10 +12,13 @@ window.toBooking = nav.toBooking;
 window.changeUserName = member.changeUserName;
 
 nav.hideDisplayBug();
-member.inputStyleInit();
+
 
 (async()=>{
   await nav.auth(false, "member");
   await book.getUserInfo(member.nameInput, member.emailInput);
   member.getHistoryOrders();
+  member.inputStyleInit();
+  member.getUserImage();
+  member.uploadInit();
 })()

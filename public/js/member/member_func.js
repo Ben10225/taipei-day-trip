@@ -5,6 +5,9 @@ const nameInput = document.querySelector(".name_input");
 const historyBox = document.querySelector(".history_box");
 const section = document.querySelector("section");
 const wait = document.querySelector(".wait");
+const img = document.querySelector(".img");
+const inputImg = document.querySelector(".upload_img");
+const userIcon = document.querySelector(".fa-user-tie");
 
 
 let originName = null;
@@ -22,14 +25,14 @@ function getHistoryOrders(){
       return;
     }
     if(data.data){
-      wait.remove();
+      // wait.remove();
       createHistoryDOM(data.data);
       setHistoryBoxHeightAdd(0, null);
       attractionImageArrow();
       orderItemInit();
       hideDetailsStart();
     }else{
-      wait.remove();
+      // wait.remove();
       createHistoryDOM(false);
     }
   })
@@ -324,6 +327,58 @@ function changeUserName(){
 }
 
 
+function uploadInit(){
+  inputImg.addEventListener("change", upload)
+}
+
+async function upload(e){
+  userIcon.remove();
+  let uploadImg = e.target.files || e.dataTransfer.files;
+  img.style = `background-image: url('${window.URL.createObjectURL(uploadImg[0])}')`
+  window.URL.revokeObjectURL(uploadImg[0]);
+
+  let url = await getS3Url()
+  url = url.split("?")[0]
+
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: uploadImg[0],
+  })
+}
+
+
+async function getUserImage(){
+  let url = await getS3Url()
+  url = url.split("?")[0]
+
+  return fetch(url)
+  .then((response) => {
+    if(response.ok){
+      userIcon.remove();
+      img.style = `background-image: url('${response.url}')`
+    }
+    wait.remove();
+  })
+}
+
+
+function getS3Url(){
+  return fetch("/api/history/getimg")
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.data){
+      return data.data;
+    }
+    if(data.error){
+      window.location = "/";
+    }
+  })
+}
+
+
 export default {
   inputStyleInit,
   emailInput,
@@ -331,4 +386,6 @@ export default {
   getHistoryOrders,
   createHistoryDOM,
   changeUserName,
+  uploadInit,
+  getUserImage,
 }
