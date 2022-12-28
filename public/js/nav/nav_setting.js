@@ -261,10 +261,9 @@ function auth(needRefresh, page){
         attr.getReserveData();
         wait.remove();
       }else if(page === "booking"){
-        wait.remove();
         bookingJS.getBooking();
-      }else if(page === "member"){
-
+      }else if(page === "thankyou"){
+        wait.remove();
       }
     }
     if(data.error){

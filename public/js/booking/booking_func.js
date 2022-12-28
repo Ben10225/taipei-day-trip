@@ -13,8 +13,7 @@ const submitBtn = document.querySelector(".submit_btn");
 const contactName = document.querySelector(".contact_name");
 const contactEmail = document.querySelector(".contact_email");
 const contactMobile = document.querySelector(".contact_mobile");
-
-const creditCardNumber = document.querySelector(".credit_card_number");
+const wait = document.querySelector(".wait");
 
 const mobilePattern = /^((?=(09))[0-9]{10})$/;
 const emailPattern = /^\S+@\S+$/;
@@ -30,10 +29,12 @@ function getBooking(){
       createBookingDOM(data);
       getUserInfo(contactName, contactEmail);
       preventBtn();
+      wait.remove();
       return
     }
     if(data.data && data.empty){
       createEmptyBookingDOM(data);
+      wait.remove();
       return
     }
   })
