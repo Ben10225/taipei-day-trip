@@ -91,7 +91,6 @@ def getimg():
       },                                  
       ExpiresIn=3600,
     )
-
     return {"data": get_url}, 200
 
   except Exception as e:

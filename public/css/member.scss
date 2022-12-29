@@ -42,6 +42,24 @@
         position: relative;
         overflow: hidden;
         padding: 5px;
+        .img_wait{
+          width: 95%;
+          height: 97%;
+          border-radius: 7px;
+          position: absolute;
+          background: #333;
+          transition: 0.5s;
+          opacity: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          h3{
+            color: #fff;
+            font-weight: 400;
+            font-size: 24px;
+            letter-spacing: 0.05em;
+          }
+        }
         .img{
           width: 101%;
           height: 101%;

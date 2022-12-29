@@ -6,6 +6,7 @@ const historyBox = document.querySelector(".history_box");
 const section = document.querySelector("section");
 const wait = document.querySelector(".wait");
 const img = document.querySelector(".img");
+const imgWait = document.querySelector(".img_wait");
 const inputImg = document.querySelector(".upload_img");
 const userIcon = document.querySelector(".fa-user-tie");
 
@@ -325,8 +326,7 @@ function uploadInit(){
 async function upload(e){
   userIcon.remove();
   let uploadImg = e.target.files || e.dataTransfer.files;
-  img.style = `background-image: url('${window.URL.createObjectURL(uploadImg[0])}')`
-  window.URL.revokeObjectURL(uploadImg[0]);
+  imgWait.style = "opacity: 0.7";
 
   let url = await getS3Url()
   url = url.split("?")[0]
@@ -337,6 +337,13 @@ async function upload(e){
       'Content-Type': 'multipart/form-data',
     },
     body: uploadImg[0],
+  })
+  .then((response) => {
+    if(response.ok){
+      imgWait.style = "opacity: 0 !important";
+      img.style = `background-image: url('${window.URL.createObjectURL(uploadImg[0])}');`
+      window.URL.revokeObjectURL(uploadImg[0]);
+    }
   })
 }
 
