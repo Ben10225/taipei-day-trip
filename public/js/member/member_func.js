@@ -12,7 +12,7 @@ const userIcon = document.querySelector(".fa-user-tie");
 
 let originName = null;
 let tempClick = null;
-let ct =0;
+let ct = 0;
 let historyHeightGlobal = null;
 
 
@@ -25,14 +25,12 @@ function getHistoryOrders(){
       return;
     }
     if(data.data){
-      // wait.remove();
       createHistoryDOM(data.data);
       setHistoryBoxHeightAdd(0, null);
       attractionImageArrow();
       orderItemInit();
       hideDetailsStart();
     }else{
-      // wait.remove();
       createHistoryDOM(false);
     }
   })
@@ -277,14 +275,6 @@ function hideDetailsStart(){
 
 
 function inputStyleInit(){
-  emailInput.addEventListener("blur", ()=>{
-    if(!emailInput.value){
-      emailLabel.style = "left: 7px; top:24px; transition: 0.4s; font-size: 21px; color: #999;"
-    }
-  })
-  emailInput.addEventListener("focus", ()=>{
-    emailLabel.style = "left:8; top: 4; transition: 0.4s; font-size: 16px; color: #000;"
-  })
   nameInput.addEventListener("blur", ()=>{
     if(!nameInput.value){
       nameLabel.style = "left: 7px; top:22px; transition: 0.4s; font-size: 21px; color: #999; background: transparent;"

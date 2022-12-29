@@ -89,7 +89,8 @@ def getimg():
         "Bucket": os.getenv("bucket_name"),
         "Key": uuid,
       },                                  
-      ExpiresIn=3600)
+      ExpiresIn=3600,
+    )
 
     return {"data": get_url}, 200
 

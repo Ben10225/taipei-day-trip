@@ -16,6 +16,13 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"]=False
 
 
+@app.after_request 
+def after_request(response):
+	header = response.headers
+	header["Access-Control-Allow-Origin"] = "*"
+	return response
+
+
 # Pages
 @app.route("/")
 def index():
