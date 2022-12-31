@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}會員頁面{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="/css/member.css">
+{% endblock %}
+
+{% block section %}
+<section>
+  <div class="member_box">
+    <div class="img_box">
+      <div class="img_wait">
+        <h3>上傳中</h3>
+      </div>
+      <div class="img">
+        <i class="fa-solid fa-user-tie"></i>
+      </div>
+      <input type="file" class="upload_img" accept="image/gif, image/jpeg, image/png">
+    </div>
+    <div class="user_box">
+      <div class="input_row">
+        <h6 class="email_label">email</h6>
+        <input type="text" class="email_input" disabled>
+      </div>
+      <div class="input_row">
+        <h6 class="name_label">name</h6>
+        <input type="text" class="name_input">
+      </div>
+      <button class="save_name" onclick="changeUserName()">Save</button>
+    </div>
+  </div>
+  <div class="history_box">
+    <h2 class="history_title">歷史訂單</h2>
+    <!-- <div class="order">
+      <div class="order_item">
+        <h3 class="order_number">order_number</h3>
+        <h3 class="time">time</h3>
+      </div>
+      <div class="details">
+        <div class="contact_info">
+          <h5>訂單金額</h5>
+          <p>總金額： NT <span class="total_price">5500</span>$</p>
+          <h5>聯絡人</h5>
+          <p>姓名： Ben</p>
+          <p>信箱： b@b</p>
+          <p>電話： 0911222333</p>
+        </div>
+        <hr class="big_hr">
+        <div class="attraction_info">
+          <h5 class="order_index">行程 <span>1</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+          <hr>
+          <h5 class="order_index">行程 <span>2</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+        </div>
+      </div>
+    </div>
+    <div class="order">
+      <div class="order_item">
+        <h3 class="order_number">order_number</h3>
+        <h3 class="time">time</h3>
+      </div>
+      <div class="details">
+        <div class="contact_info">
+          <h5>訂單金額</h5>
+          <p>總金額： NT <span class="total_price">5500</span>$</p>
+          <h5>聯絡人</h5>
+          <p>姓名： Ben</p>
+          <p>信箱： b@b</p>
+          <p>電話： 0911222333</p>
+        </div>
+        <hr class="big_hr">
+        <div class="attraction_info">
+          <h5 class="order_index">行程 <span>1</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+          <hr>
+          <h5 class="order_index">行程 <span>2</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+        </div>
+      </div>
+    </div>
+    <div class="order">
+      <div class="order_item">
+        <h3 class="order_number">order_number</h3>
+        <h3 class="time">time</h3>
+      </div>
+      <div class="details">
+        <div class="contact_info">
+          <h5>訂單金額</h5>
+          <p>總金額： NT <span class="total_price">5500</span>$</p>
+          <h5>聯絡人</h5>
+          <p>姓名： Ben</p>
+          <p>信箱： b@b</p>
+          <p>電話： 0911222333</p>
+        </div>
+        <hr class="big_hr">
+        <div class="attraction_info">
+          <h5 class="order_index">行程 <span>1</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+          <hr>
+          <h5 class="order_index">行程 <span>2</span></h5>
+          <p>景點： 大稻埕碼頭</p>
+          <p>時間： 早上 7 點到下午 3 點</p>
+          <p>費用： NT <span class="price">2000</span>$</p>
+          <p>地點： 臺北市 大同區環河北路一段</p>
+          <div class="arrow_down">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="attraction_img attraction_img_hide"></div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+<footer>
+  <p>COPYRIGHT © 2022 台北一日遊</p>
+</footer>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="/js/member/member.js"></script>
+{% endblock %}

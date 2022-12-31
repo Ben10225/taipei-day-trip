@@ -1,110 +1,102 @@
-
-import uuid
 from flask import *
-from flask_bcrypt import Bcrypt
-from utils.validate import *
-from utils.jwt import *
 from api.model import *
+from utils.jwt import *
+import boto3
 
-bcrypt = Bcrypt()
+from dotenv import load_dotenv
+load_dotenv()
+
+s3 = boto3.client('s3',
+  aws_access_key_id = os.getenv("aws_access_key_id"),
+  aws_secret_access_key = os.getenv("aws_secret_access_key"),
+  region_name = os.getenv("region_name")
+)
+
 router_page_member = Blueprint("router_page_member", __name__, template_folder="templates")
 
 
-# sign_up api
-@router_page_member.route("/api/user", methods=["post"])
-def sign_up():
-  name = request.json['name']
-  email = request.json['email']
-  password = request.json['password']
-
-  checked = validated(email, password)
-
-  if not name or not checked:
-    return {"error": True, "message": "輸入格式錯誤"}, 400
-  
-  hashed_password = bcrypt.generate_password_hash(password=password)
-  
-  my_uuid = str(uuid.uuid4())
-
-  status = User.create_user(my_uuid, name, email, hashed_password)
-
-
-  if status == "exists":
-    return {"error":True, "message": "此信箱已被使用"}, 400
-
-  elif status == "created":
-    return {"data": "OK"}, 200
-
-  return {"error": True, "message": "伺服器錯誤"}, 500
-
-
-# sign_in api
-@router_page_member.route("/api/user/auth", methods=["put"])
-def sign_in():
-  email = request.json['email']
-  password = request.json['password']
-  reserve = request.json['reserve']
-
-  checked = validated(email, password)
-
-  if not checked:
-    return {"error": True, "message": "輸入格式錯誤"}, 400
-
-  user_info = User.get_user(email)
-  if not user_info:
-    return {"error":True, "message": "查無此帳號"}, 400
-
-  check_password = bcrypt.check_password_hash(user_info["password"], password)
-  if not check_password:
-    return {"error":True, "message": "密碼錯誤"}, 400
-
-  token = jwt_encode(user_info["uuid"], user_info["name"])
-  resp = make_response({"data": "OK"}, 200)
-  resp.set_cookie("token", token)
-
-  if reserve:
-    date = request.json['date']
-    radio = request.json['radio']
-    reserve_data = date + " " + radio
-    resp.set_cookie("reserve", reserve_data)
-
-  return resp
-
-
-# auth api
-@router_page_member.route("/api/user/auth")
-def check_auth():
+@router_page_member.route("/api/member")
+def get_history():
   try:
     payload = jwt_verify(request.cookies.get("token"))
-    return {"ok": True}, 200
+    uuid = payload["sub"]
 
-  except:
+    orders = History.get_user_orders(uuid)
+
+    if not orders:
+      return {"data": None}, 200
+
+    history = []
+
+    for order in orders:
+      attractions_info = History.get_user_orders_attractions(order["payment_id"], order["order_number"])
+
+      item = {
+        "orderNumber": order["order_number"]+ "-" + str(order["payment_id"]),
+        "totalPrice": order["total_price"],
+        "contactName": order["contact_name"],
+        "contactEmail": order["contact_email"],
+        "contactPhone": order["contact_phone"],
+        "trips": attractions_info,
+        "time": str(order["time"])
+      }
+      history.append(item)
+
+    return {"data": history}, 200
+
+
+  except Exception as e:
+    print(e)
     resp = make_response({"error": True, "message": "未登入狀態"}, 200)
     resp.set_cookie('token', '', 0)
     return resp
 
 
-# sign_out api
-@router_page_member.route("/api/user/auth", methods=["delete"])
-def sign_out():
-  resp = make_response({"ok": True}, 200)
-  resp.set_cookie('token', '', 0)
-  return resp
+@router_page_member.route("/api/member/name", methods=["post"])
+def change_user_name():
+  try:
+    payload = jwt_verify(request.cookies.get("token"))
+    uuid = payload["sub"]
+    name = request.json['name']
 
+    if not name:
+      return {"error": True, "message": "資料輸入錯誤"}, 400
+    
+    History.update_user_name(uuid, name)
+    token = jwt_encode(uuid, name)
 
-
-@router_page_member.route("/api/user/auth/cookie")
-def get_ReserveData():
-  reserve_data = request.cookies.get("reserve")
-  if reserve_data:
-    date = reserve_data.split(" ")[0]
-    radio = reserve_data.split(" ")[1]
-
-    resp = make_response({
-      "ok": True,
-      "date": date,
-      "radio": radio
-    }, 200)
-    resp.set_cookie('reserve', '', 0)
+    resp = make_response({"ok": True}, 200)
+    resp.set_cookie('token', '', 0)
+    resp.set_cookie("token", token)
     return resp
-  return {"data": None}
+
+  except Exception as e:
+    print(e)
+    resp = make_response({"error": True, "message": "未登入狀態"}, 200)
+    resp.set_cookie('token', '', 0)
+    return resp
+
+
+@router_page_member.route("/api/member/getimg")
+def getimg():
+  try:
+    payload = jwt_verify(request.cookies.get("token"))
+    uuid = payload["sub"]
+
+    get_url = s3.generate_presigned_url(
+      "get_object",
+      Params = {
+        "Bucket": os.getenv("bucket_name"),
+        "Key": uuid,
+      },                                  
+      ExpiresIn=3600,
+    )
+    return {"data": get_url}, 200
+
+  except Exception as e:
+    print(e)
+    resp = make_response({"error": True, "message": "未登入狀態"}, 200)
+    resp.set_cookie('token', '', 0)
+    return resp
+
+

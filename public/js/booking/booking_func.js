@@ -13,8 +13,7 @@ const submitBtn = document.querySelector(".submit_btn");
 const contactName = document.querySelector(".contact_name");
 const contactEmail = document.querySelector(".contact_email");
 const contactMobile = document.querySelector(".contact_mobile");
-
-const creditCardNumber = document.querySelector(".credit_card_number");
+const wait = document.querySelector(".wait");
 
 const mobilePattern = /^((?=(09))[0-9]{10})$/;
 const emailPattern = /^\S+@\S+$/;
@@ -28,12 +27,14 @@ function getBooking(){
   .then((data) => {
     if(data.data && !data.empty){
       createBookingDOM(data);
-      getUserInfo();
+      getUserInfo(contactName, contactEmail);
       preventBtn();
+      wait.remove();
       return
     }
     if(data.data && data.empty){
       createEmptyBookingDOM(data);
+      wait.remove();
       return
     }
   })
@@ -73,7 +74,7 @@ function createBooking(id, date, time, status){
 }
 
 
-function deleteBooking(bid){
+function deleteBooking(bid, status){
   fetch("/api/booking", {
     method: "delete",
     headers: {
@@ -85,7 +86,7 @@ function deleteBooking(bid){
   })
   .then((response) => response.json())
   .then((data) => {
-    if(data.pass){
+    if(status === "order"){
       return
     }
     if(data.ok){
@@ -99,13 +100,13 @@ function deleteBooking(bid){
 }
 
 
-function getUserInfo(){
-  fetch("/api/booking/getinfo")
+function getUserInfo(nameDOM, emailDOM){
+  return fetch("/api/booking/getinfo")
   .then((response) => response.json())
   .then((data) => {
     if(data.data){
-      contactName.value = data.data.name;
-      contactEmail.value = data.data.email;
+      nameDOM.value = data.data.name;
+      emailDOM.value = data.data.email;
     }
     if(data.error){
       window.location.href = "/";
@@ -244,7 +245,7 @@ function jumpToNextInput(){
   })
 }
 
-function varifyInfo(){
+function verifyInfo(){
   contactName.addEventListener("input", (e)=>{
     if(e.target.value){
       submitBtn.style = "pointer-events: auto; opacity: 1";
@@ -294,7 +295,8 @@ export default {
   createBooking,
   getBooking,
   jumpToNextInput,
-  varifyInfo,
+  verifyInfo,
   deleteBooking,
   bidLst,
+  getUserInfo,
 }

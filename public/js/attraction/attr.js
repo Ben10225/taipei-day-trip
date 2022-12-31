@@ -17,7 +17,7 @@ window.eveningClick = attr.eveningClick;
 window.clickBtnOpen = attr.clickBtnOpen;
 window.pushRepeatBooking = attr.pushRepeatBooking;
 
-
+nav.loadWaitingSvg();
 nav.hideDisplayBug();
 
 (async()=>{

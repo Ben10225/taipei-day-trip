@@ -10,9 +10,10 @@ window.signOut = nav.signOut;
 window.toBooking = nav.toBooking;
 window.onSubmit = onSubmit;
 
+nav.loadWaitingSvg();
 nav.hideDisplayBug();
 booking.jumpToNextInput();
-booking.varifyInfo();
+booking.verifyInfo();
 
 (async()=>{
   await nav.auth(false, "booking");
@@ -209,7 +210,7 @@ function onSubmit(event) {
       }
       if(data.data){
         let lst = booking.bidLst;
-        booking.deleteBooking(lst);
+        booking.deleteBooking(lst, "order");
         window.location = `/thankyou?number=${data.data.number}`;
       }
     })

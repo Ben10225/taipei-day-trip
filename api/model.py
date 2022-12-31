@@ -165,7 +165,7 @@ class Booking:
 			db = pool.get_connection()
 			mycursor = db.cursor(buffered=True)
 
-			if status == "mutiple":
+			if status == "multiple":
 				t = tuple(i for i in bid)
 				mycursor.execute(delete_booking_by_bids %f"{t}")
 				db.commit()
@@ -210,12 +210,12 @@ class Booking:
 
 
 class Order:
-	def create_payment(number, total_price, name, email, phone, bool):
+	def create_payment(number, uuid, total_price, name, email, phone, bool):
 		try:
 			db = pool.get_connection()
 			mycursor = db.cursor(buffered=True)
 
-			mycursor.execute(insert_payment, (number, total_price, name, email, phone, bool))
+			mycursor.execute(insert_payment, (number, uuid, total_price, name, email, phone, bool))
 			db.commit()
 
 			mycursor.execute(select_payment_id, )
@@ -257,6 +257,63 @@ class Order:
 			trips = mycursor.fetchall()
 
 			return payment, trips
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+
+class History:
+	def get_user_orders(uuid):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_payment_by_uuid_group, (uuid, ))
+			orders = mycursor.fetchall()
+
+			if len(orders) > 0:
+				return orders
+			else:
+				return None
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def get_user_orders_attractions(tid, tnum):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True, dictionary=True)
+
+			mycursor.execute(select_trips_by_tid_and_num, (tid, tnum))
+			attraction_infos = mycursor.fetchall()
+
+			if len(attraction_infos) > 0:
+				return attraction_infos
+			else:
+				return None
+
+		except Error as e:
+			print("Error while connecting to MySQL using Connection pool ", e)
+		
+		finally:
+			mycursor.close()
+			db.close()
+
+	def update_user_name(uuid, name):
+		try:
+			db = pool.get_connection()
+			mycursor = db.cursor(buffered=True)
+
+			mycursor.execute(update_name, (name, uuid))
+			db.commit()
 
 		except Error as e:
 			print("Error while connecting to MySQL using Connection pool ", e)
