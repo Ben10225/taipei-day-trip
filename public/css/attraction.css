@@ -180,7 +180,6 @@
   transition: opacity 0.4s;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .wrapper section .reserve_container_outter .reserve_container .detail_box .reserve_box button.click_open {

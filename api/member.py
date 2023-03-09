@@ -87,7 +87,7 @@ def getimg():
       "get_object",
       Params = {
         "Bucket": os.getenv("bucket_name"),
-        "Key": uuid,
+        "Key": uuid + ".jpeg",
       },                                  
       ExpiresIn=3600,
     )

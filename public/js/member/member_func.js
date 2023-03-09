@@ -1,4 +1,3 @@
-const emailLabel = document.querySelector(".email_label");
 const emailInput = document.querySelector(".email_input");
 const nameLabel = document.querySelector(".name_label");
 const nameInput = document.querySelector(".name_input");

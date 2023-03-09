@@ -220,13 +220,4 @@ function onSubmit(event) {
 }
 
 
-/*
-TPDirect.ccv.getPrime().then((response) => {
-  console.log(response)
-}).catch((error) => {
-  console.log(error)
-})
-*/
-
-
 

@@ -69,8 +69,6 @@ let insertImg = (data)=>{
     if(i==0){
       cir.classList.add("circle_black");
     }
-    // cir.addEventListener("click", circleClick.bind(null, i))
-
     
     cir.addEventListener("click", function cck(e){
       let circleBefore = document.querySelector(`.circle:nth-child(${cirpos})`);
