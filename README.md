@@ -45,7 +45,7 @@ Here is the testing credit card info for booking page.
 
 ### Framework
 
-- Python (flask)
+- Python (Flask)
 
 ### Infrastructure
 
