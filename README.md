@@ -1,13 +1,15 @@
 # [Taipei-day-trip (Python)](https://taipei-day-trip.beelinetw.com)
 
-Taipei-day-trip is an E-commerce website that offers itinerary reservation, itinerary purchase, and member information.
+Taipei-day-trip is an E-commerce website that offers itinerary reservation, tour purchase, and member information.
 
 <br/>
 
-This project build with Python Flask and pure JavaScript, there's also a [Go Gin](https://github.com/Ben10225/go_taipei-day-trip) (GitHub) version for practice.
+This project was built with Python Flask and pure JavaScript, and there's also a [Go Gin](https://github.com/Ben10225/go_taipei-day-trip) (GitHub) version for practice.
 
 <br/>
 
+## Live Demo
+#### website: https://taipei-day-trip.beelinetw.com
 ![](https://github.com/Ben10225/taipei-day-trip/blob/develop/public/images/taipei-day-trip-demo.gif)
 
 Here is the testing credit card info for booking page.
