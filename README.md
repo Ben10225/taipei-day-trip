@@ -4,7 +4,7 @@ Taipei-day-trip is an E-commerce website that offers itinerary reservation, itin
 
 <br/>
 
-This project built with Python Flask and pure JavaScript, I also have a [Go Gin](https://github.com/Ben10225/GO_tp-d-trip) (GitHub) version for practice.
+This project built with Python Flask and pure JavaScript, I also have a [Go Gin](https://github.com/Ben10225/go_taipei-day-trip) (GitHub) version for practice.
 
 <br/>
 
