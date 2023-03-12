@@ -48,6 +48,35 @@ INSERT INTO `attractions` VALUES (1,1,'新北投溫泉區',1,'北投溫泉從日
 UNLOCK TABLES;
 
 --
+-- Table structure for table `bookings`
+--
+
+DROP TABLE IF EXISTS `bookings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bookings` (
+  `bid` int NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL,
+  `attraction_id` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `time` varchar(255) NOT NULL,
+  `price` int NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`bid`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookings`
+--
+
+LOCK TABLES `bookings` WRITE;
+/*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
+INSERT INTO `bookings` VALUES (76,'2b3e5eb9-0132-42fb-a8a6-f9c5d7a0f3e3','10','2023-01-05','morning',2000,'2022-12-27 22:03:06');
+/*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `categories`
 --
 
@@ -119,6 +148,94 @@ LOCK TABLES `mrts` WRITE;
 INSERT INTO `mrts` VALUES (1,'新北投'),(2,'雙連'),(3,'士林'),(4,'劍潭'),(5,'唭哩岸'),(6,'大安森林公園'),(7,'象山'),(8,'龍山寺'),(9,'行天宮'),(10,'中正紀念堂'),(11,'市政府'),(12,'動物園'),(13,'關渡'),(14,'忠孝新生'),(15,'臺大醫院'),(16,'台北101／世貿'),(17,'松江南京'),(18,'中山'),(19,'國父紀念館'),(20,NULL),(21,'文德'),(22,'圓山'),(23,'大湖公園'),(24,'大直'),(25,'石牌'),(26,'忠義'),(27,'西門'),(28,'松山'),(29,'北投'),(30,'葫洲'),(31,'木柵'),(32,'芝山'),(33,'公館');
 /*!40000 ALTER TABLE `mrts` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(255) NOT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `total_price` int NOT NULL,
+  `contact_name` varchar(255) NOT NULL,
+  `contact_email` varchar(255) NOT NULL,
+  `contact_phone` varchar(255) NOT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (1,'202212291712444966859','3ba32f79-a2f3-41b6-bc93-3859ce5937f5',2500,'李沐','m@m','0922333444',1,'2022-12-29 17:12:44'),(2,'202212292218499696384','c838e436-f956-46dc-942d-d7b6a71a3f0f',2000,'Ben','b@b','0911222333',1,'2022-12-29 22:18:49'),(3,'202303091751444170542','c838e436-f956-46dc-942d-d7b6a71a3f0f',5000,'Ben','b@b','0988777666',1,'2023-03-09 17:51:44');
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `trips`
+--
+
+DROP TABLE IF EXISTS `trips`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `trips` (
+  `tid` int NOT NULL,
+  `trip_order_number` varchar(255) NOT NULL,
+  `attraction_id` varchar(255) NOT NULL,
+  `attraction_name` varchar(255) NOT NULL,
+  `attraction_address` varchar(255) NOT NULL,
+  `attraction_image` varchar(255) NOT NULL,
+  `attraction_price` int NOT NULL,
+  `attraction_date` varchar(255) NOT NULL,
+  `attraction_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trips`
+--
+
+LOCK TABLES `trips` WRITE;
+/*!40000 ALTER TABLE `trips` DISABLE KEYS */;
+INSERT INTO `trips` VALUES (1,'202212291712444966859','2','大稻埕碼頭','臺北市  大同區環河北路一段','https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000340.jpg',2500,'2023-01-03','下午 1 點到晚上 9 點'),(2,'202212292218499696384','4','國立故宮博物院','臺北市  士林區至善路二段221號','https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D14/E810/F21/48d66fbd-1ba3-4efd-837a-3767db5f52e0.jpg',2000,'2022-12-31','早上 7 點到下午 3 點'),(3,'202303091751444170542','4','國立故宮博物院','臺北市  士林區至善路二段221號','https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D14/E810/F21/48d66fbd-1ba3-4efd-837a-3767db5f52e0.jpg',2500,'2023-03-29','下午 1 點到晚上 9 點'),(3,'202303091751444170542','20','袖珍博物館','臺北市  中山區建國北路1段 96 號 B1','https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000762.jpg',2500,'2023-03-15','下午 1 點到晚上 9 點');
+/*!40000 ALTER TABLE `trips` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `uuid` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('1155998b-19f9-430b-a037-52bd2a133d2e','Gingle','gin@com.tw','$2b$12$b2WfhX1mdzCXSAxsGZXuh.8K/Cv60B1h1VqzyGlFm2zpT/ARmGd1O','2022-12-16 11:38:52'),('2b3e5eb9-0132-42fb-a8a6-f9c5d7a0f3e3','馬可','ma@ma','$2b$12$..unO61NzfN7PJ/F9vGi5uvBUBGKxIvtVmZcGVdbs0v03xcchl/dS','2022-12-27 12:44:31'),('3ba32f79-a2f3-41b6-bc93-3859ce5937f5','李沐','m@m','$2b$12$hs/3JslhIFheR/6XUKz7qeGrBJnojDFURYC2GyZ0XqHGr3VkBCf92','2022-12-20 13:55:54'),('bd39f8dd-5fa2-4110-87e1-88c7f44b5163','vvv','v@v','$2b$12$XPj63crloJGoESdVXTsb7u5Q.RExbH3S8Oet9VgTOkWRelGCv85Re','2022-12-29 00:03:54'),('c838e436-f956-46dc-942d-d7b6a71a3f0f','Ben','b@b','$2b$12$kbwaLKg9oAI92beFZ6.WVuChqQ0Io/nYFDUTehn/EAyE3axqbX8ku','2022-12-14 11:22:23');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -129,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-23 10:25:18
+-- Dump completed on 2023-03-09 23:00:15

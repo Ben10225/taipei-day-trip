@@ -91,7 +91,6 @@ FROM trips
 WHERE tid=%s AND trip_order_number=%s
 ORDER BY tid DESC
 """
-# 可能要給 trips auto increment
 
 update_name = """
 UPDATE users SET name=%s WHERE uuid=%s;
